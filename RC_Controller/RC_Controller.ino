@@ -43,18 +43,18 @@ void setup()
   pinMode(JOYSTICK_PUSHBUTTON,INPUT);
   digitalWrite(JOYSTICK_PUSHBUTTON,HIGH);
 
-  Serial.begin(115200);
-  Serial1.begin(115200);
-  Serial2.begin(115200);
+  Serial.begin(9600);
+  Serial1.begin(9600);
+  Serial2.begin(9600);
   
-  Serial2.print("$"); //Set the module
+  /*Serial2.print("$"); //Set the module
   Serial2.print("$");
   Serial2.print("$");  
   delay(100);  
   Serial2.println("C,000666682F4B"); //pairing with module2
   lcd.print("Connecting Robot...");
   delay(6000);
-  lcd.clear();
+  lcd.clear();*/
 }
 
 
