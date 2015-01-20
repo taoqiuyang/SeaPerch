@@ -69,8 +69,8 @@ void loop() {
     delay(6000);
   }*/
 
-    normalized_joystick_X = processJoystick(HORIZONTAL_PIN);
-    normalized_joystick_Y = processJoystick(VERTICAL_PIN);
+    normalized_joystick_X = processJoystick(HORIZONTAL_PIN, joystickMidPoint_X);
+    normalized_joystick_Y = processJoystick(VERTICAL_PIN, joystickMidPoint_Y);
     joystick_button = !digitalRead(PUSHBUTTON);
 
     Motor1 = 0;
@@ -209,24 +209,24 @@ void serial_2_get_data_and_decode() {
     }
 }
 
-double processJoystick(int pinId) {
-    double normalized_X;
-    int horizontal = analogRead(pinId);
+double processJoystick(int pinId, int midPoint) {
+    double normalized;
+    int rawValue = analogRead(pinId);
     delay(0.1);
     //-----------------normalize----------------
     //map the ADC reading to [-1, 1]
-    if (horizontal < joystickMidPoint_X - 1) {
-        normalized_X = 1.0 * (joystickMidPoint_X - horizontal) / joystickMidPoint_X;
+    if (rawValue < joystickMidPoint_X - 1) {
+        normalized = 1.0 * (midPoint - rawValue) / midPoint;
     }
-    if (horizontal > joystickMidPoint_X + 1) {
-        normalized_X = -1.0 * (horizontal - joystickMidPoint_X) / (1023 - joystickMidPoint_X);
+    if (rawValue > joystickMidPoint_X + 1) {
+        normalized = -1.0 * (rawValue - midPoint) / (1023 - midPoint);
     }
-    if (normalized_X > 1) {
-        normalized_X = 1;
+    if (normalized > 1) {
+        normalized = 1;
     }
-    if (normalized_X < -1) {
-        normalized_X = -1;
+    if (normalized < -1) {
+        normalized = -1;
     }
     //-----------------apply curve--------------
-    return normalized_X + 1;
+    return normalized + 1;
 }
