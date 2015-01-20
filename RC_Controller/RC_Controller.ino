@@ -216,9 +216,8 @@ void Serial_2_get_data_and_decode() {
 }
 
 double processJoystick(int pinId) {
-    double normalized_X, processed_X;
-    int horizontal;
-    horizontal = analogRead(pinId);
+    double normalized_X;
+    int horizontal = analogRead(pinId);
     delay(0.1);
     //-----------------normalize----------------
     //map the ADC reading to [-1, 1]
@@ -235,6 +234,5 @@ double processJoystick(int pinId) {
         normalized_X = -1;
     }
     //-----------------apply curve--------------
-    processed_X = normalized_X + 1;
-    return processed_X;
+    return normalized_X + 1;
 }
