@@ -78,7 +78,11 @@ void loop() {
     motors[1] = 0;
     motors[2] = 0;
     Motor4_Motor5_differential_and_limit_current();
-    checksum = normalized_joystick_X + normalized_joystick_Y + joystick_button + motors[0] + motors[1] + motors[2] + motors[3] + motors[4];
+    checksum = normalized_joystick_X + normalized_joystick_Y + joystick_button;
+    for (int i = 0; i < sizeof(motors) / sizeof(motors[0]); i++) {
+        checksum += motors[i];
+    }
+
     serial_2_send_data();
     delay(20);
 
@@ -139,11 +143,9 @@ void serial_2_send_data() {
     Serial2.print(",");
     Serial2.print(joystick_button);
     Serial2.print(",");
-    sendMotorSpec(motors[0]);
-    sendMotorSpec(motors[1]);
-    sendMotorSpec(motors[2]);
-    sendMotorSpec(motors[3]);
-    sendMotorSpec(motors[4]);
+    for (int i = 0; i < sizeof(motors) / sizeof(motors[0]); i++) {
+        sendMotorSpec(motors[i]);
+    }
     Serial2.print(checksum, 3);
 
     Serial2.print("\n");
