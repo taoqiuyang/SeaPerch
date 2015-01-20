@@ -17,10 +17,7 @@ Read the joystick value from ADC, encode and send to serial port 1
 #include <LiquidCrystal.h>
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 
-
-const int JOYSTICK_VERTICAL_PIN = 13;  //Joystick vertical
-const int JOYSTICK_HORIZONTAL_PIN = 14; //Joystick horizontal
-const int JOYSTICK_PUSHBUTTON = 52;   //Joystick pushbutton
+enum Joystick { VERTICAL_PIN = 13,  HORIZONTAL_PIN = 14, PUSHBUTTON = 52};
 const int joystickMidPoint_X = 505;
 const int joystickMidPoint_Y = 515;
 
@@ -40,8 +37,8 @@ void setup()
 {
   lcd.begin(16, 2);
   
-  pinMode(JOYSTICK_PUSHBUTTON,INPUT);
-  digitalWrite(JOYSTICK_PUSHBUTTON,HIGH);
+  pinMode(PUSHBUTTON,INPUT);
+  digitalWrite(PUSHBUTTON,HIGH);
 
   Serial.begin(9600);
   Serial1.begin(9600);
@@ -70,7 +67,7 @@ void loop(){
  
   normalized_joystick_X = processJoystick_X();
   normalized_joystick_Y = processJoystick_Y();
-  joystick_button = !digitalRead(JOYSTICK_PUSHBUTTON); 
+  joystick_button = !digitalRead(PUSHBUTTON);
 
   Motor1 = 0;
   Motor2 = 0;
@@ -220,7 +217,7 @@ void Serial_2_get_data_and_decode(){
 double processJoystick_X(){
   double normalized_X,processed_X;
   int    horizontal;
-  horizontal = analogRead(JOYSTICK_HORIZONTAL_PIN);
+  horizontal = analogRead(HORIZONTAL_PIN);
   delay(0.1);
   //-----------------normalize----------------
   //map the ADC reading to [-1, 1] 
@@ -244,7 +241,7 @@ double processJoystick_X(){
 double processJoystick_Y(){
   double normalized_Y,processed_Y;
   int    vertical;
-  vertical = analogRead(JOYSTICK_VERTICAL_PIN);
+  vertical = analogRead(VERTICAL_PIN);
   delay(0.1);
   //-----------------normalize----------------
   //map the ADC reading to [-1, 1] 
