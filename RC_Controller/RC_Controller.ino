@@ -29,7 +29,8 @@ String Serial_2_data_recieved = "";
 int Serial2_received_data_status = 0;  //0 for no valid data, 1 for valid data received
 
 float normalized_joystick_X, normalized_joystick_Y, checksum;
-int joystick_button, Motor1, Motor2, Motor3, Motor4, Motor5;
+int joystick_button;
+int motors[5];
 
 float robot_battery_voltage;
 
@@ -73,11 +74,11 @@ void loop() {
     normalized_joystick_Y = processJoystick(VERTICAL_PIN, joystickMidPoint_Y);
     joystick_button = !digitalRead(PUSHBUTTON);
 
-    Motor1 = 0;
-    Motor2 = 0;
-    Motor3 = 0;
+    motors[0] = 0;
+    motors[1] = 0;
+    motors[2] = 0;
     Motor4_Motor5_differential_and_limit_current();
-    checksum = normalized_joystick_X + normalized_joystick_Y + joystick_button + Motor1 + Motor2 + Motor3 + Motor4 + Motor5;
+    checksum = normalized_joystick_X + normalized_joystick_Y + joystick_button + motors[0] + motors[1] + motors[2] + motors[3] + motors[4];
     serial_2_send_data();
     delay(20);
 
@@ -123,8 +124,8 @@ void Motor4_Motor5_differential_and_limit_current() {
     if (m5 > limit) {m5 = limit;}
     if (m5 < -1.0 * limit) {m5 = -1.0 * limit;}
 
-    Motor4 = (int) ((m4 + 1) * 255);
-    Motor5 = (int) ((m5 + 1) * 255);
+    motors[3] = (int) ((m4 + 1) * 255);
+    motors[4] = (int) ((m5 + 1) * 255);
 
 }
 
@@ -138,11 +139,11 @@ void serial_2_send_data() {
     Serial2.print(",");
     Serial2.print(joystick_button);
     Serial2.print(",");
-    sendMotorSpec(Motor1);
-    sendMotorSpec(Motor2);
-    sendMotorSpec(Motor3);
-    sendMotorSpec(Motor4);
-    sendMotorSpec(Motor5);
+    sendMotorSpec(motors[0]);
+    sendMotorSpec(motors[1]);
+    sendMotorSpec(motors[2]);
+    sendMotorSpec(motors[3]);
+    sendMotorSpec(motors[4]);
     Serial2.print(checksum, 3);
 
     Serial2.print("\n");
