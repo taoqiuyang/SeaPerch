@@ -59,15 +59,15 @@ void loop(){
   
 
   //Serial_1_send_data();
-  
 
-  Serial_2_get_data_and_decode();
+
+  serial_2_get_data_and_decode();
   //Serial.print(Serial2_received_data_status);
   motor_execute();
   
   get_sensor_data();
   checksum = battery_voltage+normalized_joystick_Y+joystick_button+Motor1+Motor2+Motor3+Motor4+Motor5;
-  Serial_2_send_data();
+  serial_2_send_data();
   delay(20);
   
     /*while (Serial2.available()) {
@@ -124,7 +124,7 @@ void motor_execute(){
 
 
 
-void Serial_2_send_data(){
+void serial_2_send_data(){
   Serial2.flush(); 
   Serial2.print("#");
   Serial2.print(battery_voltage,3);  
@@ -159,7 +159,7 @@ void Serial_2_send_data(){
 }
 
 
-void Serial_2_get_data_and_decode(){
+void serial_2_get_data_and_decode(){
   if ( Serial2.available() > 0){
     Serial_2_data_recieved = Serial2.readStringUntil('\n');
     Serial.println(Serial_2_data_recieved);

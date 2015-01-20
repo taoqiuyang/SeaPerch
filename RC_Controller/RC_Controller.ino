@@ -78,14 +78,14 @@ void loop() {
     Motor3 = 0;
     Motor4_Motor5_differential_and_limit_current();
     checksum = normalized_joystick_X + normalized_joystick_Y + joystick_button + Motor1 + Motor2 + Motor3 + Motor4 + Motor5;
-    Serial_2_send_data();
+    serial_2_send_data();
     delay(20);
 
 
-    Serial_2_get_data_and_decode();
+    serial_2_get_data_and_decode();
 
     serialDisplay();
-    LCD_Display();
+    lcdDisplay();
     /*while (Serial2.available()) {
       int received = Serial2.read();
       Serial.write(received);
@@ -100,7 +100,7 @@ void serialDisplay() {
     Serial.println(" V");
 }
 
-void LCD_Display() {
+void lcdDisplay() {
     lcd.setCursor(0, 0);
     lcd.print("Battery Voltage:");
     lcd.setCursor(0, 1);
@@ -128,7 +128,7 @@ void Motor4_Motor5_differential_and_limit_current() {
 
 }
 
-void Serial_2_send_data() {
+void serial_2_send_data() {
     Serial2.flush();
     Serial2.print("#");
 
@@ -155,7 +155,7 @@ void sendMotorSpec(int motorSpec) {
     Serial2.print(",");
 }
 
-void Serial_2_get_data_and_decode() {
+void serial_2_get_data_and_decode() {
     if (Serial2.available() > 0) {
         Serial_2_data_recieved = Serial2.readStringUntil('\n');
         //Serial.println(Serial_2_data_recieved);
