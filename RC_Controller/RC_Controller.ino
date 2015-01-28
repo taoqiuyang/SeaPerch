@@ -15,6 +15,7 @@ Read the joystick value from ADC, encode and send to serial port 1
 
 */
 #include <LiquidCrystal.h>
+#include "MotorSpecs.h"
 
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 
@@ -24,17 +25,17 @@ enum Joystick {
 const int joystickMidPoint_X = 505;
 const int joystickMidPoint_Y = 515;
 const int motorCount = 5;
+int motors[motorCount];
 
 String Serial_1_data_recieved = "";
 String Serial_2_data_recieved = "";
-int Serial2_received_data_status = 0;  //0 for no valid data, 1 for valid data received
 
-float normalized_joystick_X, normalized_joystick_Y, checksum;
+int Serial2_received_data_status = 0;  //0 for no valid data, 1 for valid data received
+float normalized_joystick_Y, checksum;
 int joystick_button;
-int motors[motorCount];
 
 float robot_battery_voltage;
-
+MotorSpecs motorSpecs;
 
 int connectButton = 22;
 
@@ -70,13 +71,12 @@ void loop() {
     Serial2.println("C,000666682F4B"); //pairing with module2
     delay(6000);
   }*/
-
-    normalized_joystick_X = processJoystick(HORIZONTAL_PIN, joystickMidPoint_X);
+    motorSpecs.setNormalized_joystick_X(processJoystick(HORIZONTAL_PIN, joystickMidPoint_X));
     normalized_joystick_Y = processJoystick(VERTICAL_PIN, joystickMidPoint_Y);
     joystick_button = !digitalRead(PUSHBUTTON);
 
     Motor4_Motor5_differential_and_limit_current();
-    checksum = normalized_joystick_X + normalized_joystick_Y + joystick_button;
+    checksum = motorSpecs.getNormalized_joystick_X() + normalized_joystick_Y + joystick_button;
     for (int i = 0; i < motorCount; i++) {
         checksum += motors[i];
     }
@@ -109,13 +109,12 @@ void lcdDisplay() {
     lcd.setCursor(0, 1);
     lcd.print(robot_battery_voltage);
     lcd.print(" V");
-
 }
 
 
 void Motor4_Motor5_differential_and_limit_current() {
     float limit = 0.6;
-    float x = (normalized_joystick_X - 1) * limit;
+    float x = (motorSpecs.getNormalized_joystick_X() - 1) * limit;
     float y = (normalized_joystick_Y - 1) * limit;
     float m4, m5;
 
@@ -128,14 +127,13 @@ void Motor4_Motor5_differential_and_limit_current() {
 
     motors[3] = (int) ((m4 + 1) * 255);
     motors[4] = (int) ((m5 + 1) * 255);
-
 }
 
 void serial_2_send_data() {
     Serial2.flush();
     Serial2.print("#");
 
-    Serial2.print(normalized_joystick_X, 3);
+    Serial2.print(motorSpecs.getNormalized_joystick_X(), 3);
     Serial2.print(",");
     Serial2.print(normalized_joystick_Y, 3);
     Serial2.print(",");
