@@ -40,9 +40,9 @@ int int_to_be_sent_0,int_to_be_sent_1,int_to_be_sent_2,int_to_be_sent_3,int_to_b
 void setup()
 {
   pinMode(BATTERY_MEASUREMENT_PIN, INPUT);
-  Serial.begin(115200);
-  Serial1.begin(115200);
-  Serial2.begin(115200);
+  Serial.begin(9600);
+  Serial1.begin(9600);
+  Serial2.begin(9600);
   
   //---initialize the motor controller
   AFMS.begin();  // 1.6KHz PWM
