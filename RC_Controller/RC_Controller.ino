@@ -23,6 +23,7 @@ enum Joystick {
 };
 const int joystickMidPoint_X = 505;
 const int joystickMidPoint_Y = 515;
+const int motorCount = 5;
 
 String Serial_1_data_recieved = "";
 String Serial_2_data_recieved = "";
@@ -30,7 +31,7 @@ int Serial2_received_data_status = 0;  //0 for no valid data, 1 for valid data r
 
 float normalized_joystick_X, normalized_joystick_Y, checksum;
 int joystick_button;
-int motors[5];
+int motors[motorCount];
 
 float robot_battery_voltage;
 
@@ -79,7 +80,7 @@ void loop() {
     motors[2] = 0;
     Motor4_Motor5_differential_and_limit_current();
     checksum = normalized_joystick_X + normalized_joystick_Y + joystick_button;
-    for (int i = 0; i < sizeof(motors) / sizeof(motors[0]); i++) {
+    for (int i = 0; i < motorCount; i++) {
         checksum += motors[i];
     }
 
@@ -143,7 +144,7 @@ void serial_2_send_data() {
     Serial2.print(",");
     Serial2.print(joystick_button);
     Serial2.print(",");
-    for (int i = 0; i < sizeof(motors) / sizeof(motors[0]); i++) {
+    for (int i = 0; i < motorCount; i++) {
         sendMotorSpec(motors[i]);
     }
     Serial2.print(checksum, 3);
