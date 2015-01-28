@@ -75,9 +75,6 @@ void loop() {
     normalized_joystick_Y = processJoystick(VERTICAL_PIN, joystickMidPoint_Y);
     joystick_button = !digitalRead(PUSHBUTTON);
 
-    motors[0] = 0;
-    motors[1] = 0;
-    motors[2] = 0;
     Motor4_Motor5_differential_and_limit_current();
     checksum = normalized_joystick_X + normalized_joystick_Y + joystick_button;
     for (int i = 0; i < motorCount; i++) {
