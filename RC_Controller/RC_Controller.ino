@@ -31,7 +31,7 @@ String Serial_1_data_recieved = "";
 String Serial_2_data_recieved = "";
 
 int Serial2_received_data_status = 0;  //0 for no valid data, 1 for valid data received
-float normalized_joystick_Y, checksum;
+float checksum;
 int joystick_button;
 
 float robot_battery_voltage;
@@ -72,11 +72,11 @@ void loop() {
     delay(6000);
   }*/
     motorSpecs.setNormalized_joystick_X(processJoystick(HORIZONTAL_PIN, joystickMidPoint_X));
-    normalized_joystick_Y = processJoystick(VERTICAL_PIN, joystickMidPoint_Y);
+    motorSpecs.setNormalized_joystick_Y(processJoystick(VERTICAL_PIN, joystickMidPoint_Y));
     joystick_button = !digitalRead(PUSHBUTTON);
 
     Motor4_Motor5_differential_and_limit_current();
-    checksum = motorSpecs.getNormalized_joystick_X() + normalized_joystick_Y + joystick_button;
+    checksum = motorSpecs.getNormalized_joystick_X() + motorSpecs.getNormalized_joystick_Y() + joystick_button;
     for (int i = 0; i < motorCount; i++) {
         checksum += motors[i];
     }
@@ -115,7 +115,7 @@ void lcdDisplay() {
 void Motor4_Motor5_differential_and_limit_current() {
     float limit = 0.6;
     float x = (motorSpecs.getNormalized_joystick_X() - 1) * limit;
-    float y = (normalized_joystick_Y - 1) * limit;
+    float y = (motorSpecs.getNormalized_joystick_Y() - 1) * limit;
     float m4, m5;
 
     m4 = x + y;
@@ -135,7 +135,7 @@ void serial_2_send_data() {
 
     Serial2.print(motorSpecs.getNormalized_joystick_X(), 3);
     Serial2.print(",");
-    Serial2.print(normalized_joystick_Y, 3);
+    Serial2.print(motorSpecs.getNormalized_joystick_Y(), 3);
     Serial2.print(",");
     Serial2.print(joystick_button);
     Serial2.print(",");
