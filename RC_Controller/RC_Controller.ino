@@ -6,8 +6,12 @@ Electronic Team - Embeded System Group
 Virtical Integrated Project - RoboSense
 Georgia Institute of Technology
 
-=================Description================================================
-Read the joystick value from ADC, encode and send to serial port 1
+=================Connections================================================
+RX2, TX2 --> Bluetooth module
+A0  --> Key input from LCD button shield
+A13 --> Joystick Vertical
+A14 --> Joystick Horizontal
+D52 --> Joystick button
 
 
 ================= How to use ===============================================
@@ -15,34 +19,60 @@ Read the joystick value from ADC, encode and send to serial port 1
 
 */
 #include <LiquidCrystal.h>
+#include <LCDKeypad.h>
 #include "MotorSpecs.h"
 
-LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
-
+//Joystick-----------------------------
 enum Joystick {
     VERTICAL_PIN = 13, HORIZONTAL_PIN = 14, PUSHBUTTON = 52
 };
 const int joystickMidPoint_X = 505;
 const int joystickMidPoint_Y = 515;
-const int motorCount = 5;
-
-String Serial_1_data_recieved = "";
-String Serial_2_data_recieved = "";
-
-int Serial2_received_data_status = 0;  //0 for no valid data, 1 for valid data received
-float checksum;
 int joystick_button;
 
-float robot_battery_voltage;
+//Motors------------------------------
+const int motorCount = 5;
+void sendMotorSpec(int motorSpec);
 MotorSpecs *motorSpecs;
 
-int connectButton = 22;
+//Serial Comm-------------------------
+String Serial_1_data_recieved = "";
+String Serial_2_data_recieved = "";
+int Serial2_received_data_status = 0;  //0 for no valid data, 1 for valid data received
+float checksum;
 
-void sendMotorSpec(int motorSpec);
+//Data feedback-----------------------
+float robot_battery_voltage;
+
+
+//LCD key shield------------------------
+LiquidCrystal lcd(8, 13, 9, 4, 5, 6, 7);
+int adc_key_in;
+int NUM_KEYS = 5;
+int adc_key_val[5] ={50, 200, 400, 600, 800 };
+int key=-1;
+int oldkey=-1;
+char msgs[5][16] = {"Right ",
+                    "Up    ",               
+                    "Down  ",
+                    "Left  ",
+                    "Select" };
+                    
+
+
 
 void setup() {
+  //LCD welcome screen-------------
     lcd.begin(16, 2);
-
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("Gatech VIP");
+    lcd.setCursor(0,1);
+    lcd.print("SeaPerch Project");
+    delay(2000);
+    lcd.clear();
+    
+  //initializaion------------------
     pinMode(PUSHBUTTON, INPUT);
     digitalWrite(PUSHBUTTON, HIGH);
 
@@ -54,27 +84,32 @@ void setup() {
     motorSpecs->setMotor(0, 0);
     motorSpecs->setMotor(1, 0);
     motorSpecs->setMotor(2, 0);
-
-    /*Serial2.print("$"); //Set the module
-    Serial2.print("$");
-    Serial2.print("$");
-    delay(100);
-    Serial2.println("C,000666682F4B"); //pairing with module2
-    lcd.print("Connecting Robot...");
-    delay(6000);
-    lcd.clear();*/
 }
 
 
 void loop() {
-    /*if (digitalRead(connectButton)==1){
-    Serial2.print("$"); //Set the module
-    Serial2.print("$");
-    Serial2.print("$");
-    delay(100);
-    Serial2.println("C,000666682F4B"); //pairing with module2
-    delay(6000);
-  }*/
+  
+    //Detect key pressed on LCD sheild----------------------
+    adc_key_in = analogRead(0);
+    key = get_key(adc_key_in); 
+    if (key != oldkey)   // if keypress is detected
+   {
+     delay(50);  // wait for debounce time
+     adc_key_in = analogRead(0);    // read the value from the sensor 
+     key = get_key(adc_key_in);    // convert into key press
+     if (key != oldkey)    
+     {   
+       lcd.setCursor(0, 1);
+       oldkey = key;
+       if (key >=0)
+       {
+           lcd.print(msgs[key]);              
+       }
+     }
+   }
+   delay(1000);
+   //--------------------------------------------------------  
+    
     motorSpecs->setNormalized_joystick_X(processJoystick(HORIZONTAL_PIN, joystickMidPoint_X));
     motorSpecs->setNormalized_joystick_Y(processJoystick(VERTICAL_PIN, joystickMidPoint_Y));
     joystick_button = !digitalRead(PUSHBUTTON);
@@ -100,6 +135,8 @@ void loop() {
 
     //Serial.print(Serial2_received_data_status);
 }
+
+
 
 void serialDisplay() {
     Serial.print("Battery Voltage: ");
@@ -232,4 +269,19 @@ double processJoystick(int pinId, int midPoint) {
     }
     //-----------------apply curve--------------
     return normalized + 1;
+}
+
+// Convert ADC value from keypad to key number
+int get_key(unsigned int input)
+{
+    int k;
+    for (k = 0; k < NUM_KEYS; k++)
+    {
+      if (input < adc_key_val[k])
+      {
+        return k;
+      }
+    }   
+    if (k >= NUM_KEYS)k = -1;  // No valid key pressed
+    return k;
 }
