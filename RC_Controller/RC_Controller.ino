@@ -35,7 +35,7 @@ float checksum;
 int joystick_button;
 
 float robot_battery_voltage;
-MotorSpecs motorSpecs;
+MotorSpecs *motorSpecs;
 
 int connectButton = 22;
 
@@ -50,6 +50,8 @@ void setup() {
     Serial.begin(9600);
     Serial1.begin(9600);
     Serial2.begin(9600);
+
+    motorSpecs = new MotorSpecs(5);
 
     /*Serial2.print("$"); //Set the module
     Serial2.print("$");
@@ -71,12 +73,12 @@ void loop() {
     Serial2.println("C,000666682F4B"); //pairing with module2
     delay(6000);
   }*/
-    motorSpecs.setNormalized_joystick_X(processJoystick(HORIZONTAL_PIN, joystickMidPoint_X));
-    motorSpecs.setNormalized_joystick_Y(processJoystick(VERTICAL_PIN, joystickMidPoint_Y));
+    motorSpecs->setNormalized_joystick_X(processJoystick(HORIZONTAL_PIN, joystickMidPoint_X));
+    motorSpecs->setNormalized_joystick_Y(processJoystick(VERTICAL_PIN, joystickMidPoint_Y));
     joystick_button = !digitalRead(PUSHBUTTON);
 
     Motor4_Motor5_differential_and_limit_current();
-    checksum = motorSpecs.getNormalized_joystick_X() + motorSpecs.getNormalized_joystick_Y() + joystick_button;
+    checksum = motorSpecs->getNormalized_joystick_X() + motorSpecs->getNormalized_joystick_Y() + joystick_button;
     for (int i = 0; i < motorCount; i++) {
         checksum += motors[i];
     }
@@ -114,8 +116,8 @@ void lcdDisplay() {
 
 void Motor4_Motor5_differential_and_limit_current() {
     float limit = 0.6;
-    float x = (motorSpecs.getNormalized_joystick_X() - 1) * limit;
-    float y = (motorSpecs.getNormalized_joystick_Y() - 1) * limit;
+    float x = (motorSpecs->getNormalized_joystick_X() - 1) * limit;
+    float y = (motorSpecs->getNormalized_joystick_Y() - 1) * limit;
     float m4, m5;
 
     m4 = x + y;
@@ -133,9 +135,9 @@ void serial_2_send_data() {
     Serial2.flush();
     Serial2.print("#");
 
-    Serial2.print(motorSpecs.getNormalized_joystick_X(), 3);
+    Serial2.print(motorSpecs->getNormalized_joystick_X(), 3);
     Serial2.print(",");
-    Serial2.print(motorSpecs.getNormalized_joystick_Y(), 3);
+    Serial2.print(motorSpecs->getNormalized_joystick_Y(), 3);
     Serial2.print(",");
     Serial2.print(joystick_button);
     Serial2.print(",");
