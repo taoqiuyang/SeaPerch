@@ -23,3 +23,10 @@ const float MotorSpecs::getNormalized_joystick_Y() const {
 void MotorSpecs::setNormalized_joystick_Y(float normalized_joystick_Y) {
     MotorSpecs::normalized_joystick_Y = normalized_joystick_Y;
 }
+
+const int MotorSpecs::getMotor(int motorId) const {
+    return motors[motorId];
+}
+void MotorSpecs::setMotor(int motorId, int motorValue){
+    motors[motorId] = motorValue;
+}

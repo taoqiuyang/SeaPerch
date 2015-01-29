@@ -25,7 +25,6 @@ enum Joystick {
 const int joystickMidPoint_X = 505;
 const int joystickMidPoint_Y = 515;
 const int motorCount = 5;
-int motors[motorCount];
 
 String Serial_1_data_recieved = "";
 String Serial_2_data_recieved = "";
@@ -51,7 +50,10 @@ void setup() {
     Serial1.begin(9600);
     Serial2.begin(9600);
 
-    motorSpecs = new MotorSpecs(5);
+    motorSpecs = new MotorSpecs(motorCount);
+    motorSpecs->setMotor(0, 0);
+    motorSpecs->setMotor(1, 0);
+    motorSpecs->setMotor(2, 0);
 
     /*Serial2.print("$"); //Set the module
     Serial2.print("$");
@@ -80,7 +82,7 @@ void loop() {
     Motor4_Motor5_differential_and_limit_current();
     checksum = motorSpecs->getNormalized_joystick_X() + motorSpecs->getNormalized_joystick_Y() + joystick_button;
     for (int i = 0; i < motorCount; i++) {
-        checksum += motors[i];
+        checksum += motorSpecs->getMotor(i);
     }
 
     serial_2_send_data();
@@ -127,8 +129,8 @@ void Motor4_Motor5_differential_and_limit_current() {
     if (m5 > limit) {m5 = limit;}
     if (m5 < -1.0 * limit) {m5 = -1.0 * limit;}
 
-    motors[3] = (int) ((m4 + 1) * 255);
-    motors[4] = (int) ((m5 + 1) * 255);
+    motorSpecs->setMotor(3, (int) ((m4 + 1) * 255));
+    motorSpecs->setMotor(4, (int) ((m5 + 1) * 255));
 }
 
 void serial_2_send_data() {
@@ -142,7 +144,7 @@ void serial_2_send_data() {
     Serial2.print(joystick_button);
     Serial2.print(",");
     for (int i = 0; i < motorCount; i++) {
-        sendMotorSpec(motors[i]);
+        sendMotorSpec(motorSpecs->getMotor(i));
     }
     Serial2.print(checksum, 3);
 
