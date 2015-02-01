@@ -28,7 +28,6 @@ enum Joystick {
 };
 const int joystickMidPoint_X = 505;
 const int joystickMidPoint_Y = 515;
-int joystick_button;
 
 //Motors------------------------------
 const int motorCount = 5;
@@ -107,15 +106,14 @@ void loop() {
        }
      }
    }
-   delay(1000);
    //--------------------------------------------------------  
     
     motorSpecs->setNormalized_joystick_X(processJoystick(HORIZONTAL_PIN, joystickMidPoint_X));
     motorSpecs->setNormalized_joystick_Y(processJoystick(VERTICAL_PIN, joystickMidPoint_Y));
-    joystick_button = !digitalRead(PUSHBUTTON);
+    motorSpecs->setJoystick_button(!digitalRead(PUSHBUTTON));
 
     Motor4_Motor5_differential_and_limit_current();
-    checksum = motorSpecs->getNormalized_joystick_X() + motorSpecs->getNormalized_joystick_Y() + joystick_button;
+    checksum = motorSpecs->getNormalized_joystick_X() + motorSpecs->getNormalized_joystick_Y() + motorSpecs->getJoystick_button();
     for (int i = 0; i < motorCount; i++) {
         checksum += motorSpecs->getMotor(i);
     }
@@ -178,7 +176,7 @@ void serial_2_send_data() {
     Serial2.print(",");
     Serial2.print(motorSpecs->getNormalized_joystick_Y(), 3);
     Serial2.print(",");
-    Serial2.print(joystick_button);
+    Serial2.print(motorSpecs->getJoystick_button());
     Serial2.print(",");
     for (int i = 0; i < motorCount; i++) {
         sendMotorSpec(motorSpecs->getMotor(i));

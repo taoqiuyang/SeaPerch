@@ -24,6 +24,14 @@ void MotorSpecs::setNormalized_joystick_Y(float normalized_joystick_Y) {
     MotorSpecs::normalized_joystick_Y = normalized_joystick_Y;
 }
 
+const int MotorSpecs::getJoystick_button() const {
+    return joystick_button;
+}
+
+void MotorSpecs::setJoystick_button(int joystick_button) {
+    MotorSpecs::joystick_button = joystick_button;
+}
+
 const int MotorSpecs::getMotor(int motorId) const {
     return motors[motorId];
 }
