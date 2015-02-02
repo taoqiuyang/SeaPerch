@@ -1,3 +1,6 @@
+#ifndef _TextCoder_H
+#define _TextCoder_H
+
 #include <Arduino.h>
 #include "MotorSpecs.h"
 
@@ -30,3 +33,5 @@ void serial_2_send_data(MotorSpecs *motorSpecs) {
 
     Serial2.print("\n");
 }
+
+#endif
