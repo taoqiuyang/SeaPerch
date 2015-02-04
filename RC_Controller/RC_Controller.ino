@@ -57,9 +57,9 @@ void setup() {
     Serial2.begin(9600);
 
     motorSpecs = new MotorSpecs(motorCount);
-    motorSpecs->setMotor(0, 0);
-    motorSpecs->setMotor(1, 0);
     motorSpecs->setMotor(2, 0);
+    motorSpecs->setMotor(3, 0);
+    motorSpecs->setMotor(4, 0);
 }
 
 void loop() {
@@ -107,8 +107,8 @@ void Motor4_Motor5_differential_and_limit_current() {
     if (m5 > limit) {m5 = limit;}
     if (m5 < -1.0 * limit) {m5 = -1.0 * limit;}
 
-    motorSpecs->setMotor(3, (int) ((m4 + 1) * 255));
-    motorSpecs->setMotor(4, (int) ((m5 + 1) * 255));
+    motorSpecs->setMotor(0, (int) ((m4 + 1) * 255));
+    motorSpecs->setMotor(1, (int) ((m5 + 1) * 255));
 }
 
 void serial_2_get_data_and_decode() {

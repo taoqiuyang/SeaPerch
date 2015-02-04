@@ -92,33 +92,33 @@ void motor_execute(){
   uint8_t motorSpd4=0;
   uint8_t motorSpd5=0;
 
-  if (Motor4 >= 255){
-    motorSpd4 = Motor4-255; //value [0,255]
+  if (Motor1 >= 255){
+    motorSpd4 = Motor1-255; //value [0,255]
     motorSpd4 = map(motorSpd4,0,255,30,255); //eliminate motor dead end  
-    if (Motor4 <= 258){motorSpd4=0;} //joystick bias
+    if (Motor1 <= 258){motorSpd4=0;} //joystick bias
     Motor_Driver_1->setSpeed(motorSpd4);
     Motor_Driver_1->run(FORWARD);
   }else{
-    motorSpd4 = 255-Motor4;
+    motorSpd4 = 255-Motor1;
     motorSpd4 = map(motorSpd4,0,255,30,255); //eliminate motor dead end  
-    if (Motor4 >= 252){motorSpd4=0;}
+    if (Motor1 >= 252){motorSpd4=0;}
     Motor_Driver_1->setSpeed(motorSpd4);
     Motor_Driver_1->run(BACKWARD);
   }
   
-  if (Motor5 >= 255){
-    motorSpd5 = Motor5-255;
+  if (Motor2 >= 255){
+    motorSpd5 = Motor2-255;
     motorSpd5 = map(motorSpd5,0,255,30,255); //eliminate motor dead end  
-    if (Motor5 <= 258){motorSpd5=0;}
-    Motor_Driver_3->setSpeed(motorSpd5);
-    Motor_Driver_3->run(FORWARD);
+    if (Motor2 <= 258){motorSpd5=0;}
+    Motor_Driver_2->setSpeed(motorSpd5);
+    Motor_Driver_2->run(FORWARD);
   }else{
-    motorSpd5 = 255-Motor5 ;
+    motorSpd5 = 255-Motor2 ;
     motorSpd5 = map(motorSpd5,0,255,30,255); //eliminate motor dead end  
-    if (Motor5 >= 252){motorSpd5=0;}
+    if (Motor2 >= 252){motorSpd5=0;}
     
-    Motor_Driver_3->setSpeed(motorSpd5);
-    Motor_Driver_3->run(BACKWARD);
+    Motor_Driver_2->setSpeed(motorSpd5);
+    Motor_Driver_2->run(BACKWARD);
   }
 }
 
