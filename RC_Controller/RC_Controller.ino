@@ -33,7 +33,9 @@ const int joystickMidPoint_Y = 515;
 
 //Motors------------------------------
 const int motorCount = 5;
+
 void sendMotorSpec(int motorSpec);
+
 MotorSpecs *motorSpecs;
 
 //Serial Comm-------------------------
@@ -50,10 +52,12 @@ const int SLIDE_POT_PIN = 15;
 int slide_pot_value;
 int depth_motor;
 
+TextCoder *coder;
+
 void setup() {
     lcdWelcome();
 
-  //initializaion------------------
+    //initializaion------------------
     pinMode(PUSHBUTTON, INPUT);
     digitalWrite(PUSHBUTTON, HIGH);
 
@@ -62,15 +66,18 @@ void setup() {
     Serial2.begin(9600);
 
     motorSpecs = new MotorSpecs(motorCount);
+    motorSpecs->setMotor(2, 0);
     motorSpecs->setMotor(3, 0);
     motorSpecs->setMotor(4, 0);
+
+    coder = new TextCoder(Serial2);
 }
 
 void loop() {
     detectKey();
-   //--------------------------------------------------------  
-    slide_pot_value = analogRead(SLIDE_POT_PIN);
-    depth_motor = map(slide_pot_value,0,1023,-255,255);
+    //--------------------------------------------------------
+//    slide_pot_value = analogRead(SLIDE_POT_PIN);
+//    depth_motor = map(slide_pot_value,0,1023,-255,255);
 
     motorSpecs->setNormalized_joystick_X(processJoystick(HORIZONTAL_PIN, joystickMidPoint_X));
     motorSpecs->setNormalized_joystick_Y(processJoystick(VERTICAL_PIN, joystickMidPoint_Y));
@@ -78,7 +85,7 @@ void loop() {
 
     Motor4_Motor5_differential_and_limit_current();
 
-    serial_2_send_data(motorSpecs);
+    coder->toSerial(motorSpecs);
     delay(20);
 
 
@@ -115,7 +122,7 @@ void Motor4_Motor5_differential_and_limit_current() {
 
     motorSpecs->setMotor(0, (int) ((m4 + 1) * 255));
     motorSpecs->setMotor(1, (int) ((m5 + 1) * 255));
-    motorSpecs->setMotor(2, depth_motor + 255);
+//    motorSpecs->setMotor(2, depth_motor + 255);
 }
 
 void serial_2_get_data_and_decode() {
