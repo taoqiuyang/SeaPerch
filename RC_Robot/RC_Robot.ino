@@ -120,6 +120,17 @@ void motor_execute(){
     Motor_Driver_2->setSpeed(motorSpd5);
     Motor_Driver_2->run(BACKWARD);
   }
+
+    Motor3 -= 255;
+    if (Motor3 <= -10) {
+        Motor_Driver_3->setSpeed(-1 * Motor3 * 0.7);
+        Motor_Driver_3->run(BACKWARD);
+    } else if (Motor3 >= 10){
+        Motor_Driver_3->setSpeed(Motor3 * 0.7);
+        Motor_Driver_3->run(FORWARD);
+    } else {
+        Motor_Driver_3->setSpeed(0);
+    }
 }
 
 

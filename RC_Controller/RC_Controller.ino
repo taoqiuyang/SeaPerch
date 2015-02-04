@@ -45,6 +45,11 @@ float checksum;
 //Data feedback-----------------------
 float robot_battery_voltage;
 
+//Slide pot---------------------------
+const int SLIDE_POT_PIN = 15;
+int slide_pot_value;
+int depth_motor;
+
 void setup() {
     lcdWelcome();
 
@@ -57,7 +62,6 @@ void setup() {
     Serial2.begin(9600);
 
     motorSpecs = new MotorSpecs(motorCount);
-    motorSpecs->setMotor(2, 0);
     motorSpecs->setMotor(3, 0);
     motorSpecs->setMotor(4, 0);
 }
@@ -65,7 +69,9 @@ void setup() {
 void loop() {
     detectKey();
    //--------------------------------------------------------  
-    
+    slide_pot_value = analogRead(SLIDE_POT_PIN);
+    depth_motor = map(slide_pot_value,0,1023,-255,255);
+
     motorSpecs->setNormalized_joystick_X(processJoystick(HORIZONTAL_PIN, joystickMidPoint_X));
     motorSpecs->setNormalized_joystick_Y(processJoystick(VERTICAL_PIN, joystickMidPoint_Y));
     motorSpecs->setJoystick_button(!digitalRead(PUSHBUTTON));
@@ -109,6 +115,7 @@ void Motor4_Motor5_differential_and_limit_current() {
 
     motorSpecs->setMotor(0, (int) ((m4 + 1) * 255));
     motorSpecs->setMotor(1, (int) ((m5 + 1) * 255));
+    motorSpecs->setMotor(2, depth_motor + 255);
 }
 
 void serial_2_get_data_and_decode() {
