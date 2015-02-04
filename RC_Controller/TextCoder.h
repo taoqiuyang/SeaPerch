@@ -13,7 +13,7 @@ void sendMotorSpec(int motorSpec) {
 
 void serial_2_send_data(MotorSpecs *motorSpecs) {
     float checksum = motorSpecs->getNormalized_joystick_X() + motorSpecs->getNormalized_joystick_Y() + motorSpecs->getJoystick_button();
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < motorSpecs->getMotorCount(); i++) {
         checksum += motorSpecs->getMotor(i);
     }
 
@@ -26,7 +26,7 @@ void serial_2_send_data(MotorSpecs *motorSpecs) {
     Serial2.print(",");
     Serial2.print(motorSpecs->getJoystick_button());
     Serial2.print(",");
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < motorSpecs->getMotorCount(); i++) {
         sendMotorSpec(motorSpecs->getMotor(i));
     }
     Serial2.print(checksum, 3);

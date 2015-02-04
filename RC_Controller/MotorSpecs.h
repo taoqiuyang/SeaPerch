@@ -3,7 +3,7 @@
 
 class MotorSpecs {
 public:
-    explicit MotorSpecs(int motorCount);
+    explicit MotorSpecs(unsigned int motorCount);
     ~MotorSpecs();
     const float getNormalized_joystick_X() const;
     void setNormalized_joystick_X(float normalized_joystick_X);
@@ -13,12 +13,14 @@ public:
     void setJoystick_button(int joystick_button);
     const int getMotor(int motorId) const;
     void setMotor(int motorId, int motorValue);
+    const unsigned int getMotorCount() const;
 
 private:
+    int *motors;
+    int motorCount;
+    int joystick_button;
     float normalized_joystick_X;
     float normalized_joystick_Y;
-    int joystick_button;
-    int *motors;
 };
 
 #endif

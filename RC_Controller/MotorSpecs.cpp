@@ -1,6 +1,6 @@
 #include "MotorSpecs.h"
 
-MotorSpecs::MotorSpecs(int motorCount) {
+MotorSpecs::MotorSpecs(unsigned int motorCount) : motorCount(motorCount) {
     motors = new int[motorCount];
 }
 
@@ -37,4 +37,8 @@ const int MotorSpecs::getMotor(int motorId) const {
 }
 void MotorSpecs::setMotor(int motorId, int motorValue){
     motors[motorId] = motorValue;
+}
+
+const unsigned int MotorSpecs::getMotorCount() const {
+    return motorCount;
 }
