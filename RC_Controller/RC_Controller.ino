@@ -52,7 +52,7 @@ const int SLIDE_POT_PIN = 15;
 int slide_pot_value;
 int depth_motor;
 
-TextCoder *coder;
+TextCoder coder(Serial2);
 
 void setup() {
     lcdWelcome();
@@ -69,8 +69,6 @@ void setup() {
     motorSpecs->setMotor(2, 0);
     motorSpecs->setMotor(3, 0);
     motorSpecs->setMotor(4, 0);
-
-    coder = new TextCoder(Serial2);
 }
 
 void loop() {
@@ -85,7 +83,7 @@ void loop() {
 
     Motor4_Motor5_differential_and_limit_current();
 
-    coder->toSerial(motorSpecs);
+    coder.toSerial(motorSpecs);
     delay(20);
 
 
