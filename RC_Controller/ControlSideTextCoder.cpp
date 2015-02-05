@@ -1,15 +1,15 @@
-#include "TextCoder.h"
+#include "ControlSideTextCoder.h"
 
-TextCoder::TextCoder(HardwareSerial &serial) : serial(serial) {}
+ControlSideTextCoder::ControlSideTextCoder(HardwareSerial &serial) : serial(serial) {}
 
-void TextCoder::sendMotorSpec(int motorSpec) const {
+void ControlSideTextCoder::sendMotorSpec(int motorSpec) const {
     serial.print(motorSpec / 100);
     serial.print((motorSpec - (motorSpec / 100) * 100) / 10);
     serial.print(motorSpec % 10);
     serial.print(",");
 }
 
-void TextCoder::toSerial(MotorSpecs *motorSpecs) const {
+void ControlSideTextCoder::toSerial(MotorSpecs *motorSpecs) const {
     float checksum = motorSpecs->getNormalized_joystick_X() + motorSpecs->getNormalized_joystick_Y() + motorSpecs->getJoystick_button();
     for (int i = 0; i < motorSpecs->getMotorCount(); i++) {
         checksum += motorSpecs->getMotor(i);

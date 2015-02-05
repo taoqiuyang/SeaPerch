@@ -20,9 +20,9 @@ D52 --> Joystick button
 */
 #include <LiquidCrystal.h>
 
-#include "TextCoder.h"
 #include "MotorSpecs.h"
 #include "LCDDisplayer.h"
+#include "ControlSideTextCoder.h"
 
 //Joystick-----------------------------
 enum Joystick {
@@ -52,7 +52,7 @@ const int SLIDE_POT_PIN = 15;
 int slide_pot_value;
 int depth_motor;
 
-TextCoder coder(Serial2);
+ControlSideTextCoder coder(Serial2);
 
 void setup() {
     lcdWelcome();

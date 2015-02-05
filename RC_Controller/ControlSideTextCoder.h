@@ -1,12 +1,12 @@
-#ifndef _TextCoder_H
-#define _TextCoder_H
+#ifndef _ControlSide_TextCoder_H
+#define _ControlSide_TextCoder_H
 
 #include <Arduino.h>
 #include "MotorSpecs.h"
 
-class TextCoder {
+class ControlSideTextCoder {
 public:
-    explicit TextCoder(HardwareSerial &serial);
+    explicit ControlSideTextCoder(HardwareSerial &serial);
     void toSerial(MotorSpecs *motorSpecs) const;
 
 private:
