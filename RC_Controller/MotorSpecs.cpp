@@ -4,6 +4,18 @@ MotorSpecs::MotorSpecs(unsigned int motorCount) : motorCount(motorCount) {
     motors = new int[motorCount];
 }
 
+MotorSpecs::MotorSpecs(const MotorSpecs& motorSpecs) {
+    motorCount = motorSpecs.getMotorCount();
+    joystick_button = motorSpecs.getJoystick_button();
+    normalized_joystick_X = motorSpecs.getNormalized_joystick_X();
+    normalized_joystick_Y = motorSpecs.getNormalized_joystick_Y();
+
+    motors = new int[motorCount];
+    for (int i = 0; i < motorCount; ++i) {
+        motors[i] = motorSpecs.getMotor(i);
+    }
+}
+
 MotorSpecs::~MotorSpecs() {
     delete[] motors;
 }

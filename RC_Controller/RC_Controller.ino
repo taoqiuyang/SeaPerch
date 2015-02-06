@@ -33,7 +33,6 @@ const int joystickMidPoint_Y = 515;
 
 //Motors------------------------------
 const int motorCount = 5;
-
 MotorSpecs motorSpecs(motorCount);
 
 //Serial Comm-------------------------

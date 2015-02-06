@@ -5,6 +5,8 @@ class MotorSpecs {
 public:
     explicit MotorSpecs(unsigned int motorCount);
 
+    MotorSpecs(const MotorSpecs& motorSpecs);
+
     ~MotorSpecs();
 
     const float getNormalized_joystick_X() const;
