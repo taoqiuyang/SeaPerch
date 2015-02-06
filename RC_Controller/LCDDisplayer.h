@@ -8,23 +8,20 @@
 LiquidCrystal lcd(8, 13, 9, 4, 5, 6, 7);
 int adc_key_in;
 int NUM_KEYS = 5;
-int adc_key_val[5] ={50, 200, 400, 600, 800 };
-int key=-1;
-int oldkey=-1;
+int adc_key_val[5] = {50, 200, 400, 600, 800};
+int key = -1;
+int oldkey = -1;
 char msgs[5][16] = {"Right ",
         "Up    ",
         "Down  ",
         "Left  ",
-        "Select" };
+        "Select"};
 
 // Convert ADC value from keypad to key number
-int get_key(unsigned int input)
-{
+int get_key(unsigned int input) {
     int k;
-    for (k = 0; k < NUM_KEYS; k++)
-    {
-        if (input < adc_key_val[k])
-        {
+    for (k = 0; k < NUM_KEYS; k++) {
+        if (input < adc_key_val[k]) {
             return k;
         }
     }
@@ -36,9 +33,9 @@ void lcdWelcome() {
     //LCD welcome screen-------------
     lcd.begin(16, 2);
     lcd.clear();
-    lcd.setCursor(0,0);
+    lcd.setCursor(0, 0);
     lcd.print("Gatech VIP");
-    lcd.setCursor(0,1);
+    lcd.setCursor(0, 1);
     lcd.print("SeaPerch Project");
     delay(2000);
     lcd.clear();
@@ -61,12 +58,10 @@ void detectKey() {
         delay(50);  // wait for debounce time
         adc_key_in = analogRead(0);    // read the value from the sensor
         key = get_key(adc_key_in);    // convert into key press
-        if (key != oldkey)
-        {
+        if (key != oldkey) {
             lcd.setCursor(0, 1);
             oldkey = key;
-            if (key >=0)
-            {
+            if (key >= 0) {
                 lcd.print(msgs[key]);
             }
         }

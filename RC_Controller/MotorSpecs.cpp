@@ -35,7 +35,8 @@ void MotorSpecs::setJoystick_button(int joystick_button) {
 const int MotorSpecs::getMotor(int motorId) const {
     return motors[motorId];
 }
-void MotorSpecs::setMotor(int motorId, int motorValue){
+
+void MotorSpecs::setMotor(int motorId, int motorValue) {
     motors[motorId] = motorValue;
 }
 

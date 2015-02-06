@@ -1,6 +1,7 @@
 #include "ControlSideTextCoder.h"
 
-ControlSideTextCoder::ControlSideTextCoder(HardwareSerial &serial) : serial(serial) {}
+ControlSideTextCoder::ControlSideTextCoder(HardwareSerial &serial) : ControlSideCoder(serial) {
+}
 
 void ControlSideTextCoder::sendMotorSpec(int motorSpec) const {
     serial.print(motorSpec / 100);

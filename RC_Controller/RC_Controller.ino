@@ -52,7 +52,8 @@ const int SLIDE_POT_PIN = 15;
 int slide_pot_value;
 int depth_motor;
 
-ControlSideTextCoder coder(Serial2);
+ControlSideTextCoder textCoder = ControlSideTextCoder(Serial2);
+ControlSideCoder &coder = textCoder;
 
 void setup() {
     lcdWelcome();
