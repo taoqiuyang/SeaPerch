@@ -34,8 +34,6 @@ const int joystickMidPoint_Y = 515;
 //Motors------------------------------
 const int motorCount = 5;
 
-void sendMotorSpec(int motorSpec);
-
 MotorSpecs *motorSpecs;
 
 //Serial Comm-------------------------
