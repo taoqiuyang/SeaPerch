@@ -5,7 +5,7 @@ class ControlSideCoder {
 public:
     explicit ControlSideCoder(HardwareSerial &serial) : serial(serial) {};
 
-    virtual void toSerial(MotorSpecs *motorSpecs) const = 0;
+    virtual void toSerial(MotorSpecs &motorSpecs) const = 0;
 
 protected:
     HardwareSerial &serial;

@@ -10,23 +10,23 @@ void ControlSideTextCoder::sendMotorSpec(int motorSpec) const {
     serial.print(",");
 }
 
-void ControlSideTextCoder::toSerial(MotorSpecs *motorSpecs) const {
-    float checksum = motorSpecs->getNormalized_joystick_X() + motorSpecs->getNormalized_joystick_Y() + motorSpecs->getJoystick_button();
-    for (int i = 0; i < motorSpecs->getMotorCount(); i++) {
-        checksum += motorSpecs->getMotor(i);
+void ControlSideTextCoder::toSerial(MotorSpecs &motorSpecs) const {
+    float checksum = motorSpecs.getNormalized_joystick_X() + motorSpecs.getNormalized_joystick_Y() + motorSpecs.getJoystick_button();
+    for (int i = 0; i < motorSpecs.getMotorCount(); i++) {
+        checksum += motorSpecs.getMotor(i);
     }
 
     serial.flush();
     serial.print("#");
 
-    serial.print(motorSpecs->getNormalized_joystick_X(), 3);
+    serial.print(motorSpecs.getNormalized_joystick_X(), 3);
     serial.print(",");
-    serial.print(motorSpecs->getNormalized_joystick_Y(), 3);
+    serial.print(motorSpecs.getNormalized_joystick_Y(), 3);
     serial.print(",");
-    serial.print(motorSpecs->getJoystick_button());
+    serial.print(motorSpecs.getJoystick_button());
     serial.print(",");
-    for (int i = 0; i < motorSpecs->getMotorCount(); i++) {
-        sendMotorSpec(motorSpecs->getMotor(i));
+    for (int i = 0; i < motorSpecs.getMotorCount(); i++) {
+        sendMotorSpec(motorSpecs.getMotor(i));
     }
     serial.print(checksum, 3);
 

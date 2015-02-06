@@ -9,7 +9,7 @@ class ControlSideTextCoder : public ControlSideCoder {
 public:
     explicit ControlSideTextCoder(HardwareSerial &serial);
 
-    void toSerial(MotorSpecs *motorSpecs) const;
+    void toSerial(MotorSpecs &motorSpecs) const;
 
 private:
     void sendMotorSpec(int motorSpec) const;

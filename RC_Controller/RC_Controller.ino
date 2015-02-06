@@ -34,7 +34,7 @@ const int joystickMidPoint_Y = 515;
 //Motors------------------------------
 const int motorCount = 5;
 
-MotorSpecs *motorSpecs;
+MotorSpecs motorSpecs(motorCount);
 
 //Serial Comm-------------------------
 String Serial_1_data_recieved = "";
@@ -64,10 +64,9 @@ void setup() {
     Serial1.begin(9600);
     Serial2.begin(9600);
 
-    motorSpecs = new MotorSpecs(motorCount);
-    motorSpecs->setMotor(2, 0);
-    motorSpecs->setMotor(3, 0);
-    motorSpecs->setMotor(4, 0);
+    motorSpecs.setMotor(2, 0);
+    motorSpecs.setMotor(3, 0);
+    motorSpecs.setMotor(4, 0);
 }
 
 void loop() {
@@ -76,9 +75,9 @@ void loop() {
 //    slide_pot_value = analogRead(SLIDE_POT_PIN);
 //    depth_motor = map(slide_pot_value,0,1023,-255,255);
 
-    motorSpecs->setNormalized_joystick_X(processJoystick(HORIZONTAL_PIN, joystickMidPoint_X));
-    motorSpecs->setNormalized_joystick_Y(processJoystick(VERTICAL_PIN, joystickMidPoint_Y));
-    motorSpecs->setJoystick_button(!digitalRead(PUSHBUTTON));
+    motorSpecs.setNormalized_joystick_X(processJoystick(HORIZONTAL_PIN, joystickMidPoint_X));
+    motorSpecs.setNormalized_joystick_Y(processJoystick(VERTICAL_PIN, joystickMidPoint_Y));
+    motorSpecs.setJoystick_button(!digitalRead(PUSHBUTTON));
 
     Motor4_Motor5_differential_and_limit_current();
 
@@ -106,8 +105,8 @@ void serialDisplay() {
 
 void Motor4_Motor5_differential_and_limit_current() {
     float limit = 0.6;
-    float x = (motorSpecs->getNormalized_joystick_X() - 1) * limit;
-    float y = (motorSpecs->getNormalized_joystick_Y() - 1) * limit;
+    float x = (motorSpecs.getNormalized_joystick_X() - 1) * limit;
+    float y = (motorSpecs.getNormalized_joystick_Y() - 1) * limit;
     float m4, m5;
 
     m4 = x + y;
@@ -117,9 +116,9 @@ void Motor4_Motor5_differential_and_limit_current() {
     if (m5 > limit) {m5 = limit;}
     if (m5 < -1.0 * limit) {m5 = -1.0 * limit;}
 
-    motorSpecs->setMotor(0, (int) ((m4 + 1) * 255));
-    motorSpecs->setMotor(1, (int) ((m5 + 1) * 255));
-//    motorSpecs->setMotor(2, depth_motor + 255);
+    motorSpecs.setMotor(0, (int) ((m4 + 1) * 255));
+    motorSpecs.setMotor(1, (int) ((m5 + 1) * 255));
+//    motorSpecs.setMotor(2, depth_motor + 255);
 }
 
 void serial_2_get_data_and_decode() {
