@@ -2,7 +2,6 @@
 #define _ControlSideTextCoder_H
 
 #include <Arduino.h>
-#include "MotorSpecs.h"
 #include "ControlSideCoder.h"
 
 class ControlSideTextCoder : public ControlSideCoder {
