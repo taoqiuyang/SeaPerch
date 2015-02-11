@@ -23,6 +23,7 @@ D52 --> Joystick button
 #include "MotorSpecs.h"
 #include "LCDDisplayer.h"
 #include "ControlSideTextCoder.h"
+#include "ControlSideByteCoder.h"
 
 //Joystick-----------------------------
 enum Joystick {
@@ -50,7 +51,8 @@ int slide_pot_value;
 int depth_motor;
 
 ControlSideTextCoder textCoder = ControlSideTextCoder(Serial2);
-ControlSideCoder &coder = textCoder;
+ControlSideByteCoder byteCoder = ControlSideByteCoder(Serial2);
+ControlSideCoder &coder = byteCoder;
 
 void setup() {
     lcdWelcome();
@@ -97,9 +99,9 @@ void loop() {
 }
 
 void serialDisplay() {
-    Serial.print("Battery Voltage: ");
-    Serial.print(robot_battery_voltage);
-    Serial.println(" V");
+//    Serial.print("Battery Voltage: ");
+//    Serial.print(robot_battery_voltage);
+//    Serial.println(" V");
 }
 
 void Motor4_Motor5_differential_and_limit_current() {

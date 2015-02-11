@@ -16,7 +16,7 @@ Read the data come form serial port 2, decode and drive the motor
 #include <Wire.h>
 #include <Adafruit_MotorShield.h>
 
-#include "RobotSideTextCoder.h"
+#include "RobotSideByteCoder.h"
 #include "utility/Adafruit_PWMServoDriver.h"
 
 Adafruit_MotorShield AFMS = Adafruit_MotorShield(); //attach the board with 3 motors
@@ -42,6 +42,8 @@ const int BATTERY_MEASUREMENT_PIN = 15;
 float battery_voltage, float_to_be_sent;
 int int_to_be_sent_0, int_to_be_sent_1, int_to_be_sent_2, int_to_be_sent_3, int_to_be_sent_4;
 
+RobotSideByteCoder byteCoder(Serial2);
+MotorSpecs motorSpecs(5);
 
 void setup() {
     pinMode(BATTERY_MEASUREMENT_PIN, INPUT);
@@ -56,16 +58,38 @@ void setup() {
     Motor_Driver_2->setSpeed(motorSpd);
     Motor_Driver_3->setSpeed(motorSpd);
     Motor_Driver_4->setSpeed(motorSpd);
+
+    for (int i = 0; i < motorSpecs.getMotorCount(); i++) {
+        motorSpecs.setMotor(i, 0);
+    }
 }
 
 
 void loop() {
-    serial_2_get_data_and_decode();
-    motor_execute();
-
-    get_sensor_data();
-    checksum = battery_voltage + normalized_joystick_Y + joystick_button + Motor1 + Motor2 + Motor3 + Motor4 + Motor5;
-    serial_2_send_data();
+    Serial.println("Calling Coder!");
+    if (byteCoder.fromSerial(motorSpecs)) {
+        Motor1 = motorSpecs.getMotor(0);
+        Motor2 = motorSpecs.getMotor(1);
+        Motor3 = motorSpecs.getMotor(2);
+        Motor4 = motorSpecs.getMotor(3);
+        Motor5 = motorSpecs.getMotor(4);
+        Serial.print("Motor1: ");
+        Serial.print(Motor1);
+        Serial.print("Motor2: ");
+        Serial.print(Motor2);
+        Serial.print("Motor3: ");
+        Serial.print(Motor3);
+        Serial.print("Motor4: ");
+        Serial.print(Motor4);
+        Serial.print("Motor5: ");
+        Serial.print(Motor5);
+        Serial.println();
+        motor_execute();
+    }
+//
+//    get_sensor_data();
+//    checksum = battery_voltage + normalized_joystick_Y + joystick_button + Motor1 + Motor2 + Motor3 + Motor4 + Motor5;
+//    serial_2_send_data();
     delay(20);
 }
 
