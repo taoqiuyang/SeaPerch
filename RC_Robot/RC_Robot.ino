@@ -15,6 +15,8 @@ SeaPerch Remote Control Test
  */
 //I2C lib
 #include <Wire.h>
+//PID lib
+#include <PID_v1.h>
 
 //Motor Driver Libs------------
 #include <Adafruit_MotorShield.h>
@@ -69,6 +71,12 @@ int Motor4 = 255;
 int Motor5 = 255;
 //--------------------------------------------------------------------------
 
+//PID-----------------------------------------------------------------------
+double Setpoint_PID, Input_PID, Output_PID;
+PID myPID(&Input_PID, &Output_PID, &Setpoint_PID,2,5,1, DIRECT);
+//--------------------------------------------------------------------------
+
+
 String Serial_1_data_recieved = "";
 String Serial_2_data_recieved = "";
 
@@ -108,6 +116,14 @@ void setup() {
     sensor.begin();
     pressure_baseline = sensor.getPressure(ADC_4096);
     //---------------------------------
+    
+    //---initialize PID controler------
+    Input = analogRead(0);
+    Setpoint = 100;
+    //turn the PID on
+    myPID.SetMode(AUTOMATIC);
+    //---------------------------------
+    
 }
 
 
@@ -121,6 +137,11 @@ void loop() {
         motor_execute();
     }
 
+    Input = analogRead(0);
+    myPID.Compute();
+    analogWrite(3,Output);
+    
+    
     get_sensor_data();
     Serial.print("roll: ");
     Serial.print(roll);
