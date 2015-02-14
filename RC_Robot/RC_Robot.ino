@@ -109,24 +109,12 @@ void setup() {
 
 
 void loop() {
-    Serial.println("Calling Coder!");
     if (byteCoder.fromSerial(motorSpecs)) {
         Motor1 = motorSpecs.getMotor(0);
         Motor2 = motorSpecs.getMotor(1);
         Motor3 = motorSpecs.getMotor(2);
         Motor4 = motorSpecs.getMotor(3);
         Motor5 = motorSpecs.getMotor(4);
-        Serial.print("Motor1: ");
-        Serial.print(Motor1);
-        Serial.print("Motor2: ");
-        Serial.print(Motor2);
-        Serial.print("Motor3: ");
-        Serial.print(Motor3);
-        Serial.print("Motor4: ");
-        Serial.print(Motor4);
-        Serial.print("Motor5: ");
-        Serial.print(Motor5);
-        Serial.println();
         motor_execute();
     }
 
