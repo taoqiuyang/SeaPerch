@@ -73,8 +73,8 @@ void setup() {
 void loop() {
     detectKey();
     //--------------------------------------------------------
-//    slide_pot_value = analogRead(SLIDE_POT_PIN);
-//    depth_motor = map(slide_pot_value,0,1023,-255,255);
+    slide_pot_value = analogRead(SLIDE_POT_PIN);
+    depth_motor = map(slide_pot_value,0,1023,-255,255);
 
     motorSpecs.setNormalized_joystick_X(processJoystick(HORIZONTAL_PIN, joystickMidPoint_X));
     motorSpecs.setNormalized_joystick_Y(processJoystick(VERTICAL_PIN, joystickMidPoint_Y));
@@ -119,7 +119,7 @@ void Motor4_Motor5_differential_and_limit_current() {
 
     motorSpecs.setMotor(0, (int) ((m4 + 1) * 255));
     motorSpecs.setMotor(1, (int) ((m5 + 1) * 255));
-//    motorSpecs.setMotor(2, depth_motor + 255);
+    motorSpecs.setMotor(2, depth_motor + 255);
 }
 
 void serial_2_get_data_and_decode() {

@@ -241,16 +241,16 @@ void loop() {
             Motor_Driver_3->run(BACKWARD);
         }
 
-        //    Motor3 -= 255;
-        //    if (Motor3 <= -10) {
-        //        Motor_Driver_3->setSpeed(-1 * Motor3 * 0.7);
-        //        Motor_Driver_3->run(BACKWARD);
-        //    } else if (Motor3 >= 10){
-        //        Motor_Driver_3->setSpeed(Motor3 * 0.7);
-        //        Motor_Driver_3->run(FORWARD);
-        //    } else {
-        //        Motor_Driver_3->setSpeed(0);
-        //    }
+            Motor3 -= 255;
+            if (Motor3 <= -10) {
+                Motor_Driver_4->setSpeed(-1 * Motor3 * 0.7);
+                Motor_Driver_4->run(BACKWARD);
+            } else if (Motor3 >= 10){
+                Motor_Driver_4->setSpeed(Motor3 * 0.7);
+                Motor_Driver_4->run(FORWARD);
+            } else {
+                Motor_Driver_4->setSpeed(0);
+            }
     }
 
 
