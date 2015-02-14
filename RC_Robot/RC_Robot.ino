@@ -97,13 +97,13 @@ void setup() {
     //---------------------------------
 
     //---initialize the IMU------------
-//    initSensors();
+    initSensors();
     //---------------------------------
 
     //---initialize Depth Sensor-------
-//    sensor.reset();
-//    sensor.begin();
-//    pressure_baseline = sensor.getPressure(ADC_4096);
+    sensor.reset();
+    sensor.begin();
+    pressure_baseline = sensor.getPressure(ADC_4096);
     //---------------------------------
 }
 
@@ -118,20 +118,20 @@ void loop() {
         motor_execute();
     }
 
-//        get_sensor_data();
-//        Serial.print("roll: ");
-//        Serial.print(roll);
-//        Serial.print("  pitch: ");
-//        Serial.print(pitch);
-//        Serial.print("  yaw: ");
-//        Serial.print(yaw);
-//        Serial.print("  temp_IMU:");
-//        Serial.print(temperature_IMU);
-//        Serial.print("  Temp Dep: ");
-//        Serial.print(temperature_c);
-//        Serial.print("  Pres(mbar): ");
-//        Serial.println(pressure_abs);
-//        Serial.println();
+    get_sensor_data();
+    Serial.print("roll: ");
+    Serial.print(roll);
+    Serial.print("  pitch: ");
+    Serial.print(pitch);
+    Serial.print("  yaw: ");
+    Serial.print(yaw);
+    Serial.print("  temp_IMU:");
+    Serial.print(temperature_IMU);
+    Serial.print("  Temp Dep: ");
+    Serial.print(temperature_c);
+    Serial.print("  Pres(mbar): ");
+    Serial.println(pressure_abs);
+    Serial.println();
 }
 
 
