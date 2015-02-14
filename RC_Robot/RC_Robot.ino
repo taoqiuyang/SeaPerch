@@ -53,7 +53,7 @@ double base_altitude = 1655.0; // Altitude of SparkFun's HQ in Boulder, CO. in (
 
 
 //Motors--------------------------------------------------------------------
-Adafruit_MotorShield AFMS = Adafruit_MotorShield(); //attach the board with 3 motors
+Adafruit_MotorShield AFMS(0x61); //attach the board with 3 motors
 Adafruit_DCMotor *Motor_Driver_1 = AFMS.getMotor(1);
 Adafruit_DCMotor *Motor_Driver_2 = AFMS.getMotor(2);
 Adafruit_DCMotor *Motor_Driver_3 = AFMS.getMotor(3);
@@ -215,8 +215,8 @@ void motor_execute() {
         if (Motor2 <= 258) {
             motorSpd5 = 0;
         }
-        Motor_Driver_3->setSpeed(motorSpd5);
-        Motor_Driver_3->run(FORWARD);
+        Motor_Driver_2->setSpeed(motorSpd5);
+        Motor_Driver_2->run(FORWARD);
     }
     else {
         motorSpd5 = 255 - Motor2;
@@ -225,19 +225,19 @@ void motor_execute() {
             motorSpd5 = 0;
         }
 
-        Motor_Driver_3->setSpeed(motorSpd5);
-        Motor_Driver_3->run(BACKWARD);
+        Motor_Driver_2->setSpeed(motorSpd5);
+        Motor_Driver_2->run(BACKWARD);
     }
 
     Motor3 -= 255;
     if (Motor3 <= -10) {
-        Motor_Driver_4->setSpeed(-1 * Motor3 * 0.7);
-        Motor_Driver_4->run(BACKWARD);
+        Motor_Driver_3->setSpeed(-1 * Motor3 * 0.7);
+        Motor_Driver_3->run(BACKWARD);
     } else if (Motor3 >= 10) {
-        Motor_Driver_4->setSpeed(Motor3 * 0.7);
-        Motor_Driver_4->run(FORWARD);
+        Motor_Driver_3->setSpeed(Motor3 * 0.7);
+        Motor_Driver_3->run(FORWARD);
     } else {
-        Motor_Driver_4->setSpeed(0);
+        Motor_Driver_3->setSpeed(0);
     }
 }
 
