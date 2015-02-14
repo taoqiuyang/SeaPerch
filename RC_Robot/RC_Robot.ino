@@ -97,7 +97,7 @@ void setup() {
     //---------------------------------
 
     //---initialize the IMU------------
-    initSensors();
+//    initSensors();
     //---------------------------------
 
     //---initialize Depth Sensor-------
