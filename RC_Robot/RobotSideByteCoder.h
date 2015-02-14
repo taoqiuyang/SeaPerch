@@ -1,7 +1,7 @@
 #ifndef _RobotSideByteCoder_H
 #define _RobotSideByteCoder_H
 
-#include "MotorSpecs.h"
+#include <MotorSpecs.h>
 #include <Arduino.h>
 
 class RobotSideByteCoder {

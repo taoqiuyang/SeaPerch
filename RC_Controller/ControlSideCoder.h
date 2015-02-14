@@ -1,7 +1,7 @@
 #ifndef _ControlSideCoder_H
 #define _ControlSideCoder_H
 
-#include "MotorSpecs.h"
+#include <MotorSpecs.h>
 
 class ControlSideCoder {
 public:

@@ -19,8 +19,9 @@ D52 --> Joystick button
 
 */
 #include <LiquidCrystal.h>
+#include <BinaryUtils.h>
+#include <MotorSpecs.h>
 
-#include "MotorSpecs.h"
 #include "LCDDisplayer.h"
 #include "ControlSideTextCoder.h"
 #include "ControlSideByteCoder.h"

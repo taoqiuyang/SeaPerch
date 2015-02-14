@@ -1,5 +1,6 @@
+#include <BinaryUtils.h>
+
 #include "ControlSideByteCoder.h"
-#include "BinaryUtils.h"
 
 ControlSideByteCoder::ControlSideByteCoder(HardwareSerial & serial) : ControlSideCoder(serial) {
 }

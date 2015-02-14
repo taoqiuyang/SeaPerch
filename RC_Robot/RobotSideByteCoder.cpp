@@ -1,5 +1,6 @@
+#include <BinaryUtils.h>
+
 #include "RobotSideByteCoder.h"
-#include "BinaryUtils.h"
 
 RobotSideByteCoder::RobotSideByteCoder(HardwareSerial & serial) : serial(serial) {
 }
