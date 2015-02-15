@@ -2,7 +2,7 @@
 
 #include "RobotSideByteCoder.h"
 
-RobotSideByteCoder::RobotSideByteCoder(HardwareSerial & serial) : serial(serial) {
+RobotSideByteCoder::RobotSideByteCoder(HardwareSerial & serial) : RobotSideCoder(serial) {
 }
 
 bool RobotSideByteCoder::fromSerial(MotorSpecs &motorSpecs) const {
