@@ -1,8 +1,8 @@
 #ifndef _LCDDisplayer_H
 #define _LCDDisplayer_H
 
-#include <LiquidCrystal.h>
 #include <Arduino.h>
+#include <LiquidCrystal.h>
 
 //LCD key shield------------------------
 LiquidCrystal lcd(8, 13, 9, 4, 5, 6, 7);

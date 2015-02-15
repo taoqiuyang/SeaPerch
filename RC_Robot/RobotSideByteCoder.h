@@ -1,8 +1,8 @@
 #ifndef _RobotSideByteCoder_H
 #define _RobotSideByteCoder_H
 
-#include <MotorSpecs.h>
 #include <Arduino.h>
+#include <SeaPerch_MotorSpecs.h>
 
 class RobotSideByteCoder {
 public:

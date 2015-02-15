@@ -19,8 +19,8 @@ D52 --> Joystick button
 
 */
 #include <LiquidCrystal.h>
-#include <BinaryUtils.h>
-#include <MotorSpecs.h>
+#include <SeaPerch_BinaryUtils.h>
+#include <SeaPerch_MotorSpecs.h>
 
 #include "LCDDisplayer.h"
 #include "ControlSideTextCoder.h"

@@ -1,5 +1,5 @@
-#ifndef _BinaryUtils_H
-#define _BinaryUtils_H
+#ifndef _SeaPerch_BinaryUtils_H
+#define _SeaPerch_BinaryUtils_H
 
 const int BYTE_MASK = 0xff;
 const int INT_SIZE = sizeof(int);

@@ -1,4 +1,4 @@
-#include "MotorSpecs.h"
+#include "SeaPerch_MotorSpecs.h"
 
 MotorSpecs::MotorSpecs(unsigned int motorCount) : motorCount(motorCount) {
     motors = new int[motorCount];

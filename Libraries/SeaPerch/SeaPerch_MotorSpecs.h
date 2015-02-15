@@ -1,5 +1,5 @@
-#ifndef _MotorSpecs_H
-#define _MotorSpecs_H
+#ifndef _SeaPerch_MotorSpecs_H
+#define _SeaPerch_MotorSpecs_H
 
 class MotorSpecs {
 public:

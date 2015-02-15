@@ -31,8 +31,8 @@ SeaPerch Remote Control Test
 #include <Adafruit_10DOF.h>
 //----------------------------
 
-#include <BinaryUtils.h>
-#include <MotorSpecs.h>
+#include <SeaPerch_BinaryUtils.h>
+#include <SeaPerch_MotorSpecs.h>
 
 #include "RobotSideByteCoder.h"
 #include "utility/Adafruit_PWMServoDriver.h"
