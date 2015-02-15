@@ -15,6 +15,8 @@ SeaPerch Remote Control Test
  */
 //I2C lib
 #include <Wire.h>
+//PID lib
+#include <PID_v1.h>
 
 //Motor Driver Libs------------
 #include <Adafruit_MotorShield.h>
@@ -55,6 +57,17 @@ double pressure_abs, pressure_relative, altitude_delta, pressure_baseline;
 double base_altitude = 1655.0; // Altitude of SparkFun's HQ in Boulder, CO. in (m)
 //--------------------------------------------------------------------------
 
+//PID-----------------------------------------------------------------------
+double Setpoint_PID, Input_PID, Output_PID;
+//Specify the links and initial tuning parameters
+double Kp=5;
+double Ki=0.00;
+double Kd=1;
+PID myPID(&Input_PID, &Output_PID, &Setpoint_PID, Kp, Ki, Kd, DIRECT);
+//--------------------------------------------------------------------------
+
+
+
 String Serial_1_data_recieved = "";
 String Serial_2_data_recieved = "";
 
@@ -85,6 +98,14 @@ void setup() {
     sensor.begin();
     pressure_baseline = sensor.getPressure(ADC_4096);
     //---------------------------------
+    
+    //---PID---------------------------
+    Input_PID = 1000; //1atm=1000mbar
+    Setpoint_PID = 1000; 
+    myPID.SetOutputLimits(-255, 255);
+    //turn the PID on
+    myPID.SetMode(AUTOMATIC);
+    //----------------------------------
 }
 
 
@@ -93,8 +114,22 @@ void loop() {
         unpackSpecs(motorSpecs);
     }
     
+    //PID-----------------------------------
+    Input_PID = analogRead(0);
+    Input_PID = map(Input_PID, 0, 1024, 1480, 1520);
+    myPID.Compute();
+    outputPID=output_PID+255;  //map [-255-255] to [0-510]
+  
+    Serial.print("In: ");
+    Serial.print(Input_PID);
+    Serial.print("  SetPoint: ");
+    Serial.print(Setpoint_PID);
+    Serial.print("  Out: ");
+    Serial.print(Output_PID);
+    //--------------------------------------
+    
     get_sensor_data();
-    Serial.print("roll: ");
+    Serial.print("  roll: ");
     Serial.print(roll);
     Serial.print("  pitch: ");
     Serial.print(pitch);
