@@ -2,6 +2,8 @@
 #define _MotorExecutor_H
 
 #include <SeaPerch_MotorSpecs.h>
+#include <Adafruit_MotorShield.h>
+#include <utility/Adafruit_PWMServoDriver.h>
 
 //Motors--------------------------------------------------------------------
 Adafruit_MotorShield AFMS(0x61); //attach the board with 3 motors

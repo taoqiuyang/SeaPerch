@@ -20,6 +20,7 @@ SeaPerch Remote Control Test
 
 //Motor Driver Libs------------
 #include <Adafruit_MotorShield.h>
+#include <utility/Adafruit_PWMServoDriver.h>
 //-----------------------------
 
 //Depth Sensor Libs------------
@@ -38,7 +39,6 @@ SeaPerch Remote Control Test
 
 #include "MotorExecutor.h"
 #include "RobotSideByteCoder.h"
-#include "utility/Adafruit_PWMServoDriver.h"
 
 //IMU----------------------------------------------------------------------
 Adafruit_10DOF dof = Adafruit_10DOF();
