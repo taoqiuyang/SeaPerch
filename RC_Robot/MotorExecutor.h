@@ -5,11 +5,9 @@
 
 //Motors--------------------------------------------------------------------
 Adafruit_MotorShield AFMS(0x61); //attach the board with 3 motors
-Adafruit_DCMotor *Motor_Driver_1 = AFMS.getMotor(1);
-Adafruit_DCMotor *Motor_Driver_2 = AFMS.getMotor(2);
-Adafruit_DCMotor *Motor_Driver_3 = AFMS.getMotor(3);
-Adafruit_DCMotor *Motor_Driver_4 = AFMS.getMotor(4);
-uint8_t motorSpd = 0;
+Adafruit_DCMotor *leftMotor = AFMS.getMotor(1);
+Adafruit_DCMotor *rightMotor = AFMS.getMotor(2);
+Adafruit_DCMotor *upMotor = AFMS.getMotor(3);
 int Motor1 = 255;
 int Motor2 = 255;
 int Motor3 = 255;
@@ -20,13 +18,9 @@ int Motor5 = 255;
 void setupMotor(MotorSpecs &motorSpecs) {
     //---initialize the motor controller
     AFMS.begin();  // 1.6KHz PWM
-    Motor_Driver_1->setSpeed(motorSpd);
-    Motor_Driver_2->setSpeed(motorSpd);
-    Motor_Driver_3->setSpeed(motorSpd);
-    Motor_Driver_4->setSpeed(motorSpd);
-    for (int i = 0; i < motorSpecs.getMotorCount(); i++) {
-        motorSpecs.setMotor(i, 0);
-    }
+    leftMotor->setSpeed(0);
+    rightMotor->setSpeed(0);
+    upMotor->setSpeed(0);
     //---------------------------------
 }
 
@@ -43,8 +37,8 @@ void motor_execute() {
         if (Motor1 <= 258) {
             motorSpd4 = 0;
         } //joystick bias
-        Motor_Driver_1->setSpeed(motorSpd4);
-        Motor_Driver_1->run(FORWARD);
+        leftMotor->setSpeed(motorSpd4);
+        leftMotor->run(FORWARD);
     }
     else {
         motorSpd4 = 255 - Motor1;
@@ -52,8 +46,8 @@ void motor_execute() {
         if (Motor1 >= 252) {
             motorSpd4 = 0;
         }
-        Motor_Driver_1->setSpeed(motorSpd4);
-        Motor_Driver_1->run(BACKWARD);
+        leftMotor->setSpeed(motorSpd4);
+        leftMotor->run(BACKWARD);
     }
 
     if (Motor2 >= 255) {
@@ -62,8 +56,8 @@ void motor_execute() {
         if (Motor2 <= 258) {
             motorSpd5 = 0;
         }
-        Motor_Driver_2->setSpeed(motorSpd5);
-        Motor_Driver_2->run(FORWARD);
+        rightMotor->setSpeed(motorSpd5);
+        rightMotor->run(FORWARD);
     }
     else {
         motorSpd5 = 255 - Motor2;
@@ -72,19 +66,19 @@ void motor_execute() {
             motorSpd5 = 0;
         }
 
-        Motor_Driver_2->setSpeed(motorSpd5);
-        Motor_Driver_2->run(BACKWARD);
+        rightMotor->setSpeed(motorSpd5);
+        rightMotor->run(BACKWARD);
     }
 
     Motor3 -= 255;
     if (Motor3 <= -10) {
-        Motor_Driver_3->setSpeed(-1 * Motor3 * 0.7);
-        Motor_Driver_3->run(BACKWARD);
+        upMotor->setSpeed(-1 * Motor3 * 0.7);
+        upMotor->run(BACKWARD);
     } else if (Motor3 >= 10) {
-        Motor_Driver_3->setSpeed(Motor3 * 0.7);
-        Motor_Driver_3->run(FORWARD);
+        upMotor->setSpeed(Motor3 * 0.7);
+        upMotor->run(FORWARD);
     } else {
-        Motor_Driver_3->setSpeed(0);
+        upMotor->setSpeed(0);
     }
 }
 
