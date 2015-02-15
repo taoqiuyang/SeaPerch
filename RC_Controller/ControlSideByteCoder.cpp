@@ -2,7 +2,7 @@
 
 #include "ControlSideByteCoder.h"
 
-ControlSideByteCoder::ControlSideByteCoder(HardwareSerial & serial) : ControlSideCoder(serial) {
+ControlSideByteCoder::ControlSideByteCoder(HardwareSerial &serial) : ControlSideCoder(serial) {
 }
 
 void ControlSideByteCoder::toSerial(MotorSpecs &motorSpecs) const {
