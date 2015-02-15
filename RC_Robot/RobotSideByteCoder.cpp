@@ -5,7 +5,7 @@
 RobotSideByteCoder::RobotSideByteCoder(HardwareSerial & serial) : RobotSideCoder(serial) {
 }
 
-bool RobotSideByteCoder::fromSerial(MotorSpecs &motorSpecs) const {
+bool RobotSideByteCoder::fromSerial(MotorSpecs & motorSpecs) const {
     if (serial.available() > 0) {
         if (serial.find("#")) {
             char buffer[INT_SIZE];

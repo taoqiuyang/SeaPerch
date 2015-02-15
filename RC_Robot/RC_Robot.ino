@@ -60,13 +60,11 @@ double base_altitude = 1655.0; // Altitude of SparkFun's HQ in Boulder, CO. in (
 //PID-----------------------------------------------------------------------
 double Setpoint_PID, Input_PID, Output_PID;
 //Specify the links and initial tuning parameters
-double Kp=5;
-double Ki=0.00;
-double Kd=1;
+double Kp = 5;
+double Ki = 0.00;
+double Kd = 1;
 PID myPID(&Input_PID, &Output_PID, &Setpoint_PID, Kp, Ki, Kd, DIRECT);
 //--------------------------------------------------------------------------
-
-
 
 String Serial_1_data_recieved = "";
 String Serial_2_data_recieved = "";
@@ -80,6 +78,7 @@ int int_to_be_sent_0, int_to_be_sent_1, int_to_be_sent_2, int_to_be_sent_3, int_
 
 RobotSideByteCoder byteCoder(Serial2);
 MotorSpecs motorSpecs(5);
+MotorExecutor motorExecutor;
 
 void setup() {
     pinMode(BATTERY_MEASUREMENT_PIN, INPUT);
@@ -87,7 +86,7 @@ void setup() {
     Serial1.begin(9600);
     Serial2.begin(9600);
 
-    setupMotor(motorSpecs);
+    motorExecutor.begin();
 
     for (int i = 0; i < motorSpecs.getMotorCount(); i++) {
         motorSpecs.setMotor(i, 0);
@@ -102,10 +101,10 @@ void setup() {
     sensor.begin();
     pressure_baseline = sensor.getPressure(ADC_4096);
     //---------------------------------
-    
+
     //---PID---------------------------
     Input_PID = 1000; //1atm=1000mbar
-    Setpoint_PID = 1000; 
+    Setpoint_PID = 1000;
     myPID.SetOutputLimits(-255, 255);
     //turn the PID on
     myPID.SetMode(AUTOMATIC);
@@ -115,16 +114,16 @@ void setup() {
 
 void loop() {
     if (byteCoder.fromSerial(motorSpecs)) {
-        motor_execute(motorSpecs);
+        motorExecutor.execute(motorSpecs);
     }
-    
+
     //PID-----------------------------------
     Input_PID = analogRead(0);
     Input_PID = map(Input_PID, 0, 1024, 1480, 1520);
     Setpoint_PID = 1500; //the water pressure (mabr)at desired depth
     myPID.Compute();
     //Output_PID=[-255,255]
-  
+
     Serial.print("In: ");
     Serial.print(Input_PID);
     Serial.print("  SetPoint: ");
@@ -132,7 +131,7 @@ void loop() {
     Serial.print("  Out: ");
     Serial.print(Output_PID);
     //--------------------------------------
-    
+
     get_sensor_data();
     Serial.print("  roll: ");
     Serial.print(roll);
@@ -230,5 +229,3 @@ double altitude(double P, double P0)
 {
     return (44330.0 * (1 - pow(P / P0, 1 / 5.255)));
 }
-  
-

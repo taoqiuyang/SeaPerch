@@ -5,7 +5,8 @@
 
 class RobotSideCoder {
 public:
-    explicit RobotSideCoder(HardwareSerial &serial) : serial(serial) {};
+    explicit RobotSideCoder(HardwareSerial &serial) : serial(serial) {
+    };
 
     bool fromSerial(MotorSpecs &motorSpecs) const;
 
