@@ -193,40 +193,6 @@ void get_sensor_data() {
     //---------------------------------------------------------------
 }
 
-void serial_2_send_data() {
-    Serial2.flush();
-    Serial2.print("#");
-    Serial2.print(battery_voltage, 3);
-    Serial2.print(",");
-    Serial2.print(normalized_joystick_Y, 3);
-    Serial2.print(",");
-    Serial2.print(joystick_button);
-    Serial2.print(",");
-    Serial2.print(Motor1 / 100);
-    Serial2.print((Motor1 - (Motor1 / 100) * 100) / 10);
-    Serial2.print(Motor1 % 10);
-    Serial2.print(",");
-    Serial2.print(Motor2 / 100);
-    Serial2.print((Motor2 - (Motor2 / 100) * 100) / 10);
-    Serial2.print(Motor2 % 10);
-    Serial2.print(",");
-    Serial2.print(Motor3 / 100);
-    Serial2.print((Motor3 - (Motor3 / 100) * 100) / 10);
-    Serial2.print(Motor3 % 10);
-    Serial2.print(",");
-    Serial2.print(Motor4 / 100);
-    Serial2.print((Motor4 - (Motor4 / 100) * 100) / 10);
-    Serial2.print(Motor4 % 10);
-    Serial2.print(",");
-    Serial2.print(Motor5 / 100);
-    Serial2.print((Motor5 - (Motor5 / 100) * 100) / 10);
-    Serial2.print(Motor5 % 10);
-    Serial2.print(",");
-    Serial2.print(checksum, 3);
-
-    Serial2.print("\n");
-}
-
 void initSensors() {
     if (!accel.begin()) {
         /* There was a problem detecting the LSM303 ... check your connections */
