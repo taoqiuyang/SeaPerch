@@ -5,8 +5,18 @@
 #include <Adafruit_MotorShield.h>
 #include <utility/Adafruit_PWMServoDriver.h>
 
+class MotorExecutor {
+public:
+    explicit MotorExecutor() : AFMS(0x61) {
+
+    }
+
+    Adafruit_MotorShield AFMS;
+};
+
 //Motors--------------------------------------------------------------------
-Adafruit_MotorShield AFMS(0x61); //attach the board with 3 motors
+MotorExecutor motorExecutor;
+Adafruit_MotorShield &AFMS = motorExecutor.AFMS;
 Adafruit_DCMotor *leftMotor = AFMS.getMotor(1);
 Adafruit_DCMotor *rightMotor = AFMS.getMotor(2);
 Adafruit_DCMotor *upMotor = AFMS.getMotor(3);
