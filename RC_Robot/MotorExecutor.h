@@ -8,18 +8,23 @@
 class MotorExecutor {
 public:
     explicit MotorExecutor() : AFMS(0x61) {
-
+        leftMotor = AFMS.getMotor(1);
+        rightMotor = AFMS.getMotor(2);
+        upMotor = AFMS.getMotor(3);
     }
 
     Adafruit_MotorShield AFMS;
+    Adafruit_DCMotor *leftMotor;
+    Adafruit_DCMotor *rightMotor;
+    Adafruit_DCMotor *upMotor;
 };
 
 //Motors--------------------------------------------------------------------
 MotorExecutor motorExecutor;
 Adafruit_MotorShield &AFMS = motorExecutor.AFMS;
-Adafruit_DCMotor *leftMotor = AFMS.getMotor(1);
-Adafruit_DCMotor *rightMotor = AFMS.getMotor(2);
-Adafruit_DCMotor *upMotor = AFMS.getMotor(3);
+Adafruit_DCMotor *leftMotor = motorExecutor.leftMotor;
+Adafruit_DCMotor *rightMotor = motorExecutor.rightMotor;
+Adafruit_DCMotor *upMotor= motorExecutor.upMotor;
 int Motor1 = 255;
 int Motor2 = 255;
 int Motor3 = 255;
