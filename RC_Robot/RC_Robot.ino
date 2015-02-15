@@ -115,7 +115,7 @@ void setup() {
 
 void loop() {
     if (byteCoder.fromSerial(motorSpecs)) {
-        unpackSpecs(motorSpecs);
+        motor_execute(motorSpecs);
     }
     
     //PID-----------------------------------

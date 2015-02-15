@@ -24,7 +24,11 @@ void setupMotor(MotorSpecs &motorSpecs) {
     //---------------------------------
 }
 
-void motor_execute() {
+void motor_execute(MotorSpecs &motorSpecs) {
+    Motor1 = motorSpecs.getMotor(0);
+    Motor2 = motorSpecs.getMotor(1);
+    Motor3 = motorSpecs.getMotor(2);
+
     uint8_t motorSpd1 = 0;
     uint8_t motorSpd2 = 0;
     uint8_t motorSpd3 = 0;
@@ -80,15 +84,6 @@ void motor_execute() {
     } else {
         upMotor->setSpeed(0);
     }
-}
-
-void unpackSpecs(MotorSpecs &motorSpecs) {
-    Motor1 = motorSpecs.getMotor(0);
-    Motor2 = motorSpecs.getMotor(1);
-    Motor3 = motorSpecs.getMotor(2);
-    Motor4 = motorSpecs.getMotor(3);
-    Motor5 = motorSpecs.getMotor(4);
-    motor_execute();
 }
 
 #endif
