@@ -119,7 +119,7 @@ void loop() {
     Input_PID = map(Input_PID, 0, 1024, 1480, 1520);
     Setpoint_PID = 1500; //the water pressure (mabr)at desired depth
     myPID.Compute();
-    Output_PID=Output_PID+255;  //[0,510], output value for motor3
+    //Output_PID=[-255,255]
   
     Serial.print("In: ");
     Serial.print(Input_PID);
