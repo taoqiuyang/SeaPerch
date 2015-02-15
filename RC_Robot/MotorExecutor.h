@@ -5,12 +5,17 @@
 #include <Adafruit_MotorShield.h>
 #include <utility/Adafruit_PWMServoDriver.h>
 
+const int I2CAddress = 0x61;
+enum MotorPosition {
+    LEFT = 1, RIGHT = 2, UP = 3
+};
+
 class MotorExecutor {
 public:
-    explicit MotorExecutor() : AFMS(0x61) {
-        leftMotor = AFMS.getMotor(1);
-        rightMotor = AFMS.getMotor(2);
-        upMotor = AFMS.getMotor(3);
+    explicit MotorExecutor() : AFMS(I2CAddress) {
+        leftMotor = AFMS.getMotor(LEFT);
+        rightMotor = AFMS.getMotor(RIGHT);
+        upMotor = AFMS.getMotor(UP);
     }
 
     void begin() {
@@ -20,7 +25,7 @@ public:
         upMotor->setSpeed(0);
     }
 
-    void execute(MotorSpecs & motorSpecs) {
+    void execute(const MotorSpecs & motorSpecs) const {
         int Motor1 = motorSpecs.getMotor(0);
         int Motor2 = motorSpecs.getMotor(1);
         int Motor3 = motorSpecs.getMotor(2);
