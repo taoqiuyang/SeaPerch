@@ -1,8 +1,8 @@
 #include "SeaPerch_BinaryUtils.h"
 
-void toBytes(int integer, char *buffer) {
+void toBytes(int anInt, char *buffer) {
     for (int i = 0; i < INT_SIZE; i++) {
-        char currentByte = (integer >> (8 * i)) & BYTE_MASK;
+        char currentByte = (anInt >> (8 * i)) & BYTE_MASK;
         buffer[INT_SIZE - i - 1] = currentByte;
     }
 }
