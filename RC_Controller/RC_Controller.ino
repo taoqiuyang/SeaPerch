@@ -9,9 +9,12 @@ Georgia Institute of Technology
 =================Connections================================================
 RX2, TX2 --> Bluetooth module
 A0  --> Key input from LCD button shield
+A12 --> Battery Voltage
 A13 --> Joystick Vertical
 A14 --> Joystick Horizontal
+A15 --> Slide Pot
 D52 --> Joystick button
+D53 --> Slide Pot LED (Active HIGH)
 
 
 ================= How to use ===============================================
