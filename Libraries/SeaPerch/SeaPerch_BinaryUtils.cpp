@@ -1,19 +1,19 @@
 #include "SeaPerch_BinaryUtils.h"
 
 void toBytes(const int anInt, char *buffer) {
+    char const *bytes = reinterpret_cast<char const *>(&anInt);
+
     for (int i = 0; i < INT_SIZE; i++) {
-        char currentByte = (anInt >> (8 * i)) & BYTE_MASK;
-        buffer[INT_SIZE - i - 1] = currentByte;
+        buffer[i] = bytes[i];
     }
 }
 
-int toInt(const char * buffer) {
-    int integer = 0;
+int toInt(const char *buffer) {
+    char bytes[INT_SIZE];
 
     for (int i = 0; i < INT_SIZE; i++) {
-        char currentByte = buffer[INT_SIZE - i - 1];
-        integer |= (currentByte & BYTE_MASK) << (8 * i);
+        bytes[i] = buffer[i];
     }
 
-    return integer;
+    return *reinterpret_cast<int *>(bytes);
 }
