@@ -6,8 +6,8 @@ ControlSideByteCoder::ControlSideByteCoder(HardwareSerial &serial) : ControlSide
 }
 
 void ControlSideByteCoder::toSerial(ControlSpecs &controlSpecs) const {
-    int checksum = 0;
-    char buffer[INT_SIZE];
+    float checksum = 0;
+    char buffer[20];
 
     serial.print("#");
 
@@ -19,8 +19,23 @@ void ControlSideByteCoder::toSerial(ControlSpecs &controlSpecs) const {
         toSerial(buffer, INT_SIZE);
     }
 
+    float normalizedJoystickX = controlSpecs.getNormalized_joystick_X();
+    BinaryUtils::toBytes(normalizedJoystickX, buffer);
+    toSerial(buffer, FLOAT_SIZE);
+    checksum += normalizedJoystickX;
+
+    float normalizedJoystickY = controlSpecs.getNormalized_joystick_Y();
+    BinaryUtils::toBytes(normalizedJoystickY, buffer);
+    toSerial(buffer, FLOAT_SIZE);
+    checksum += normalizedJoystickY;
+
+    float slidePot = controlSpecs.getSlidePot();
+    BinaryUtils::toBytes(slidePot, buffer);
+    toSerial(buffer, FLOAT_SIZE);
+    checksum += slidePot;
+
     BinaryUtils::toBytes(checksum, buffer);
-    toSerial(buffer, INT_SIZE);
+    toSerial(buffer, FLOAT_SIZE);
 
     serial.flush();
 }
