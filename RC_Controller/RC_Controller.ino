@@ -32,8 +32,8 @@ D53 --> Slide Pot LED (Active HIGH)
 enum ControlPin {
     JOYSTICK_VERTICAL = 13, JOYSTICK_HORIZONTAL = 14, SLIDE_POT = 15, JOYSTICK_PUSHBUTTON = 52
 };
-int joystickMidPoint_X;
-int joystickMidPoint_Y;
+int joystickMidPoint_X = 0;
+int joystickMidPoint_Y = 0;
 
 //Motors------------------------------
 const int motorCount = 5;
@@ -62,11 +62,12 @@ void setup() {
     //initializaion------------------
     pinMode(JOYSTICK_PUSHBUTTON, INPUT);
     digitalWrite(JOYSTICK_PUSHBUTTON, HIGH);
-    calibrate();
 
     Serial.begin(9600);
     Serial1.begin(9600);
     Serial2.begin(9600);
+
+    calibrate();
 
     motorSpecs.setMotor(2, 0);
     motorSpecs.setMotor(3, 0);
@@ -202,7 +203,10 @@ double processJoystick(int pinId, int midPoint) {
 }
 
 void calibrate() {
-//    for (int i = 0; i < 200; i++) {
-//        joystickMidPoint_X += analogRead()
-//    }
+    for (int i = 0; i < 200; i++) {
+        joystickMidPoint_X = (joystickMidPoint_X + analogRead(JOYSTICK_HORIZONTAL)) / 2;
+        delay(1);
+        joystickMidPoint_Y = (joystickMidPoint_Y + analogRead(JOYSTICK_VERTICAL)) / 2;
+        delay(1);
+    }
 }
