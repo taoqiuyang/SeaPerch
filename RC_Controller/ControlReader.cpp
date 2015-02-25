@@ -37,7 +37,7 @@ const double ControlReader::processJoystick(int pinId, int midPoint) const {
         normalized = (midPoint - rawValue) / (double)midPoint;
     }
     if (rawValue > midPoint + 1) {
-        normalized = -1 * (rawValue - midPoint) / (double)(1023 - midPoint);
+        normalized = (midPoint - rawValue) / (double)(1023 - midPoint);
     }
     if (normalized > 1) {
         normalized = 1;
