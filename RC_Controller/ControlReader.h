@@ -7,17 +7,17 @@ public:
 
     void calibrate();
 
-    double getNormalizedJoystickX();
+    const double getNormalizedJoystickX() const;
 
-    double getNormalizedJoystickY();
+    const double getNormalizedJoystickY() const;
 
-    int getSlidePot();
+    const int getSlidePot() const;
 
 private:
     int joystickMidPointX;
     int joystickMidPointY;
 
-    double processJoystick(int pinId, int midPoint);
+    const double processJoystick(int pinId, int midPoint) const;
 };
 
 #endif

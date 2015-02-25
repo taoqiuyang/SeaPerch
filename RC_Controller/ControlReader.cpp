@@ -15,19 +15,19 @@ void ControlReader::calibrate() {
     }
 }
 
-double ControlReader::getNormalizedJoystickX() {
+const double ControlReader::getNormalizedJoystickX() const {
     return processJoystick(JOYSTICK_HORIZONTAL, joystickMidPointX);
 }
 
-double ControlReader::getNormalizedJoystickY() {
+const double ControlReader::getNormalizedJoystickY() const {
     return processJoystick(JOYSTICK_VERTICAL, joystickMidPointY);
 }
 
-int ControlReader::getSlidePot() {
+const int ControlReader::getSlidePot() const {
     return analogRead(SLIDE_POT);
 }
 
-double ControlReader::processJoystick(int pinId, int midPoint) {
+const double ControlReader::processJoystick(int pinId, int midPoint) const {
     double normalized;
     int rawValue = analogRead(pinId);
 
