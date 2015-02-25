@@ -7,27 +7,28 @@ ControlSideByteCoder::ControlSideByteCoder(HardwareSerial &serial) : ControlSide
 
 void ControlSideByteCoder::toSerial(ControlSpecs &controlSpecs) const {
     int checksum = 0;
-    int byteMask = 0xff;
+    char buffer[INT_SIZE];
 
     serial.print("#");
 
-    char buffer[INT_SIZE];
     for (int i = 0; i < controlSpecs.getMotorCount(); i++) {
         int motorValue = controlSpecs.getMotor(i);
 
         BinaryUtils::toBytes(motorValue, buffer);
         checksum += motorValue;
-
-        for (int j = 0; j < INT_SIZE; j++) {
-            serial.write(buffer[j]);
-        }
+        toSerial(buffer, INT_SIZE);
     }
 
     BinaryUtils::toBytes(checksum, buffer);
-    for (int k = 0; k < sizeof(int); k++) {
-        serial.write(buffer[k]);
-    }
+    toSerial(buffer, INT_SIZE);
+
     serial.flush();
 
     delay(200);
+}
+
+void ControlSideByteCoder::toSerial(char *buffer, int size) const {
+    for (int i = 0; i < size; i++) {
+        serial.write(buffer[i]);
+    }
 }

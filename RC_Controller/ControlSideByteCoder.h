@@ -9,6 +9,9 @@ public:
     explicit ControlSideByteCoder(HardwareSerial &serial);
 
     void toSerial(ControlSpecs &controlSpecs) const;
+
+private:
+    void toSerial(char *buffer, int size) const;
 };
 
 #endif
