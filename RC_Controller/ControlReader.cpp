@@ -23,7 +23,6 @@ void ControlReader::readControlSpecs(ControlSpecs &controlSpecs) const {
 
 //map the ADC reading to [-1, 1]
 const double ControlReader::processJoystick(int pinId, int midPoint) const {
-    double normalized;
     int rawValue = analogRead(pinId);
 
     if (rawValue < midPoint - 1) {
