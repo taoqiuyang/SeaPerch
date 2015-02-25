@@ -1,6 +1,6 @@
 #include "SeaPerch_BinaryUtils.h"
 
-void toBytes(const int anInt, char *buffer) {
+void BinaryUtils::toBytes(const int anInt, char *buffer) {
     char const *bytes = reinterpret_cast<char const *>(&anInt);
 
     for (int i = 0; i < INT_SIZE; i++) {
@@ -8,7 +8,7 @@ void toBytes(const int anInt, char *buffer) {
     }
 }
 
-int toInt(const char *buffer) {
+int BinaryUtils::toInt(const char *buffer) {
     char bytes[INT_SIZE];
 
     for (int i = 0; i < INT_SIZE; i++) {

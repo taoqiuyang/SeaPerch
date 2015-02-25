@@ -15,7 +15,7 @@ void ControlSideByteCoder::toSerial(ControlSpecs &controlSpecs) const {
     for (int i = 0; i < controlSpecs.getMotorCount(); i++) {
         int motorValue = controlSpecs.getMotor(i);
 
-        toBytes(motorValue, buffer);
+        BinaryUtils::toBytes(motorValue, buffer);
         checksum += motorValue;
 
         for (int j = 0; j < INT_SIZE; j++) {
@@ -23,7 +23,7 @@ void ControlSideByteCoder::toSerial(ControlSpecs &controlSpecs) const {
         }
     }
 
-    toBytes(checksum, buffer);
+    BinaryUtils::toBytes(checksum, buffer);
     for (int k = 0; k < sizeof(int); k++) {
         serial.write(buffer[k]);
     }

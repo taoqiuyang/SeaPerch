@@ -14,13 +14,13 @@ bool RobotSideByteCoder::fromSerial(ControlSpecs & controlSpecs) const {
             for (int i = 0; i < controlSpecs.getMotorCount(); i++) {
                 serial.readBytes(buffer, INT_SIZE);
 
-                int motorValue = toInt(buffer);
+                int motorValue = BinaryUtils::toInt(buffer);
                 controlSpecs.setMotor(i, motorValue);
                 expectedChecksum += motorValue;
             }
 
             serial.readBytes(buffer, INT_SIZE);
-            int checksum = toInt(buffer);
+            int checksum = BinaryUtils::toInt(buffer);
 
             return expectedChecksum == checksum;
         }
