@@ -24,7 +24,7 @@ const float ControlSpecs::getNormalized_joystick_X() const {
     return normalized_joystick_X;
 }
 
-void ControlSpecs::setNormalized_joystick_X(float aNormalized_joystick_X) {
+void ControlSpecs::setNormalized_joystick_X(const float aNormalized_joystick_X) {
     normalized_joystick_X = aNormalized_joystick_X;
 }
 
@@ -32,7 +32,7 @@ const float ControlSpecs::getNormalized_joystick_Y() const {
     return normalized_joystick_Y;
 }
 
-void ControlSpecs::setNormalized_joystick_Y(float aNormalized_joystick_Y) {
+void ControlSpecs::setNormalized_joystick_Y(const float aNormalized_joystick_Y) {
     normalized_joystick_Y = aNormalized_joystick_Y;
 }
 
@@ -40,8 +40,16 @@ const int ControlSpecs::getJoystick_button() const {
     return joystick_button;
 }
 
-void ControlSpecs::setJoystick_button(int aJoystick_button) {
+void ControlSpecs::setJoystick_button(const int aJoystick_button) {
     joystick_button = aJoystick_button;
+}
+
+const int ControlSpecs::getSlidePot() const {
+    return slidePot;
+}
+
+void ControlSpecs::setSlidePot(const int aSlidePot) {
+    slidePot = aSlidePot;
 }
 
 const int ControlSpecs::getMotor(int motorId) const {

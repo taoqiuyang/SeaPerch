@@ -11,15 +11,19 @@ public:
 
     const float getNormalized_joystick_X() const;
 
-    void setNormalized_joystick_X(float aNormalized_joystick_X);
+    void setNormalized_joystick_X(const float aNormalized_joystick_X);
 
     const float getNormalized_joystick_Y() const;
 
-    void setNormalized_joystick_Y(float aNormalized_joystick_Y);
+    void setNormalized_joystick_Y(const float aNormalized_joystick_Y);
 
     const int getJoystick_button() const;
 
-    void setJoystick_button(int aJoystick_button);
+    void setJoystick_button(const int aJoystick_button);
+
+    const int getSlidePot() const;
+
+    void setSlidePot(const int aSlidePot);
 
     const int getMotor(int motorId) const;
 
@@ -31,6 +35,7 @@ private:
     int *motors;
     int motorCount;
     int joystick_button;
+    int slidePot;
     float normalized_joystick_X;
     float normalized_joystick_Y;
 };
