@@ -30,10 +30,10 @@ D53 --> Slide Pot LED (Active HIGH)
 #include "ControlSideByteCoder.h"
 
 enum ControlPin {
-    VERTICAL = 13, HORIZONTAL = 14, SLIDE_POT = 15, PUSHBUTTON = 52
+    JOYSTICK_VERTICAL = 13, JOYSTICK_HORIZONTAL = 14, SLIDE_POT = 15, JOYSTICK_PUSHBUTTON = 52
 };
-const int joystickMidPoint_X = 505;
-const int joystickMidPoint_Y = 515;
+int joystickMidPoint_X;
+int joystickMidPoint_Y;
 
 //Motors------------------------------
 const int motorCount = 5;
@@ -60,8 +60,9 @@ void setup() {
     lcdWelcome();
 
     //initializaion------------------
-    pinMode(PUSHBUTTON, INPUT);
-    digitalWrite(PUSHBUTTON, HIGH);
+    pinMode(JOYSTICK_PUSHBUTTON, INPUT);
+    digitalWrite(JOYSTICK_PUSHBUTTON, HIGH);
+    calibrate();
 
     Serial.begin(9600);
     Serial1.begin(9600);
@@ -78,9 +79,9 @@ void loop() {
     slide_pot_value = analogRead(SLIDE_POT);
     depth_motor = map(slide_pot_value,0,1023,-255,255);
 
-    motorSpecs.setNormalized_joystick_X(processJoystick(HORIZONTAL, joystickMidPoint_X));
-    motorSpecs.setNormalized_joystick_Y(processJoystick(VERTICAL, joystickMidPoint_Y));
-    motorSpecs.setJoystick_button(!digitalRead(PUSHBUTTON));
+    motorSpecs.setNormalized_joystick_X(processJoystick(JOYSTICK_HORIZONTAL, joystickMidPoint_X));
+    motorSpecs.setNormalized_joystick_Y(processJoystick(JOYSTICK_VERTICAL, joystickMidPoint_Y));
+    motorSpecs.setJoystick_button(!digitalRead(JOYSTICK_PUSHBUTTON));
 
     Motor4_Motor5_differential_and_limit_current();
 
@@ -198,4 +199,10 @@ double processJoystick(int pinId, int midPoint) {
     }
     //-----------------apply curve--------------
     return normalized + 1;
+}
+
+void calibrate() {
+//    for (int i = 0; i < 200; i++) {
+//        joystickMidPoint_X += analogRead()
+//    }
 }
