@@ -2,7 +2,7 @@
 #define _SeaPerch_BinaryUtils_H
 
 const int INT_SIZE = sizeof(int);
-const int DOUBLE_SIZE = sizeof(short);
+const int FLOAT_SIZE = sizeof(float);
 
 class BinaryUtils {
 public:
