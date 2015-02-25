@@ -185,10 +185,10 @@ double processJoystick(int pinId, int midPoint) {
     delay(0.1);
     //-----------------normalize----------------
     //map the ADC reading to [-1, 1]
-    if (rawValue < joystickMidPoint_X - 1) {
+    if (rawValue < midPoint - 1) {
         normalized = 1.0 * (midPoint - rawValue) / midPoint;
     }
-    if (rawValue > joystickMidPoint_X + 1) {
+    if (rawValue > midPoint + 1) {
         normalized = -1.0 * (rawValue - midPoint) / (1023 - midPoint);
     }
     if (normalized > 1) {
