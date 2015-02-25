@@ -11,8 +11,6 @@ public:
 
     void readControlSpecs(ControlSpecs &controlSpecs) const;
 
-    const int getSlidePot() const;
-
 private:
     int joystickMidPointX;
     int joystickMidPointY;

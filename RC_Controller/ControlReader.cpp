@@ -18,10 +18,7 @@ void ControlReader::calibrate() {
 void ControlReader::readControlSpecs(ControlSpecs &controlSpecs) const {
     controlSpecs.setNormalized_joystick_X(processJoystick(JOYSTICK_HORIZONTAL, joystickMidPointX));
     controlSpecs.setNormalized_joystick_Y(processJoystick(JOYSTICK_VERTICAL, joystickMidPointY));
-}
-
-const int ControlReader::getSlidePot() const {
-    return analogRead(SLIDE_POT);
+    controlSpecs.setSlidePot(analogRead(SLIDE_POT));
 }
 
 //map the ADC reading to [-1, 1]
