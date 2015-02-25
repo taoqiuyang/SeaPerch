@@ -8,19 +8,17 @@ Georgia Institute of Technology
 
 ================= How to use ===============================================
 
-
 */
+#include <Arduino.h>
 #include <LiquidCrystal.h>
 #include <SeaPerch_BinaryUtils.h>
 #include <SeaPerch_MotorSpecs.h>
 
 #include "ControlPin.h"
 #include "LCDDisplayer.h"
+#include "ControlReader.h"
 #include "ControlSideTextCoder.h"
 #include "ControlSideByteCoder.h"
-
-int joystickMidPoint_X = 0;
-int joystickMidPoint_Y = 0;
 
 //Motors------------------------------
 const int motorCount = 5;
@@ -30,7 +28,6 @@ MotorSpecs motorSpecs(motorCount);
 String Serial_1_data_recieved = "";
 String Serial_2_data_recieved = "";
 int Serial2_received_data_status = 0;  //0 for no valid data, 1 for valid data received
-float checksum;
 
 //Data feedback-----------------------
 float robot_battery_voltage;
@@ -42,6 +39,7 @@ int depth_motor;
 ControlSideTextCoder textCoder = ControlSideTextCoder(Serial2);
 ControlSideByteCoder byteCoder = ControlSideByteCoder(Serial2);
 ControlSideCoder &coder = byteCoder;
+ControlReader controlReader;
 
 void setup() {
     lcdWelcome();
@@ -54,7 +52,7 @@ void setup() {
     Serial1.begin(9600);
     Serial2.begin(9600);
 
-    calibrate();
+    controlReader.calibrate();
 
     motorSpecs.setMotor(2, 0);
     motorSpecs.setMotor(3, 0);
@@ -67,8 +65,8 @@ void loop() {
     slide_pot_value = analogRead(SLIDE_POT);
     depth_motor = map(slide_pot_value,0,1023,-255,255);
 
-    motorSpecs.setNormalized_joystick_X(processJoystick(JOYSTICK_HORIZONTAL, joystickMidPoint_X));
-    motorSpecs.setNormalized_joystick_Y(processJoystick(JOYSTICK_VERTICAL, joystickMidPoint_Y));
+    motorSpecs.setNormalized_joystick_X(controlReader.getNormalizedJoystickX());
+    motorSpecs.setNormalized_joystick_Y(controlReader.getNormalizedJoystickY());
     motorSpecs.setJoystick_button(!digitalRead(JOYSTICK_PUSHBUTTON));
 
     Motor4_Motor5_differential_and_limit_current();
@@ -164,36 +162,5 @@ void serial_2_get_data_and_decode() {
                 Serial2_received_data_status = 1;
             }
         }
-    }
-}
-
-double processJoystick(int pinId, int midPoint) {
-    double normalized;
-    int rawValue = analogRead(pinId);
-    delay(0.1);
-    //-----------------normalize----------------
-    //map the ADC reading to [-1, 1]
-    if (rawValue < midPoint - 1) {
-        normalized = 1.0 * (midPoint - rawValue) / midPoint;
-    }
-    if (rawValue > midPoint + 1) {
-        normalized = -1.0 * (rawValue - midPoint) / (1023 - midPoint);
-    }
-    if (normalized > 1) {
-        normalized = 1;
-    }
-    if (normalized < -1) {
-        normalized = -1;
-    }
-    //-----------------apply curve--------------
-    return normalized + 1;
-}
-
-void calibrate() {
-    for (int i = 0; i < 200; i++) {
-        joystickMidPoint_X = (joystickMidPoint_X + analogRead(JOYSTICK_HORIZONTAL)) / 2;
-        delay(1);
-        joystickMidPoint_Y = (joystickMidPoint_Y + analogRead(JOYSTICK_VERTICAL)) / 2;
-        delay(1);
     }
 }
