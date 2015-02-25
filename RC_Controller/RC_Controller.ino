@@ -68,7 +68,7 @@ void loop() {
     Motor4_Motor5_differential_and_limit_current();
 
     coder.toSerial(controlSpecs);
-    delay(20);
+    delay(200);
 
 
     serial_2_get_data_and_decode();

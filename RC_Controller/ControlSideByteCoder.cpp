@@ -23,8 +23,6 @@ void ControlSideByteCoder::toSerial(ControlSpecs &controlSpecs) const {
     toSerial(buffer, INT_SIZE);
 
     serial.flush();
-
-    delay(200);
 }
 
 void ControlSideByteCoder::toSerial(char *buffer, int size) const {
