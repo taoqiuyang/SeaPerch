@@ -7,9 +7,12 @@ const int DOUBLE_SIZE = sizeof(short);
 class BinaryUtils {
 public:
     static void toBytes(const int anInt, char *buffer);
-//    static void toBytes(const float aFloat, char *buffer);
+    static void toBytes(const float aFloat, char *buffer);
     static int toInt(const char *buffer);
-//    static int toFloat(const char *buffer);
+    static int toFloat(const char *buffer);
+
+private:
+    static void bytecpy(char *dst, const char *src, int size);
 };
 
 #endif

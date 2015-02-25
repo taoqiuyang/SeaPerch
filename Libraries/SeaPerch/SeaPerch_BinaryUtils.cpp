@@ -2,18 +2,18 @@
 
 void BinaryUtils::toBytes(const int anInt, char *buffer) {
     char const *bytes = reinterpret_cast<char const *>(&anInt);
-
-    for (int i = 0; i < INT_SIZE; i++) {
-        buffer[i] = bytes[i];
-    }
+    bytecpy(buffer, bytes, INT_SIZE);
 }
 
 int BinaryUtils::toInt(const char *buffer) {
     char bytes[INT_SIZE];
-
-    for (int i = 0; i < INT_SIZE; i++) {
-        bytes[i] = buffer[i];
-    }
+    bytecpy(bytes, buffer, INT_SIZE);
 
     return *reinterpret_cast<int *>(bytes);
+}
+
+void BinaryUtils::bytecpy(char *dst, const char *src, int size) {
+    for (int i = 0; i < size; i++) {
+        dst[i] = src[i];
+    }
 }
