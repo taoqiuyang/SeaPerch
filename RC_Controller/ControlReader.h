@@ -15,7 +15,7 @@ private:
     int joystickMidPointX;
     int joystickMidPointY;
 
-    const double processJoystick(int pinId, int midPoint) const;
+    const float processJoystick(int pinId, int midPoint) const;
 };
 
 #endif
