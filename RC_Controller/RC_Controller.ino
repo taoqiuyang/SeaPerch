@@ -6,17 +6,6 @@ Electronic Team - Embeded System Group
 Virtical Integrated Project - RoboSense
 Georgia Institute of Technology
 
-=================Connections================================================
-RX2, TX2 --> Bluetooth module
-A0  --> Key input from LCD button shield
-A12 --> Battery Voltage
-A13 --> Joystick Vertical
-A14 --> Joystick Horizontal
-A15 --> Slide Pot
-D52 --> Joystick button
-D53 --> Slide Pot LED (Active HIGH)
-
-
 ================= How to use ===============================================
 
 
@@ -25,13 +14,11 @@ D53 --> Slide Pot LED (Active HIGH)
 #include <SeaPerch_BinaryUtils.h>
 #include <SeaPerch_MotorSpecs.h>
 
+#include "ControlPin.h"
 #include "LCDDisplayer.h"
 #include "ControlSideTextCoder.h"
 #include "ControlSideByteCoder.h"
 
-enum ControlPin {
-    JOYSTICK_VERTICAL = 13, JOYSTICK_HORIZONTAL = 14, SLIDE_POT = 15, JOYSTICK_PUSHBUTTON = 52
-};
 int joystickMidPoint_X = 0;
 int joystickMidPoint_Y = 0;
 
