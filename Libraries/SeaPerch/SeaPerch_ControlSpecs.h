@@ -1,13 +1,13 @@
-#ifndef _SeaPerch_MotorSpecs_H
-#define _SeaPerch_MotorSpecs_H
+#ifndef _SeaPerch_ControlSpecs_H
+#define _SeaPerch_ControlSpecs_H
 
-class MotorSpecs {
+class ControlSpecs {
 public:
-    explicit MotorSpecs(unsigned int motorCount);
+    explicit ControlSpecs(unsigned int motorCount);
 
-    MotorSpecs(const MotorSpecs& motorSpecs);
+    ControlSpecs(const ControlSpecs& controlSpecs);
 
-    ~MotorSpecs();
+    ~ControlSpecs();
 
     const float getNormalized_joystick_X() const;
 

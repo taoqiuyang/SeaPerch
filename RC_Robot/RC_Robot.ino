@@ -35,7 +35,7 @@ SeaPerch Remote Control Test
 //----------------------------
 
 #include <SeaPerch_BinaryUtils.h>
-#include <SeaPerch_MotorSpecs.h>
+#include <SeaPerch_ControlSpecs.h>
 
 #include "MotorExecutor.h"
 #include "RobotSideByteCoder.h"
@@ -77,7 +77,7 @@ float battery_voltage, float_to_be_sent;
 int int_to_be_sent_0, int_to_be_sent_1, int_to_be_sent_2, int_to_be_sent_3, int_to_be_sent_4;
 
 RobotSideByteCoder byteCoder(Serial2);
-MotorSpecs motorSpecs(5);
+ControlSpecs controlSpecs(5);
 MotorExecutor motorExecutor;
 
 void setup() {
@@ -88,8 +88,8 @@ void setup() {
 
     motorExecutor.begin();
 
-    for (int i = 0; i < motorSpecs.getMotorCount(); i++) {
-        motorSpecs.setMotor(i, 0);
+    for (int i = 0; i < controlSpecs.getMotorCount(); i++) {
+        controlSpecs.setMotor(i, 0);
     }
 
     //---initialize the IMU------------
@@ -113,8 +113,8 @@ void setup() {
 
 
 void loop() {
-    if (byteCoder.fromSerial(motorSpecs)) {
-        motorExecutor.execute(motorSpecs);
+    if (byteCoder.fromSerial(controlSpecs)) {
+        motorExecutor.execute(controlSpecs);
     }
 
     //PID-----------------------------------

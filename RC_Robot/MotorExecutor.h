@@ -1,7 +1,7 @@
 #ifndef _MotorExecutor_H
 #define _MotorExecutor_H
 
-#include <SeaPerch_MotorSpecs.h>
+#include <SeaPerch_ControlSpecs.h>
 #include <Adafruit_MotorShield.h>
 #include <utility/Adafruit_PWMServoDriver.h>
 
@@ -11,7 +11,7 @@ public:
 
     void begin();
 
-    void execute(const MotorSpecs &motorSpecs) const;
+    void execute(const ControlSpecs &controlSpecs) const;
 
 private:
     Adafruit_MotorShield AFMS;

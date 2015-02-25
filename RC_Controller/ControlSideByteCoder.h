@@ -8,7 +8,7 @@ class ControlSideByteCoder : public ControlSideCoder {
 public:
     explicit ControlSideByteCoder(HardwareSerial &serial);
 
-    void toSerial(MotorSpecs &motorSpecs) const;
+    void toSerial(ControlSpecs &controlSpecs) const;
 };
 
 #endif

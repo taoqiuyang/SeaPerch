@@ -1,14 +1,14 @@
 #ifndef _RobotSideCoder_H
 #define _RobotSideCoder_H
 
-#include <SeaPerch_MotorSpecs.h>
+#include <SeaPerch_ControlSpecs.h>
 
 class RobotSideCoder {
 public:
     explicit RobotSideCoder(HardwareSerial &serial) : serial(serial) {
     };
 
-    bool fromSerial(MotorSpecs &motorSpecs) const;
+    bool fromSerial(ControlSpecs &controlSpecs) const;
 
 protected:
     HardwareSerial &serial;

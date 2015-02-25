@@ -12,7 +12,7 @@ Georgia Institute of Technology
 #include <Arduino.h>
 #include <LiquidCrystal.h>
 #include <SeaPerch_BinaryUtils.h>
-#include <SeaPerch_MotorSpecs.h>
+#include <SeaPerch_ControlSpecs.h>
 
 #include "ControlPin.h"
 #include "LCDDisplayer.h"
@@ -22,7 +22,7 @@ Georgia Institute of Technology
 
 //Motors------------------------------
 const int motorCount = 5;
-MotorSpecs motorSpecs(motorCount);
+ControlSpecs controlSpecs(motorCount);
 
 //Serial Comm-------------------------
 String Serial_1_data_recieved = "";
@@ -53,9 +53,9 @@ void setup() {
 
     controlReader.calibrate();
 
-    motorSpecs.setMotor(2, 0);
-    motorSpecs.setMotor(3, 0);
-    motorSpecs.setMotor(4, 0);
+    controlSpecs.setMotor(2, 0);
+    controlSpecs.setMotor(3, 0);
+    controlSpecs.setMotor(4, 0);
 }
 
 void loop() {
@@ -63,13 +63,13 @@ void loop() {
     //--------------------------------------------------------
     depth_motor = map(controlReader.getSlidePot(),0,1023,-255,255);
 
-    motorSpecs.setNormalized_joystick_X(controlReader.getNormalizedJoystickX());
-    motorSpecs.setNormalized_joystick_Y(controlReader.getNormalizedJoystickY());
-    motorSpecs.setJoystick_button(!digitalRead(JOYSTICK_PUSHBUTTON));
+    controlSpecs.setNormalized_joystick_X(controlReader.getNormalizedJoystickX());
+    controlSpecs.setNormalized_joystick_Y(controlReader.getNormalizedJoystickY());
+    controlSpecs.setJoystick_button(!digitalRead(JOYSTICK_PUSHBUTTON));
 
     Motor4_Motor5_differential_and_limit_current();
 
-    coder.toSerial(motorSpecs);
+    coder.toSerial(controlSpecs);
     delay(20);
 
 
@@ -93,8 +93,8 @@ void serialDisplay() {
 
 void Motor4_Motor5_differential_and_limit_current() {
     float limit = 0.6;
-    float x = (motorSpecs.getNormalized_joystick_X() - 1) * limit;
-    float y = (motorSpecs.getNormalized_joystick_Y() - 1) * limit;
+    float x = (controlSpecs.getNormalized_joystick_X() - 1) * limit;
+    float y = (controlSpecs.getNormalized_joystick_Y() - 1) * limit;
     float m4, m5;
 
     m4 = x + y;
@@ -104,9 +104,9 @@ void Motor4_Motor5_differential_and_limit_current() {
     if (m5 > limit) {m5 = limit;}
     if (m5 < -1.0 * limit) {m5 = -1.0 * limit;}
 
-    motorSpecs.setMotor(0, (int) ((m4 + 1) * 255));
-    motorSpecs.setMotor(1, (int) ((m5 + 1) * 255));
-    motorSpecs.setMotor(2, depth_motor + 255);
+    controlSpecs.setMotor(0, (int) ((m4 + 1) * 255));
+    controlSpecs.setMotor(1, (int) ((m5 + 1) * 255));
+    controlSpecs.setMotor(2, depth_motor + 255);
 }
 
 void serial_2_get_data_and_decode() {

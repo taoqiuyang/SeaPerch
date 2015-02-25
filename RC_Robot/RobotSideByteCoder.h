@@ -8,7 +8,7 @@ class RobotSideByteCoder : public RobotSideCoder {
 public:
     explicit RobotSideByteCoder(HardwareSerial &serial);
 
-    bool fromSerial(MotorSpecs &motorSpecs) const;
+    bool fromSerial(ControlSpecs &controlSpecs) const;
 };
 
 #endif

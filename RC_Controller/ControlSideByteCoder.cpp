@@ -5,15 +5,15 @@
 ControlSideByteCoder::ControlSideByteCoder(HardwareSerial &serial) : ControlSideCoder(serial) {
 }
 
-void ControlSideByteCoder::toSerial(MotorSpecs &motorSpecs) const {
+void ControlSideByteCoder::toSerial(ControlSpecs &controlSpecs) const {
     int checksum = 0;
     int byteMask = 0xff;
 
     serial.print("#");
 
     char buffer[INT_SIZE];
-    for (int i = 0; i < motorSpecs.getMotorCount(); i++) {
-        int motorValue = motorSpecs.getMotor(i);
+    for (int i = 0; i < controlSpecs.getMotorCount(); i++) {
+        int motorValue = controlSpecs.getMotor(i);
 
         toBytes(motorValue, buffer);
         checksum += motorValue;

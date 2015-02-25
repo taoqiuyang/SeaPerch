@@ -5,17 +5,17 @@
 RobotSideByteCoder::RobotSideByteCoder(HardwareSerial & serial) : RobotSideCoder(serial) {
 }
 
-bool RobotSideByteCoder::fromSerial(MotorSpecs & motorSpecs) const {
+bool RobotSideByteCoder::fromSerial(ControlSpecs & controlSpecs) const {
     if (serial.available() > 0) {
         if (serial.find("#")) {
             char buffer[INT_SIZE];
             int expectedChecksum = 0;
 
-            for (int i = 0; i < motorSpecs.getMotorCount(); i++) {
+            for (int i = 0; i < controlSpecs.getMotorCount(); i++) {
                 serial.readBytes(buffer, INT_SIZE);
 
                 int motorValue = toInt(buffer);
-                motorSpecs.setMotor(i, motorValue);
+                controlSpecs.setMotor(i, motorValue);
                 expectedChecksum += motorValue;
             }
 

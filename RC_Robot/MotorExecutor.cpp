@@ -18,10 +18,10 @@ void MotorExecutor::begin() {
     upMotor->setSpeed(0);
 }
 
-void MotorExecutor::execute(const MotorSpecs &motorSpecs) const {
-    int Motor1 = motorSpecs.getMotor(0);
-    int Motor2 = motorSpecs.getMotor(1);
-    int Motor3 = motorSpecs.getMotor(2);
+void MotorExecutor::execute(const ControlSpecs &controlSpecs) const {
+    int Motor1 = controlSpecs.getMotor(0);
+    int Motor2 = controlSpecs.getMotor(1);
+    int Motor3 = controlSpecs.getMotor(2);
 
     uint8_t motorSpd1 = 0;
     uint8_t motorSpd2 = 0;

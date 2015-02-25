@@ -1,13 +1,13 @@
 #ifndef _ControlSideCoder_H
 #define _ControlSideCoder_H
 
-#include <SeaPerch_MotorSpecs.h>;
+#include <SeaPerch_ControlSpecs.h>;
 
 class ControlSideCoder {
 public:
     explicit ControlSideCoder(HardwareSerial &serial) : serial(serial) {};
 
-    virtual void toSerial(MotorSpecs &motorSpecs) const = 0;
+    virtual void toSerial(ControlSpecs &controlSpecs) const = 0;
 
 protected:
     HardwareSerial &serial;
