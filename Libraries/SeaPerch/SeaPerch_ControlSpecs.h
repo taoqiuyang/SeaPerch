@@ -11,15 +11,15 @@ public:
 
     const float getNormalized_joystick_X() const;
 
-    void setNormalized_joystick_X(float normalized_joystick_X);
+    void setNormalized_joystick_X(float aNormalized_joystick_X);
 
     const float getNormalized_joystick_Y() const;
 
-    void setNormalized_joystick_Y(float normalized_joystick_Y);
+    void setNormalized_joystick_Y(float aNormalized_joystick_Y);
 
     const int getJoystick_button() const;
 
-    void setJoystick_button(int joystick_button);
+    void setJoystick_button(int aJoystick_button);
 
     const int getMotor(int motorId) const;
 
