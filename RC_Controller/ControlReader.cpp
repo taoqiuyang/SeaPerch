@@ -27,19 +27,16 @@ const int ControlReader::getSlidePot() const {
     return analogRead(SLIDE_POT);
 }
 
+//map the ADC reading to [-1, 1]
 const double ControlReader::processJoystick(int pinId, int midPoint) const {
     double normalized;
     int rawValue = analogRead(pinId);
 
-    //-----------------normalize----------------
-    //map the ADC reading to [-1, 1]
     if (rawValue < midPoint - 1) {
-        normalized = (midPoint - rawValue) / (double)midPoint;
+        return (midPoint - rawValue) / (double)midPoint + 1;
+    } else if (rawValue > midPoint + 1) {
+        return -1 * (rawValue - midPoint) / (double)(1023 - midPoint) + 1;
+    } else {
+        return 1;
     }
-    if (rawValue > midPoint + 1) {
-        normalized = (midPoint - rawValue) / (double)(1023 - midPoint);
-    }
-
-    //-----------------apply curve--------------
-    return normalized + 1;
 }
