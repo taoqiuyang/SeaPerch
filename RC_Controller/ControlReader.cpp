@@ -39,12 +39,7 @@ const double ControlReader::processJoystick(int pinId, int midPoint) const {
     if (rawValue > midPoint + 1) {
         normalized = (midPoint - rawValue) / (double)(1023 - midPoint);
     }
-    if (normalized > 1) {
-        normalized = 1;
-    }
-    if (normalized < -1) {
-        normalized = -1;
-    }
+
     //-----------------apply curve--------------
     return normalized + 1;
 }
