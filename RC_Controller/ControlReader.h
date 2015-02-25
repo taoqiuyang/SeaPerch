@@ -11,6 +11,8 @@ public:
 
     double getNormalizedJoystickY();
 
+    int getSlidePot();
+
 private:
     int joystickMidPointX;
     int joystickMidPointY;

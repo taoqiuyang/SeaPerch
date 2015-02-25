@@ -33,7 +33,6 @@ int Serial2_received_data_status = 0;  //0 for no valid data, 1 for valid data r
 float robot_battery_voltage;
 
 //Slide pot---------------------------
-int slide_pot_value;
 int depth_motor;
 
 ControlSideTextCoder textCoder = ControlSideTextCoder(Serial2);
@@ -62,8 +61,7 @@ void setup() {
 void loop() {
     detectKey();
     //--------------------------------------------------------
-    slide_pot_value = analogRead(SLIDE_POT);
-    depth_motor = map(slide_pot_value,0,1023,-255,255);
+    depth_motor = map(controlReader.getSlidePot(),0,1023,-255,255);
 
     motorSpecs.setNormalized_joystick_X(controlReader.getNormalizedJoystickX());
     motorSpecs.setNormalized_joystick_Y(controlReader.getNormalizedJoystickY());

@@ -23,6 +23,10 @@ double ControlReader::getNormalizedJoystickY() {
     return processJoystick(JOYSTICK_VERTICAL, joystickMidPointY);
 }
 
+int ControlReader::getSlidePot() {
+    return analogRead(SLIDE_POT);
+}
+
 double ControlReader::processJoystick(int pinId, int midPoint) {
     double normalized;
     int rawValue = analogRead(pinId);
