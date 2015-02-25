@@ -29,9 +29,8 @@ D53 --> Slide Pot LED (Active HIGH)
 #include "ControlSideTextCoder.h"
 #include "ControlSideByteCoder.h"
 
-//Joystick-----------------------------
-enum Joystick {
-    VERTICAL_PIN = 13, HORIZONTAL_PIN = 14, PUSHBUTTON = 52
+enum ControlPin {
+    VERTICAL = 13, HORIZONTAL = 14, SLIDE_POT = 15, PUSHBUTTON = 52
 };
 const int joystickMidPoint_X = 505;
 const int joystickMidPoint_Y = 515;
@@ -50,7 +49,6 @@ float checksum;
 float robot_battery_voltage;
 
 //Slide pot---------------------------
-const int SLIDE_POT_PIN = 15;
 int slide_pot_value;
 int depth_motor;
 
@@ -77,11 +75,11 @@ void setup() {
 void loop() {
     detectKey();
     //--------------------------------------------------------
-    slide_pot_value = analogRead(SLIDE_POT_PIN);
+    slide_pot_value = analogRead(SLIDE_POT);
     depth_motor = map(slide_pot_value,0,1023,-255,255);
 
-    motorSpecs.setNormalized_joystick_X(processJoystick(HORIZONTAL_PIN, joystickMidPoint_X));
-    motorSpecs.setNormalized_joystick_Y(processJoystick(VERTICAL_PIN, joystickMidPoint_Y));
+    motorSpecs.setNormalized_joystick_X(processJoystick(HORIZONTAL, joystickMidPoint_X));
+    motorSpecs.setNormalized_joystick_Y(processJoystick(VERTICAL, joystickMidPoint_Y));
     motorSpecs.setJoystick_button(!digitalRead(PUSHBUTTON));
 
     Motor4_Motor5_differential_and_limit_current();
