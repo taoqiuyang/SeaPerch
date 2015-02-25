@@ -9,7 +9,7 @@ public:
     static void toBytes(const int anInt, char *buffer);
     static void toBytes(const float aFloat, char *buffer);
     static int toInt(const char *buffer);
-    static int toFloat(const char *buffer);
+    static float toFloat(const char *buffer);
 
 private:
     static void bytecpy(char *dst, const char *src, int size);
