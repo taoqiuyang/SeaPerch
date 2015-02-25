@@ -34,10 +34,10 @@ const double ControlReader::processJoystick(int pinId, int midPoint) const {
     //-----------------normalize----------------
     //map the ADC reading to [-1, 1]
     if (rawValue < midPoint - 1) {
-        normalized = 1.0 * (midPoint - rawValue) / midPoint;
+        normalized = (midPoint - rawValue) / (double)midPoint;
     }
     if (rawValue > midPoint + 1) {
-        normalized = -1.0 * (rawValue - midPoint) / (1023 - midPoint);
+        normalized = -1 * (rawValue - midPoint) / (double)(1023 - midPoint);
     }
     if (normalized > 1) {
         normalized = 1;
