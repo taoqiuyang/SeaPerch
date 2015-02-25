@@ -15,12 +15,9 @@ void ControlReader::calibrate() {
     }
 }
 
-const double ControlReader::getNormalizedJoystickX() const {
-    return processJoystick(JOYSTICK_HORIZONTAL, joystickMidPointX);
-}
-
-const double ControlReader::getNormalizedJoystickY() const {
-    return processJoystick(JOYSTICK_VERTICAL, joystickMidPointY);
+void ControlReader::readControlSpecs(ControlSpecs &controlSpecs) const {
+    controlSpecs.setNormalized_joystick_X(processJoystick(JOYSTICK_HORIZONTAL, joystickMidPointX));
+    controlSpecs.setNormalized_joystick_Y(processJoystick(JOYSTICK_VERTICAL, joystickMidPointY));
 }
 
 const int ControlReader::getSlidePot() const {

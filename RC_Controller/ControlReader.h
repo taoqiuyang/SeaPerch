@@ -1,15 +1,15 @@
 #ifndef _ControlReader_H
 #define _ControlReader_H
 
+#include <SeaPerch_ControlSpecs.h>
+
 class ControlReader {
 public:
     ControlReader();
 
     void calibrate();
 
-    const double getNormalizedJoystickX() const;
-
-    const double getNormalizedJoystickY() const;
+    void readControlSpecs(ControlSpecs &controlSpecs) const;
 
     const int getSlidePot() const;
 

@@ -63,8 +63,7 @@ void loop() {
     //--------------------------------------------------------
     depth_motor = map(controlReader.getSlidePot(),0,1023,-255,255);
 
-    controlSpecs.setNormalized_joystick_X(controlReader.getNormalizedJoystickX());
-    controlSpecs.setNormalized_joystick_Y(controlReader.getNormalizedJoystickY());
+    controlReader.readControlSpecs(controlSpecs);
     controlSpecs.setJoystick_button(!digitalRead(JOYSTICK_PUSHBUTTON));
 
     Motor4_Motor5_differential_and_limit_current();
