@@ -7,7 +7,7 @@ ControlSideByteCoder::ControlSideByteCoder(HardwareSerial &serial) : ControlSide
 
 void ControlSideByteCoder::toSerial(ControlSpecs &controlSpecs) const {
     float checksum = 0;
-    char buffer[20];
+    char buffer[max(INT_SIZE, FLOAT_SIZE)];
 
     serial.print("#");
 

@@ -8,7 +8,7 @@ RobotSideByteCoder::RobotSideByteCoder(HardwareSerial & serial) : RobotSideCoder
 bool RobotSideByteCoder::fromSerial(ControlSpecs & controlSpecs) const {
     if (serial.available() > 0) {
         if (serial.find("#")) {
-            char buffer[20];
+            char buffer[max(INT_SIZE, FLOAT_SIZE)];
             float expectedChecksum = 0;
 
             for (int i = 0; i < controlSpecs.getMotorCount(); i++) {
