@@ -25,9 +25,9 @@ void ControlReader::readControlSpecs(ControlSpecs &controlSpecs) const {
 const float ControlReader::processJoystick(int pinId, int midPoint) const {
     int rawValue = analogRead(pinId);
 
-    if (rawValue < midPoint - 1) {
+    if (rawValue < midPoint - 2) {
         return (midPoint - rawValue) / (float)midPoint;
-    } else if (rawValue > midPoint + 1) {
+    } else if (rawValue > midPoint + 2) {
         return -1 * (rawValue - midPoint) / (float)(1023 - midPoint);
     } else {
         return 0.0;

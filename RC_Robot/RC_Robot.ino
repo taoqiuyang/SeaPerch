@@ -124,28 +124,28 @@ void loop() {
     myPID.Compute();
     //Output_PID=[-255,255]
 
-    Serial.print("In: ");
-    Serial.print(Input_PID);
-    Serial.print("  SetPoint: ");
-    Serial.print(Setpoint_PID);
-    Serial.print("  Out: ");
-    Serial.print(Output_PID);
+//    Serial.print("In: ");
+//    Serial.print(Input_PID);
+//    Serial.print("  SetPoint: ");
+//    Serial.print(Setpoint_PID);
+//    Serial.print("  Out: ");
+//    Serial.print(Output_PID);
     //--------------------------------------
 
     get_sensor_data();
-    Serial.print("  roll: ");
-    Serial.print(roll);
-    Serial.print("  pitch: ");
-    Serial.print(pitch);
-    Serial.print("  yaw: ");
-    Serial.print(yaw);
-    Serial.print("  temp_IMU:");
-    Serial.print(temperature_IMU);
-    Serial.print("  Temp Dep: ");
-    Serial.print(temperature_c);
-    Serial.print("  Pres(mbar): ");
-    Serial.println(pressure_abs);
-    Serial.println();
+//    Serial.print("  roll: ");
+//    Serial.print(roll);
+//    Serial.print("  pitch: ");
+//    Serial.print(pitch);
+//    Serial.print("  yaw: ");
+//    Serial.print(yaw);
+//    Serial.print("  temp_IMU:");
+//    Serial.print(temperature_IMU);
+//    Serial.print("  Temp Dep: ");
+//    Serial.print(temperature_c);
+//    Serial.print("  Pres(mbar): ");
+//    Serial.println(pressure_abs);
+//    Serial.println();
 }
 
 
