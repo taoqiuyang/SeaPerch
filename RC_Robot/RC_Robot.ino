@@ -88,10 +88,6 @@ void setup() {
 
     motorExecutor.begin();
 
-    for (int i = 0; i < controlSpecs.getMotorCount(); i++) {
-        controlSpecs.setMotor(i, 0);
-    }
-
     //---initialize the IMU------------
     initSensors();
     //---------------------------------

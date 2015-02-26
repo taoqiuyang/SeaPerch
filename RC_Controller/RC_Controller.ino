@@ -50,22 +50,14 @@ void setup() {
     Serial2.begin(9600);
 
     controlReader.calibrate();
-
-    controlSpecs.setMotor(2, 0);
-    controlSpecs.setMotor(3, 0);
-    controlSpecs.setMotor(4, 0);
 }
 
 void loop() {
     detectKey();
     //--------------------------------------------------------
     controlReader.readControlSpecs(controlSpecs);
-    depth_motor = map(controlSpecs.getSlidePot(),0,1023,-255,255);
-    controlSpecs.setJoystick_button(!digitalRead(JOYSTICK_PUSHBUTTON));
-
     coder.toSerial(controlSpecs);
     delay(200);
-
 
     serial_2_get_data_and_decode();
 
