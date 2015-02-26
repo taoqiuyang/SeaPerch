@@ -20,6 +20,8 @@ private:
     Adafruit_DCMotor *upMotor;
 
     void executeJoystickCommand(float normalizedX, float normalizedY);
+
+    void executeSlidePotCommand(int slidePotValue);
 };
 
 #endif
