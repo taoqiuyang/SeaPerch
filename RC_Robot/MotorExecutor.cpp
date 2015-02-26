@@ -32,8 +32,8 @@ void MotorExecutor::execute(const ControlSpecs &controlSpecs) const {
 
     int rawLeftMagnitude = abs((int)(normalizedLeft * 255));
     int rawRightMagnitude = abs((int)(normalizedRight * 255));
-    int leftMagnitude = rawLeftMagnitude == 0 ? 0 : map(rawLeftMagnitude, 1, 255, 30, 150);
-    int rightMagnitude = rawRightMagnitude == 0 ? 0 : map(rawRightMagnitude, 1, 255, 30, 150);
+    int leftMagnitude = rawLeftMagnitude == 0 ? 0 : map(rawLeftMagnitude, 2, 255, 30, 150);
+    int rightMagnitude = rawRightMagnitude == 0 ? 0 : map(rawRightMagnitude, 2, 255, 30, 150);
 
     leftMotor->setSpeed(leftMagnitude);
     leftMotor->run(leftDirection);
