@@ -11,14 +11,6 @@ bool RobotSideByteCoder::fromSerial(ControlSpecs & controlSpecs) const {
             char buffer[max(INT_SIZE, FLOAT_SIZE)];
             float expectedChecksum = 0;
 
-            for (int i = 0; i < controlSpecs.getMotorCount(); i++) {
-                serial.readBytes(buffer, INT_SIZE);
-
-                int motorValue = BinaryUtils::toInt(buffer);
-                controlSpecs.setMotor(i, motorValue);
-                expectedChecksum += motorValue;
-            }
-
             serial.readBytes(buffer, FLOAT_SIZE);
             float normalizedJoystickX = BinaryUtils::toFloat(buffer);
             controlSpecs.setNormalized_joystick_X(normalizedJoystickX);

@@ -11,14 +11,6 @@ void ControlSideByteCoder::toSerial(ControlSpecs &controlSpecs) const {
 
     serial.print("#");
 
-    for (int i = 0; i < controlSpecs.getMotorCount(); i++) {
-        int motorValue = controlSpecs.getMotor(i);
-
-        BinaryUtils::toBytes(motorValue, buffer);
-        checksum += motorValue;
-        toSerial(buffer, INT_SIZE);
-    }
-
     float normalizedJoystickX = controlSpecs.getNormalized_joystick_X();
     BinaryUtils::toBytes(normalizedJoystickX, buffer);
     toSerial(buffer, FLOAT_SIZE);
