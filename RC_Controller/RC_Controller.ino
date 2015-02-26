@@ -17,7 +17,6 @@ Georgia Institute of Technology
 #include "ControlPin.h"
 #include "LCDDisplayer.h"
 #include "ControlReader.h"
-#include "ControlSideTextCoder.h"
 #include "ControlSideByteCoder.h"
 
 //Motors------------------------------
@@ -35,7 +34,6 @@ float robot_battery_voltage;
 //Slide pot---------------------------
 int depth_motor;
 
-ControlSideTextCoder textCoder = ControlSideTextCoder(Serial2);
 ControlSideByteCoder byteCoder = ControlSideByteCoder(Serial2);
 ControlSideCoder &coder = byteCoder;
 ControlReader controlReader;

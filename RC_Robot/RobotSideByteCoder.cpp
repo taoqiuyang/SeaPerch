@@ -21,8 +21,8 @@ bool RobotSideByteCoder::fromSerial(ControlSpecs & controlSpecs) const {
             controlSpecs.setNormalized_joystick_Y(normalizedJoystickY);
             expectedChecksum += normalizedJoystickY;
 
-            serial.readBytes(buffer, FLOAT_SIZE);
-            float slidePot = BinaryUtils::toFloat(buffer);
+            serial.readBytes(buffer, INT_SIZE);
+            int slidePot = BinaryUtils::toInt(buffer);
             controlSpecs.setSlidePot(slidePot);
             expectedChecksum += slidePot;
 
