@@ -26,10 +26,10 @@ const float ControlReader::processJoystick(int pinId, int midPoint) const {
     int rawValue = analogRead(pinId);
 
     if (rawValue < midPoint - 1) {
-        return (midPoint - rawValue) / (float)midPoint + 1;
+        return (midPoint - rawValue) / (float)midPoint;
     } else if (rawValue > midPoint + 1) {
-        return -1 * (rawValue - midPoint) / (float)(1023 - midPoint) + 1;
+        return -1 * (rawValue - midPoint) / (float)(1023 - midPoint);
     } else {
-        return 1;
+        return 0.0;
     }
 }

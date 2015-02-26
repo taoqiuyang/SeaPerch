@@ -65,8 +65,6 @@ void loop() {
     depth_motor = map(controlSpecs.getSlidePot(),0,1023,-255,255);
     controlSpecs.setJoystick_button(!digitalRead(JOYSTICK_PUSHBUTTON));
 
-    Motor4_Motor5_differential_and_limit_current();
-
     coder.toSerial(controlSpecs);
     delay(200);
 
@@ -87,24 +85,6 @@ void serialDisplay() {
 //    Serial.print("Battery Voltage: ");
 //    Serial.print(robot_battery_voltage);
 //    Serial.println(" V");
-}
-
-void Motor4_Motor5_differential_and_limit_current() {
-    float limit = 0.6;
-    float x = (controlSpecs.getNormalized_joystick_X() - 1) * limit;
-    float y = (controlSpecs.getNormalized_joystick_Y() - 1) * limit;
-    float m4, m5;
-
-    m4 = x + y;
-    m5 = x - y;
-    if (m4 > limit) {m4 = limit;}
-    if (m4 < -1.0 * limit) {m4 = -1.0 * limit;}
-    if (m5 > limit) {m5 = limit;}
-    if (m5 < -1.0 * limit) {m5 = -1.0 * limit;}
-
-    controlSpecs.setMotor(0, (int) ((m4 + 1) * 255));
-    controlSpecs.setMotor(1, (int) ((m5 + 1) * 255));
-    controlSpecs.setMotor(2, depth_motor + 255);
 }
 
 void serial_2_get_data_and_decode() {
