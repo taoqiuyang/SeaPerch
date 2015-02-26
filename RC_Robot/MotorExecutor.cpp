@@ -24,8 +24,8 @@ void MotorExecutor::execute(const ControlSpecs &controlSpecs) const {
     float normalizedX = controlSpecs.getNormalized_joystick_X();
     float normalizedY = controlSpecs.getNormalized_joystick_Y();
 
-    float normalizedLeft = max(min(normalizedY + normalizedX, 1.0), -1.0); // [-1, 1]
-    float normalizedRight = max(min(normalizedY - normalizedX, 1.0), -1.0); // [-1, 1]
+    float normalizedLeft = max(min(normalizedX + normalizedY, 1.0), -1.0); // [-1, 1]
+    float normalizedRight = max(min(normalizedX - normalizedY, 1.0), -1.0); // [-1, 1]
 
     uint8_t leftDirection = normalizedLeft > 0 ? FORWARD : BACKWARD;
     uint8_t rightDirection = normalizedRight > 0 ? FORWARD : BACKWARD;
