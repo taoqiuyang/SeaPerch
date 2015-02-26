@@ -19,9 +19,7 @@ Georgia Institute of Technology
 #include "ControlReader.h"
 #include "ControlSideByteCoder.h"
 
-//Motors------------------------------
-const int motorCount = 5;
-ControlSpecs controlSpecs(motorCount);
+ControlSpecs controlSpecs;
 
 //Serial Comm-------------------------
 String Serial_1_data_recieved = "";

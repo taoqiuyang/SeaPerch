@@ -77,7 +77,7 @@ float battery_voltage, float_to_be_sent;
 int int_to_be_sent_0, int_to_be_sent_1, int_to_be_sent_2, int_to_be_sent_3, int_to_be_sent_4;
 
 RobotSideByteCoder byteCoder(Serial2);
-ControlSpecs controlSpecs(5);
+ControlSpecs controlSpecs;
 MotorExecutor motorExecutor;
 
 void setup() {
