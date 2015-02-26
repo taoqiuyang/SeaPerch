@@ -11,13 +11,15 @@ public:
 
     void begin();
 
-    void execute(const ControlSpecs &controlSpecs) const;
+    void execute(const ControlSpecs &controlSpecs);
 
 private:
     Adafruit_MotorShield AFMS;
     Adafruit_DCMotor *leftMotor;
     Adafruit_DCMotor *rightMotor;
     Adafruit_DCMotor *upMotor;
+
+    void executeJoystickCommand(float normalizedX, float normalizedY);
 };
 
 #endif

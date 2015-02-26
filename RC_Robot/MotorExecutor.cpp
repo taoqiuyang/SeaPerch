@@ -20,25 +20,8 @@ void MotorExecutor::begin() {
     upMotor->setSpeed(0);
 }
 
-void MotorExecutor::execute(const ControlSpecs &controlSpecs) const {
-    float normalizedX = controlSpecs.getNormalized_joystick_X();
-    float normalizedY = controlSpecs.getNormalized_joystick_Y();
-
-    float normalizedLeft = max(min(normalizedX + normalizedY, 1.0), -1.0); // [-1, 1]
-    float normalizedRight = max(min(normalizedX - normalizedY, 1.0), -1.0); // [-1, 1]
-
-    uint8_t leftDirection = normalizedLeft > 0 ? FORWARD : BACKWARD;
-    uint8_t rightDirection = normalizedRight > 0 ? FORWARD : BACKWARD;
-
-    int rawLeftMagnitude = abs((int)(normalizedLeft * 255));
-    int rawRightMagnitude = abs((int)(normalizedRight * 255));
-    int leftMagnitude = rawLeftMagnitude == 0 ? 0 : map(rawLeftMagnitude, 3, 255, 30, 150);
-    int rightMagnitude = rawRightMagnitude == 0 ? 0 : map(rawRightMagnitude, 3, 255, 30, 150);
-
-    leftMotor->setSpeed(leftMagnitude);
-    leftMotor->run(leftDirection);
-    rightMotor->setSpeed(rightMagnitude);
-    rightMotor->run(rightDirection);
+void MotorExecutor::execute(const ControlSpecs &controlSpecs) {
+    executeJoystickCommand(controlSpecs.getNormalized_joystick_X(), controlSpecs.getNormalized_joystick_Y());
 
     //    uint8_t motorSpd1 = 0;
 //    uint8_t motorSpd2 = 0;
@@ -98,4 +81,22 @@ void MotorExecutor::execute(const ControlSpecs &controlSpecs) const {
 //    } else {
 //        upMotor->setSpeed(0);
 //    }
+}
+
+void MotorExecutor::executeJoystickCommand(float normalizedX, float normalizedY) {
+    float normalizedLeft = max(min(normalizedX + normalizedY, 1.0), -1.0); // [-1, 1]
+    float normalizedRight = max(min(normalizedX - normalizedY, 1.0), -1.0); // [-1, 1]
+
+    uint8_t leftDirection = normalizedLeft > 0 ? FORWARD : BACKWARD;
+    uint8_t rightDirection = normalizedRight > 0 ? FORWARD : BACKWARD;
+
+    int rawLeftMagnitude = abs((int)(normalizedLeft * 255));
+    int rawRightMagnitude = abs((int)(normalizedRight * 255));
+    int leftMagnitude = rawLeftMagnitude == 0 ? 0 : map(rawLeftMagnitude, 5, 255, 30, 150);
+    int rightMagnitude = rawRightMagnitude == 0 ? 0 : map(rawRightMagnitude, 5, 255, 30, 150);
+
+    leftMotor->setSpeed(leftMagnitude);
+    leftMotor->run(leftDirection);
+    rightMotor->setSpeed(rightMagnitude);
+    rightMotor->run(rightDirection);
 }
