@@ -2,22 +2,27 @@
 
 #include "MotorExecutor.h"
 
-const int I2CAddress = 0x61;
+const int I2C_ADDR = 0x61;
+const int MAX_MOTOR_SPEED = 255;
+const int MIN_MOTOR_SPEED = 5;
+const int MAX_ALLOWED_SPEED = 150;
+const int MIN_ALLOWED_SPEED = 30;
+
 enum MotorPosition {
-    LEFT = 1, RIGHT = 2, UP = 3
+    LEFT = 1, RIGHT = 2, VERTICAL = 3
 };
 
-MotorExecutor::MotorExecutor() : AFMS(I2CAddress) {
+MotorExecutor::MotorExecutor() : AFMS(I2C_ADDR) {
     leftMotor = AFMS.getMotor(LEFT);
     rightMotor = AFMS.getMotor(RIGHT);
-    upMotor = AFMS.getMotor(UP);
+    verticalMotor = AFMS.getMotor(VERTICAL);
 }
 
 void MotorExecutor::begin() {
     AFMS.begin();  // 1.6KHz PWM
     leftMotor->setSpeed(0);
     rightMotor->setSpeed(0);
-    upMotor->setSpeed(0);
+    verticalMotor->setSpeed(0);
 }
 
 void MotorExecutor::execute(const ControlSpecs &controlSpecs) {
@@ -32,10 +37,10 @@ void MotorExecutor::executeJoystickCommand(float normalizedX, float normalizedY)
     uint8_t leftDirection = normalizedLeft > 0 ? FORWARD : BACKWARD;
     uint8_t rightDirection = normalizedRight > 0 ? FORWARD : BACKWARD;
 
-    int rawLeftMagnitude = abs((int)(normalizedLeft * 255));
-    int rawRightMagnitude = abs((int)(normalizedRight * 255));
-    int leftMagnitude = rawLeftMagnitude == 0 ? 0 : map(rawLeftMagnitude, 5, 255, 30, 150);
-    int rightMagnitude = rawRightMagnitude == 0 ? 0 : map(rawRightMagnitude, 5, 255, 30, 150);
+    int rawLeftMagnitude = abs((int)(normalizedLeft * MAX_MOTOR_SPEED));
+    int rawRightMagnitude = abs((int)(normalizedRight * MAX_MOTOR_SPEED));
+    int leftMagnitude = rawLeftMagnitude == 0 ? 0 : map(rawLeftMagnitude, MIN_MOTOR_SPEED, MAX_MOTOR_SPEED, MIN_ALLOWED_SPEED, MAX_ALLOWED_SPEED);
+    int rightMagnitude = rawRightMagnitude == 0 ? 0 : map(rawRightMagnitude, MIN_MOTOR_SPEED, MAX_MOTOR_SPEED, MIN_ALLOWED_SPEED, MAX_ALLOWED_SPEED);
 
     leftMotor->setSpeed(leftMagnitude);
     leftMotor->run(leftDirection);
@@ -44,10 +49,11 @@ void MotorExecutor::executeJoystickCommand(float normalizedX, float normalizedY)
 }
 
 void MotorExecutor::executeSlidePotCommand(int slidePotValue) {
-    int rawUpPropulsion = map(slidePotValue, 0, 1023, -255, 255);
-    uint8_t upDirection = rawUpPropulsion > 0 ? FORWARD : BACKWARD;
-    int upMagnitude = (rawUpPropulsion < 5 && rawUpPropulsion > -5) ? 0 : map(abs(rawUpPropulsion), 5, 255, 30, 150);
+    int rawVerticalPropulsion = map(slidePotValue, 0, 1023, -1 * MAX_MOTOR_SPEED, MAX_MOTOR_SPEED);
+    uint8_t verticalDirection = rawVerticalPropulsion > 0 ? FORWARD : BACKWARD;
+    int verticalMagnitude = (rawVerticalPropulsion < MIN_MOTOR_SPEED && rawVerticalPropulsion > -1 * MIN_MOTOR_SPEED) ? 0
+            : map(abs(rawVerticalPropulsion), MIN_MOTOR_SPEED, MAX_MOTOR_SPEED, MIN_ALLOWED_SPEED, MAX_ALLOWED_SPEED);
 
-    upMotor->setSpeed(upMagnitude);
-    upMotor->run(upDirection);
+    verticalMotor->setSpeed(verticalMagnitude);
+    verticalMotor->run(verticalDirection);
 }

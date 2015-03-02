@@ -17,7 +17,7 @@ private:
     Adafruit_MotorShield AFMS;
     Adafruit_DCMotor *leftMotor;
     Adafruit_DCMotor *rightMotor;
-    Adafruit_DCMotor *upMotor;
+    Adafruit_DCMotor *verticalMotor;
 
     void executeJoystickCommand(float normalizedX, float normalizedY);
 
