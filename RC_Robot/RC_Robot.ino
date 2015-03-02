@@ -57,15 +57,6 @@ double pressure_abs, pressure_relative, altitude_delta, pressure_baseline;
 double base_altitude = 1655.0; // Altitude of SparkFun's HQ in Boulder, CO. in (m)
 //--------------------------------------------------------------------------
 
-//PID-----------------------------------------------------------------------
-double Setpoint_PID, Input_PID, Output_PID;
-//Specify the links and initial tuning parameters
-double Kp = 5;
-double Ki = 0.00;
-double Kd = 1;
-PID myPID(&Input_PID, &Output_PID, &Setpoint_PID, Kp, Ki, Kd, DIRECT);
-//--------------------------------------------------------------------------
-
 String Serial_1_data_recieved = "";
 String Serial_2_data_recieved = "";
 
@@ -99,11 +90,11 @@ void setup() {
     //---------------------------------
 
     //---PID---------------------------
-    Input_PID = 1000; //1atm=1000mbar
-    Setpoint_PID = 1000;
-    myPID.SetOutputLimits(-255, 255);
-    //turn the PID on
-    myPID.SetMode(AUTOMATIC);
+//    Input_PID = 1000; //1atm=1000mbar
+//    Setpoint_PID = 1000;
+//    myPID.SetOutputLimits(-255, 255);
+//    //turn the PID on
+//    myPID.SetMode(AUTOMATIC);
     //----------------------------------
 }
 
@@ -114,10 +105,10 @@ void loop() {
     }
 
     //PID-----------------------------------
-    Input_PID = analogRead(0);
-    Input_PID = map(Input_PID, 0, 1024, 1480, 1520);
-    Setpoint_PID = 1500; //the water pressure (mabr)at desired depth
-    myPID.Compute();
+//    Input_PID = analogRead(0);
+//    Input_PID = map(Input_PID, 0, 1024, 1480, 1520);
+//    Setpoint_PID = 1500; //the water pressure (mabr)at desired depth
+//    myPID.Compute();
     //Output_PID=[-255,255]
 
 //    Serial.print("In: ");

@@ -8,11 +8,16 @@ const int MIN_MOTOR_SPEED = 5;
 const int MAX_ALLOWED_SPEED = 150;
 const int MIN_ALLOWED_SPEED = 30;
 
+//initial tuning parameters
+const double Kp = 5;
+const double Ki = 0.00;
+const double Kd = 1;
+
 enum MotorPosition {
     LEFT = 1, RIGHT = 2, VERTICAL = 3
 };
 
-MotorExecutor::MotorExecutor() : AFMS(I2C_ADDR) {
+MotorExecutor::MotorExecutor() : AFMS(I2C_ADDR), myPID(&Input_PID, &Output_PID, &Setpoint_PID, Kp, Ki, Kd, DIRECT) {
     leftMotor = AFMS.getMotor(LEFT);
     rightMotor = AFMS.getMotor(RIGHT);
     verticalMotor = AFMS.getMotor(VERTICAL);
