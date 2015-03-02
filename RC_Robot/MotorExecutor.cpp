@@ -17,7 +17,7 @@ enum MotorPosition {
     LEFT = 1, RIGHT = 2, VERTICAL = 3
 };
 
-MotorExecutor::MotorExecutor() : AFMS(I2C_ADDR), myPID(&PIDInput, &PIDOutput, &PIDSetpoint, Kp, Ki, Kd, DIRECT) {
+MotorExecutor::MotorExecutor() : AFMS(I2C_ADDR), myPID(&pidInput, &pidOutput, &pidSetpoint, Kp, Ki, Kd, DIRECT) {
     leftMotor = AFMS.getMotor(LEFT);
     rightMotor = AFMS.getMotor(RIGHT);
     verticalMotor = AFMS.getMotor(VERTICAL);
@@ -58,9 +58,9 @@ void MotorExecutor::executeHorizontalMotors(float normalizedX, float normalizedY
 
 void MotorExecutor::executeSpeedControlledVerticalMotor(int speedInput) {
     int rawVerticalPropulsion = map(speedInput, 0, 1023, -1 * MAX_MOTOR_SPEED, MAX_MOTOR_SPEED);
-    uint8_t verticalDirection = rawVerticalPropulsion > 0 ? FORWARD : BACKWARD;
     int verticalMagnitude = (rawVerticalPropulsion < MIN_MOTOR_SPEED && rawVerticalPropulsion > -1 * MIN_MOTOR_SPEED) ? 0
             : map(abs(rawVerticalPropulsion), MIN_MOTOR_SPEED, MAX_MOTOR_SPEED, MIN_ALLOWED_SPEED, MAX_ALLOWED_SPEED);
+    uint8_t verticalDirection = rawVerticalPropulsion > 0 ? FORWARD : BACKWARD;
 
     verticalMotor->setSpeed(verticalMagnitude);
     verticalMotor->run(verticalDirection);

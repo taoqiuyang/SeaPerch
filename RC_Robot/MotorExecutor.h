@@ -16,9 +16,9 @@ public:
 
 private:
     PID myPID;
-    double PIDInput;
-    double PIDOutput;
-    double PIDSetpoint;
+    double pidInput;
+    double pidOutput;
+    double pidSetpoint;
     Adafruit_MotorShield AFMS;
     Adafruit_DCMotor *leftMotor;
     Adafruit_DCMotor *rightMotor;
