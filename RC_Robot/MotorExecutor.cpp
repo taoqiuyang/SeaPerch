@@ -17,7 +17,7 @@ enum MotorPosition {
     LEFT = 1, RIGHT = 2, VERTICAL = 3
 };
 
-MotorExecutor::MotorExecutor() : AFMS(I2C_ADDR), myPID(&Input_PID, &Output_PID, &Setpoint_PID, Kp, Ki, Kd, DIRECT) {
+MotorExecutor::MotorExecutor() : AFMS(I2C_ADDR), myPID(&PIDInput, &PIDOutput, &PIDSetpoint, Kp, Ki, Kd, DIRECT) {
     leftMotor = AFMS.getMotor(LEFT);
     rightMotor = AFMS.getMotor(RIGHT);
     verticalMotor = AFMS.getMotor(VERTICAL);
@@ -34,11 +34,11 @@ void MotorExecutor::begin() {
 }
 
 void MotorExecutor::execute(const ControlSpecs &controlSpecs, const double currentDepth) {
-    executeJoystickCommand(controlSpecs.getNormalized_joystick_X(), controlSpecs.getNormalized_joystick_Y());
-    executeSlidePotCommand(controlSpecs.getSlidePot());
+    executeHorizontalMotors(controlSpecs.getNormalized_joystick_X(), controlSpecs.getNormalized_joystick_Y());
+    executeSpeedControlledVerticalMotor(controlSpecs.getSlidePot());
 }
 
-void MotorExecutor::executeJoystickCommand(float normalizedX, float normalizedY) {
+void MotorExecutor::executeHorizontalMotors(float normalizedX, float normalizedY) {
     float normalizedLeft = max(min(normalizedX + normalizedY, 1.0), -1.0); // [-1, 1]
     float normalizedRight = max(min(normalizedX - normalizedY, 1.0), -1.0); // [-1, 1]
 
@@ -56,12 +56,16 @@ void MotorExecutor::executeJoystickCommand(float normalizedX, float normalizedY)
     rightMotor->run(rightDirection);
 }
 
-void MotorExecutor::executeSlidePotCommand(int slidePotValue) {
-    int rawVerticalPropulsion = map(slidePotValue, 0, 1023, -1 * MAX_MOTOR_SPEED, MAX_MOTOR_SPEED);
+void MotorExecutor::executeSpeedControlledVerticalMotor(int speedInput) {
+    int rawVerticalPropulsion = map(speedInput, 0, 1023, -1 * MAX_MOTOR_SPEED, MAX_MOTOR_SPEED);
     uint8_t verticalDirection = rawVerticalPropulsion > 0 ? FORWARD : BACKWARD;
     int verticalMagnitude = (rawVerticalPropulsion < MIN_MOTOR_SPEED && rawVerticalPropulsion > -1 * MIN_MOTOR_SPEED) ? 0
             : map(abs(rawVerticalPropulsion), MIN_MOTOR_SPEED, MAX_MOTOR_SPEED, MIN_ALLOWED_SPEED, MAX_ALLOWED_SPEED);
 
     verticalMotor->setSpeed(verticalMagnitude);
     verticalMotor->run(verticalDirection);
+}
+
+void MotorExecutor::executeDepthControlledVerticalMotor(int depthInput) {
+
 }
