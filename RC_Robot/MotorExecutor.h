@@ -16,17 +16,19 @@ public:
 
 private:
     PID myPID;
-    double Input_PID;
-    double Output_PID;
-    double Setpoint_PID;
+    double PIDInput;
+    double PIDOutput;
+    double PIDSetpoint;
     Adafruit_MotorShield AFMS;
     Adafruit_DCMotor *leftMotor;
     Adafruit_DCMotor *rightMotor;
     Adafruit_DCMotor *verticalMotor;
 
-    void executeJoystickCommand(float normalizedX, float normalizedY);
+    void executeHorizontalMotors(float normalizedX, float normalizedY);
 
-    void executeSlidePotCommand(int slidePotValue);
+    void executeSpeedControlledVerticalMotor(int speedInput);
+
+    void executeDepthControlledVerticalMotor(int depthInput);
 };
 
 #endif
