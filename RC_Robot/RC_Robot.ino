@@ -101,7 +101,7 @@ void setup() {
 
 void loop() {
     if (byteCoder.fromSerial(controlSpecs)) {
-        motorExecutor.execute(controlSpecs);
+        motorExecutor.execute(controlSpecs, analogRead(0));
     }
 
     //PID-----------------------------------

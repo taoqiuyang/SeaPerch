@@ -12,7 +12,7 @@ public:
 
     void begin();
 
-    void execute(const ControlSpecs &controlSpecs);
+    void execute(const ControlSpecs &controlSpecs, const double currentDepth);
 
 private:
     PID myPID;

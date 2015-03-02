@@ -28,9 +28,12 @@ void MotorExecutor::begin() {
     leftMotor->setSpeed(0);
     rightMotor->setSpeed(0);
     verticalMotor->setSpeed(0);
+
+    myPID.SetOutputLimits(-1 * MAX_MOTOR_SPEED, MAX_MOTOR_SPEED);
+    myPID.SetMode(AUTOMATIC);
 }
 
-void MotorExecutor::execute(const ControlSpecs &controlSpecs) {
+void MotorExecutor::execute(const ControlSpecs &controlSpecs, const double currentDepth) {
     executeJoystickCommand(controlSpecs.getNormalized_joystick_X(), controlSpecs.getNormalized_joystick_Y());
     executeSlidePotCommand(controlSpecs.getSlidePot());
 }
