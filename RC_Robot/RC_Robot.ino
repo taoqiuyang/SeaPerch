@@ -39,6 +39,7 @@ SeaPerch Remote Control Test
 
 #include "MotorExecutor.h"
 #include "RobotSideByteCoder.h"
+#include "SeaPerch_AlgoUtils.h"
 
 //IMU----------------------------------------------------------------------
 Adafruit_10DOF dof = Adafruit_10DOF();
@@ -101,7 +102,7 @@ void setup() {
 
 void loop() {
     if (byteCoder.fromSerial(controlSpecs)) {
-        motorExecutor.execute(controlSpecs, analogRead(0));
+        motorExecutor.execute(controlSpecs, sensor.getPressure(ADC_4096));
     }
 
     //PID-----------------------------------

@@ -10,7 +10,7 @@ class MotorExecutor {
 public:
     explicit MotorExecutor();
 
-    void initialize(const double aPressureBaseline);
+    void initialize(const double aPressureBase);
 
     void execute(const ControlSpecs &controlSpecs, const double currentDepth);
 
@@ -19,7 +19,8 @@ private:
     double pidInput;
     double pidOutput;
     double pidSetpoint;
-    double pressureBaseline;
+    double pressureBase;
+    double pressureCap;
     Adafruit_MotorShield AFMS;
     Adafruit_DCMotor *leftMotor;
     Adafruit_DCMotor *rightMotor;
