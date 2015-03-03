@@ -23,7 +23,9 @@ MotorExecutor::MotorExecutor() : AFMS(I2C_ADDR), myPID(&pidInput, &pidOutput, &p
     verticalMotor = AFMS.getMotor(VERTICAL);
 }
 
-void MotorExecutor::begin() {
+void MotorExecutor::initialize(double aPressureBaseline) {
+    pressureBaseline = aPressureBaseline;
+
     AFMS.begin();  // 1.6KHz PWM
     leftMotor->setSpeed(0);
     rightMotor->setSpeed(0);

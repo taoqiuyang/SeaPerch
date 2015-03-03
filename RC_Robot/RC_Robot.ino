@@ -77,8 +77,6 @@ void setup() {
     Serial1.begin(9600);
     Serial2.begin(9600);
 
-    motorExecutor.begin();
-
     //---initialize the IMU------------
     initSensors();
     //---------------------------------
@@ -88,6 +86,8 @@ void setup() {
     sensor.begin();
     pressure_baseline = sensor.getPressure(ADC_4096);
     //---------------------------------
+
+    motorExecutor.initialize(pressure_baseline);
 
     //---PID---------------------------
 //    Input_PID = 1000; //1atm=1000mbar
