@@ -10,7 +10,7 @@ class MotorExecutor {
 public:
     explicit MotorExecutor();
 
-    void initialize(double aPressureBaseline);
+    void initialize(const double aPressureBaseline);
 
     void execute(const ControlSpecs &controlSpecs, const double currentDepth);
 
@@ -25,11 +25,11 @@ private:
     Adafruit_DCMotor *rightMotor;
     Adafruit_DCMotor *verticalMotor;
 
-    void executeHorizontalMotors(float normalizedX, float normalizedY);
+    void executeHorizontalMotors(const float normalizedX, const float normalizedY);
 
-    void executeSpeedControlledVerticalMotor(int speedInput);
+    void executeSpeedControlledVerticalMotor(const int speedInput);
 
-    void executeDepthControlledVerticalMotor(int depthInput);
+    void executeDepthControlledVerticalMotor(const int depthInput, const double currentDepth);
 };
 
 #endif

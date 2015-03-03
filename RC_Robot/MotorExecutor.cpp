@@ -23,7 +23,7 @@ MotorExecutor::MotorExecutor() : AFMS(I2C_ADDR), myPID(&pidInput, &pidOutput, &p
     verticalMotor = AFMS.getMotor(VERTICAL);
 }
 
-void MotorExecutor::initialize(double aPressureBaseline) {
+void MotorExecutor::initialize(const double aPressureBaseline) {
     pressureBaseline = aPressureBaseline;
 
     AFMS.begin();  // 1.6KHz PWM
@@ -40,7 +40,7 @@ void MotorExecutor::execute(const ControlSpecs &controlSpecs, const double curre
     executeSpeedControlledVerticalMotor(controlSpecs.getSlidePot());
 }
 
-void MotorExecutor::executeHorizontalMotors(float normalizedX, float normalizedY) {
+void MotorExecutor::executeHorizontalMotors(const float normalizedX, const float normalizedY) {
     float normalizedLeft = max(min(normalizedX + normalizedY, 1.0), -1.0); // [-1, 1]
     float normalizedRight = max(min(normalizedX - normalizedY, 1.0), -1.0); // [-1, 1]
 
@@ -58,7 +58,7 @@ void MotorExecutor::executeHorizontalMotors(float normalizedX, float normalizedY
     rightMotor->run(rightDirection);
 }
 
-void MotorExecutor::executeSpeedControlledVerticalMotor(int speedInput) {
+void MotorExecutor::executeSpeedControlledVerticalMotor(const int speedInput) {
     int rawVerticalPropulsion = map(speedInput, 0, 1023, -1 * MAX_MOTOR_SPEED, MAX_MOTOR_SPEED);
     int verticalMagnitude = (rawVerticalPropulsion < MIN_MOTOR_SPEED && rawVerticalPropulsion > -1 * MIN_MOTOR_SPEED) ? 0
             : map(abs(rawVerticalPropulsion), MIN_MOTOR_SPEED, MAX_MOTOR_SPEED, MIN_ALLOWED_SPEED, MAX_ALLOWED_SPEED);
@@ -68,6 +68,6 @@ void MotorExecutor::executeSpeedControlledVerticalMotor(int speedInput) {
     verticalMotor->run(verticalDirection);
 }
 
-void MotorExecutor::executeDepthControlledVerticalMotor(int depthInput) {
+void MotorExecutor::executeDepthControlledVerticalMotor(const int depthInput, const double currentDepth) {
 
 }
