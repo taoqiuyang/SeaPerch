@@ -143,6 +143,12 @@
 <packages>
 </packages>
 <symbols>
+<symbol name="+5V">
+<wire x1="1.27" y1="-1.905" x2="0" y2="0" width="0.254" layer="94"/>
+<wire x1="0" y1="0" x2="-1.27" y2="-1.905" width="0.254" layer="94"/>
+<text x="-2.54" y="-5.08" size="1.778" layer="96" rot="R90">&gt;VALUE</text>
+<pin name="+5V" x="0" y="-2.54" visible="off" length="short" direction="sup" rot="R90"/>
+</symbol>
 <symbol name="GND">
 <wire x1="-1.905" y1="0" x2="1.905" y2="0" width="0.254" layer="94"/>
 <text x="-2.54" y="-2.54" size="1.778" layer="96">&gt;VALUE</text>
@@ -156,6 +162,19 @@
 </symbol>
 </symbols>
 <devicesets>
+<deviceset name="+5V" prefix="P+">
+<description>&lt;b&gt;SUPPLY SYMBOL&lt;/b&gt;</description>
+<gates>
+<gate name="1" symbol="+5V" x="0" y="0"/>
+</gates>
+<devices>
+<device name="">
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
 <deviceset name="GND" prefix="GND">
 <description>&lt;b&gt;SUPPLY SYMBOL&lt;/b&gt;</description>
 <gates>
@@ -9495,6 +9514,7 @@ Source: http://www.bourns.com/data/global/PDFs/3223.PDF</description>
 </classes>
 <parts>
 <part name="ZU4" library="SmartPrj" deviceset="ATMEGA328P-" device="PU"/>
+<part name="P+3" library="supply1" deviceset="+5V" device=""/>
 <part name="GND2" library="supply1" deviceset="GND" device=""/>
 <part name="GND3" library="supply1" deviceset="GND" device=""/>
 <part name="IC1" library="74xx-eu" deviceset="74*02" device="N" technology="HCT"/>
@@ -9529,7 +9549,6 @@ Source: http://www.bourns.com/data/global/PDFs/3223.PDF</description>
 <part name="C4" library="SparkFun-Passives" deviceset="CAP" device="PTH3" value="100n"/>
 <part name="R2" library="pot" deviceset="TRIM_US-" device="B25P"/>
 <part name="GND10" library="supply1" deviceset="GND" device=""/>
-<part name="P+3" library="supply1" deviceset="VCC" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -9537,6 +9556,9 @@ Source: http://www.bourns.com/data/global/PDFs/3223.PDF</description>
 </plain>
 <instances>
 <instance part="ZU4" gate="G$1" x="157.48" y="53.34"/>
+<instance part="P+3" gate="1" x="119.38" y="53.34" smashed="yes">
+<attribute name="VALUE" x="121.285" y="55.88" size="1.778" layer="96" rot="R180"/>
+</instance>
 <instance part="GND2" gate="1" x="129.54" y="33.02"/>
 <instance part="GND3" gate="1" x="99.06" y="66.04"/>
 <instance part="IC1" gate="A" x="228.6" y="127"/>
@@ -9574,11 +9596,23 @@ Source: http://www.bourns.com/data/global/PDFs/3223.PDF</description>
 <instance part="C4" gate="G$1" x="88.9" y="73.66" rot="R180"/>
 <instance part="R2" gate="G$1" x="284.48" y="60.96"/>
 <instance part="GND10" gate="1" x="284.48" y="48.26"/>
-<instance part="P+3" gate="VCC" x="119.38" y="55.88"/>
 </instances>
 <busses>
 </busses>
 <nets>
+<net name="+5V" class="3">
+<segment>
+<wire x1="137.16" y1="50.8" x2="124.46" y2="50.8" width="0.1524" layer="91"/>
+<pinref part="ZU4" gate="G$1" pin="VCC"/>
+<pinref part="P+3" gate="1" pin="+5V"/>
+<pinref part="ZU4" gate="G$1" pin="AVCC"/>
+<wire x1="124.46" y1="50.8" x2="119.38" y2="50.8" width="0.1524" layer="91"/>
+<wire x1="137.16" y1="58.42" x2="124.46" y2="58.42" width="0.1524" layer="91"/>
+<wire x1="124.46" y1="58.42" x2="124.46" y2="50.8" width="0.1524" layer="91"/>
+<pinref part="C3" gate="G$1" pin="2"/>
+<wire x1="124.46" y1="48.26" x2="124.46" y2="50.8" width="0.1524" layer="91"/>
+</segment>
+</net>
 <net name="GND" class="2">
 <segment>
 <pinref part="IC1" gate="B" pin="I1"/>
@@ -9722,18 +9756,6 @@ Source: http://www.bourns.com/data/global/PDFs/3223.PDF</description>
 <wire x1="307.34" y1="40.64" x2="307.34" y2="38.1" width="0.1524" layer="91"/>
 <pinref part="JP3" gate="1" pin="1"/>
 <wire x1="307.34" y1="38.1" x2="312.42" y2="38.1" width="0.1524" layer="91"/>
-</segment>
-<segment>
-<wire x1="137.16" y1="50.8" x2="124.46" y2="50.8" width="0.1524" layer="91"/>
-<pinref part="ZU4" gate="G$1" pin="VCC"/>
-<pinref part="ZU4" gate="G$1" pin="AVCC"/>
-<wire x1="124.46" y1="50.8" x2="119.38" y2="50.8" width="0.1524" layer="91"/>
-<wire x1="137.16" y1="58.42" x2="124.46" y2="58.42" width="0.1524" layer="91"/>
-<wire x1="124.46" y1="58.42" x2="124.46" y2="50.8" width="0.1524" layer="91"/>
-<pinref part="C3" gate="G$1" pin="2"/>
-<wire x1="124.46" y1="48.26" x2="124.46" y2="50.8" width="0.1524" layer="91"/>
-<pinref part="P+3" gate="VCC" pin="VCC"/>
-<wire x1="119.38" y1="50.8" x2="119.38" y2="53.34" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="38KHZ" class="0">
