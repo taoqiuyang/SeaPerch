@@ -6,6 +6,7 @@
 
 //LCD key shield------------------------
 LiquidCrystal lcd(8, 13, 9, 4, 5, 6, 7);
+const int MAX_LINE = 2;
 int adc_key_in;
 int NUM_KEYS = 5;
 int adc_key_val[5] = {50, 200, 400, 600, 800};
@@ -41,12 +42,13 @@ void lcdWelcome() {
     lcd.clear();
 }
 
-void lcdDisplay(float robot_battery_voltage) {
-    lcd.setCursor(0, 0);
-    lcd.print("Battery Voltage:");
-    lcd.setCursor(0, 1);
-    lcd.print(robot_battery_voltage);
-    lcd.print(" V");
+void lcdDisplay(String messages[], int lineCount) {
+    int displayableLineCount = min(lineCount, MAX_LINE);
+
+    for (int i = 0; i < displayableLineCount; i++) {
+        lcd.setCursor(0, i);
+        lcd.print(messages[i]);
+    }
 }
 
 void detectKey() {
