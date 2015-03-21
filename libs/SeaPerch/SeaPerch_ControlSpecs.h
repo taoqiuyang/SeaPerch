@@ -1,6 +1,8 @@
 #ifndef _SeaPerch_ControlSpecs_H
 #define _SeaPerch_ControlSpecs_H
 
+#include "SeaPerch_ControlMode.h"
+
 class ControlSpecs {
 public:
     explicit ControlSpecs();
@@ -19,8 +21,13 @@ public:
 
     void setSlidePot(const int aSlidePot);
 
+    const ControlMode getSlidePotMode() const;
+
+    void setSlidePotMode(const ControlMode controlMode);
+
 private:
     int slidePot;
+    ControlMode slidePotMode;
     float normalized_joystick_X;
     float normalized_joystick_Y;
 };

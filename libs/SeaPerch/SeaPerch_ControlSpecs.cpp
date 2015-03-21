@@ -32,3 +32,11 @@ const int ControlSpecs::getSlidePot() const {
 void ControlSpecs::setSlidePot(const int aSlidePot) {
     slidePot = aSlidePot;
 }
+
+const ControlMode ControlSpecs::getSlidePotMode() const {
+    return slidePotMode;
+}
+
+void ControlSpecs::setSlidePotMode(const ControlMode controlMode) {
+    slidePotMode = controlMode;
+}
