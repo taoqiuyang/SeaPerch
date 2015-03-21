@@ -55,7 +55,7 @@ void loop() {
     //--------------------------------------------------------
     controlReader.readControlSpecs(controlSpecs);
     coder.toSerial(controlSpecs);
-    delay(200);
+    delay(100);
 
     serial_2_get_data_and_decode();
 
