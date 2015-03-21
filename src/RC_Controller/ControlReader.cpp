@@ -17,7 +17,7 @@ void ControlReader::calibrate() {
 }
 
 void ControlReader::readControlSpecs(ControlSpecs &controlSpecs) const {
-    controlSpecs.setSlidePot(analogRead(SLIDE_POT));
+    controlSpecs.setSlidePotValue(analogRead(SLIDE_POT));
     controlSpecs.setSlidePotMode(SPEED);
     controlSpecs.setNormalized_joystick_X(processJoystick(JOYSTICK_HORIZONTAL, joystickMidPointX));
     controlSpecs.setNormalized_joystick_Y(processJoystick(JOYSTICK_VERTICAL, joystickMidPointY));

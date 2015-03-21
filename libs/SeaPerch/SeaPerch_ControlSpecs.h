@@ -17,16 +17,16 @@ public:
 
     void setNormalized_joystick_Y(const float aNormalized_joystick_Y);
 
-    const int getSlidePot() const;
+    const int getSlidePotValue() const;
 
-    void setSlidePot(const int aSlidePot);
+    void setSlidePotValue(const int aSlidePotValue);
 
     const ControlMode getSlidePotMode() const;
 
     void setSlidePotMode(const ControlMode controlMode);
 
 private:
-    int slidePot;
+    int slidePotValue;
     ControlMode slidePotMode;
     float normalized_joystick_X;
     float normalized_joystick_Y;

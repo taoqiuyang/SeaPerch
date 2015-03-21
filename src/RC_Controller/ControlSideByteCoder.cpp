@@ -21,10 +21,10 @@ void ControlSideByteCoder::toSerial(ControlSpecs &controlSpecs) const {
     toSerial(buffer, FLOAT_SIZE);
     checksum += normalizedJoystickY;
 
-    int slidePot = controlSpecs.getSlidePot();
-    BinaryUtils::toBytes(slidePot, buffer);
+    int slidePotValue = controlSpecs.getSlidePotValue();
+    BinaryUtils::toBytes(slidePotValue, buffer);
     toSerial(buffer, INT_SIZE);
-    checksum += slidePot;
+    checksum += slidePotValue;
 
     int slidePotMode = static_cast<int>(controlSpecs.getSlidePotMode());
     BinaryUtils::toBytes(slidePotMode, buffer);

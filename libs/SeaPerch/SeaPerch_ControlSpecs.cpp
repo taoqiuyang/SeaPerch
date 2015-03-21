@@ -4,7 +4,8 @@ ControlSpecs::ControlSpecs(){
 }
 
 ControlSpecs::ControlSpecs(const ControlSpecs& controlSpecs) {
-    slidePot = controlSpecs.getSlidePot();
+    slidePotMode = controlSpecs.getSlidePotMode();
+    slidePotValue = controlSpecs.getSlidePotValue();
     normalized_joystick_X = controlSpecs.getNormalized_joystick_X();
     normalized_joystick_Y = controlSpecs.getNormalized_joystick_Y();
 }
@@ -25,12 +26,12 @@ void ControlSpecs::setNormalized_joystick_Y(const float aNormalized_joystick_Y) 
     normalized_joystick_Y = aNormalized_joystick_Y;
 }
 
-const int ControlSpecs::getSlidePot() const {
-    return slidePot;
+const int ControlSpecs::getSlidePotValue() const {
+    return slidePotValue;
 }
 
-void ControlSpecs::setSlidePot(const int aSlidePot) {
-    slidePot = aSlidePot;
+void ControlSpecs::setSlidePotValue(const int aSlidePotValue) {
+    slidePotValue = aSlidePotValue;
 }
 
 const ControlMode ControlSpecs::getSlidePotMode() const {
