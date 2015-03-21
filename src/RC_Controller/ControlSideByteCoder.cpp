@@ -7,37 +7,45 @@ ControlSideByteCoder::ControlSideByteCoder(HardwareSerial &serial) : ControlSide
 
 void ControlSideByteCoder::toSerial(ControlSpecs &controlSpecs) const {
     float checksum = 0;
-    char buffer[max(INT_SIZE, FLOAT_SIZE)];
 
     serial.print("#");
 
     float normalizedJoystickX = controlSpecs.getNormalized_joystick_X();
-    BinaryUtils::toBytes(normalizedJoystickX, buffer);
-    toSerial(buffer, FLOAT_SIZE);
+    floatToSerial(normalizedJoystickX);
     checksum += normalizedJoystickX;
 
     float normalizedJoystickY = controlSpecs.getNormalized_joystick_Y();
-    BinaryUtils::toBytes(normalizedJoystickY, buffer);
-    toSerial(buffer, FLOAT_SIZE);
+    floatToSerial(normalizedJoystickY);
     checksum += normalizedJoystickY;
 
     int slidePotValue = controlSpecs.getSlidePotValue();
-    BinaryUtils::toBytes(slidePotValue, buffer);
-    toSerial(buffer, INT_SIZE);
+    intToSerial(slidePotValue);
     checksum += slidePotValue;
 
     int slidePotMode = static_cast<int>(controlSpecs.getSlidePotMode());
-    BinaryUtils::toBytes(slidePotMode, buffer);
-    toSerial(buffer, INT_SIZE);
+    intToSerial(slidePotMode);
     checksum += slidePotMode;
 
-    BinaryUtils::toBytes(checksum, buffer);
-    toSerial(buffer, FLOAT_SIZE);
+    floatToSerial(checksum);
 
     serial.flush();
 }
 
-void ControlSideByteCoder::toSerial(char *buffer, int size) const {
+void ControlSideByteCoder::intToSerial(int toSend) const {
+    char buffer[INT_SIZE];
+
+    BinaryUtils::toBytes(toSend, buffer);
+    charBufferToSerial(buffer, INT_SIZE);
+}
+
+void ControlSideByteCoder::floatToSerial(float toSend) const {
+    char buffer[FLOAT_SIZE];
+
+    BinaryUtils::toBytes(toSend, buffer);
+    charBufferToSerial(buffer, FLOAT_SIZE);
+}
+
+void ControlSideByteCoder::charBufferToSerial(char *buffer, int size) const {
     for (int i = 0; i < size; i++) {
         serial.write(buffer[i]);
     }
