@@ -11,9 +11,9 @@ public:
     void toSerial(ControlSpecs &controlSpecs) const;
 
 private:
-    void intToSerial(int toSend) const;
-    void floatToSerial(float toSend) const;
-    void charBufferToSerial(char *buffer, int size) const;
+    void intToSerial(const int toSend) const;
+    void floatToSerial(const float toSend) const;
+    void charBufferToSerial(const char *buffer, const int size) const;
 };
 
 #endif

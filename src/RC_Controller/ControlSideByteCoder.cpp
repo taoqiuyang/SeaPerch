@@ -31,21 +31,21 @@ void ControlSideByteCoder::toSerial(ControlSpecs &controlSpecs) const {
     serial.flush();
 }
 
-void ControlSideByteCoder::intToSerial(int toSend) const {
+void ControlSideByteCoder::intToSerial(const int toSend) const {
     char buffer[INT_SIZE];
 
     BinaryUtils::toBytes(toSend, buffer);
     charBufferToSerial(buffer, INT_SIZE);
 }
 
-void ControlSideByteCoder::floatToSerial(float toSend) const {
+void ControlSideByteCoder::floatToSerial(const float toSend) const {
     char buffer[FLOAT_SIZE];
 
     BinaryUtils::toBytes(toSend, buffer);
     charBufferToSerial(buffer, FLOAT_SIZE);
 }
 
-void ControlSideByteCoder::charBufferToSerial(char *buffer, int size) const {
+void ControlSideByteCoder::charBufferToSerial(const char *buffer, const int size) const {
     for (int i = 0; i < size; i++) {
         serial.write(buffer[i]);
     }
