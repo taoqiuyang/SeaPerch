@@ -2,6 +2,7 @@
 
 #include "ControlPin.h"
 #include "ControlReader.h"
+#include "SeaPerch_ControlMode.h"
 
 ControlReader::ControlReader() : joystickMidPointX(0), joystickMidPointY(0) {
 }
@@ -17,6 +18,7 @@ void ControlReader::calibrate() {
 
 void ControlReader::readControlSpecs(ControlSpecs &controlSpecs) const {
     controlSpecs.setSlidePot(analogRead(SLIDE_POT));
+    controlSpecs.setSlidePotMode(SPEED);
     controlSpecs.setNormalized_joystick_X(processJoystick(JOYSTICK_HORIZONTAL, joystickMidPointX));
     controlSpecs.setNormalized_joystick_Y(processJoystick(JOYSTICK_VERTICAL, joystickMidPointY));
 }

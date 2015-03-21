@@ -1,6 +1,7 @@
 #include <SeaPerch_BinaryUtils.h>
 
 #include "RobotSideByteCoder.h"
+#include "SeaPerch_ControlMode.h"
 
 RobotSideByteCoder::RobotSideByteCoder(HardwareSerial & serial) : RobotSideCoder(serial) {
 }
@@ -25,6 +26,11 @@ bool RobotSideByteCoder::fromSerial(ControlSpecs & controlSpecs) const {
             int slidePot = BinaryUtils::toInt(buffer);
             controlSpecs.setSlidePot(slidePot);
             expectedChecksum += slidePot;
+
+            serial.readBytes(buffer, INT_SIZE);
+            int slidePotMode = BinaryUtils::toInt(buffer);
+            controlSpecs.setSlidePotMode(static_cast<ControlMode>(slidePotMode));
+            expectedChecksum += slidePotMode;
 
             serial.readBytes(buffer, FLOAT_SIZE);
             float checksum = BinaryUtils::toFloat(buffer);

@@ -26,6 +26,11 @@ void ControlSideByteCoder::toSerial(ControlSpecs &controlSpecs) const {
     toSerial(buffer, INT_SIZE);
     checksum += slidePot;
 
+    int slidePotMode = static_cast<int>(controlSpecs.getSlidePotMode());
+    BinaryUtils::toBytes(slidePotMode, buffer);
+    toSerial(buffer, INT_SIZE);
+    checksum += slidePotMode;
+
     BinaryUtils::toBytes(checksum, buffer);
     toSerial(buffer, FLOAT_SIZE);
 

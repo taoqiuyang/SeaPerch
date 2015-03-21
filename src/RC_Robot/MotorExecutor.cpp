@@ -2,6 +2,7 @@
 
 #include "MotorExecutor.h"
 #include "SeaPerch_AlgoUtils.h"
+#include "SeaPerch_ControlMode.h"
 
 const int I2C_ADDR = 0x61;
 const int MAX_MOTOR_SPEED = 255;
@@ -40,8 +41,12 @@ void MotorExecutor::initialize(const double aPressureBase) {
 
 void MotorExecutor::execute(const ControlSpecs &controlSpecs, const double currentDepth) {
     executeHorizontalMotors(controlSpecs.getNormalized_joystick_X(), controlSpecs.getNormalized_joystick_Y());
-//    executeSpeedControlledVerticalMotor(controlSpecs.getSlidePot());
-    executeDepthControlledVerticalMotor(controlSpecs.getSlidePot(), currentDepth);
+
+    if (controlSpecs.getSlidePotMode() == DEPTH) {
+        executeDepthControlledVerticalMotor(controlSpecs.getSlidePot(), currentDepth);
+    } else {
+        executeSpeedControlledVerticalMotor(controlSpecs.getSlidePot());
+    }
 }
 
 void MotorExecutor::executeHorizontalMotors(const float normalizedX, const float normalizedY) {
