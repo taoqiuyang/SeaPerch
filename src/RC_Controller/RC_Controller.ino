@@ -60,10 +60,8 @@ void loop() {
     serial_2_get_data_and_decode();
 
     serialDisplay();
-    String display[2];
-    display[0] = "Battery Voltage";
-    display[1] = String(robot_battery_voltage);
-    lcdDisplay(display, 2);
+    lcdDisplay(String("Battery Voltage:\n") + robot_battery_voltage + " V");
+
     /*while (Serial2.available()) {
       int received = Serial2.read();
       Serial.write(received);
