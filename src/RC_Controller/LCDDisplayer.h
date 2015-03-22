@@ -30,18 +30,6 @@ int get_key(unsigned int input) {
     return k;
 }
 
-void lcdWelcome() {
-    //LCD welcome screen-------------
-    lcd.begin(16, 2);
-    lcd.clear();
-    lcd.setCursor(0, 0);
-    lcd.print("Gatech VIP");
-    lcd.setCursor(0, 1);
-    lcd.print("SeaPerch Project");
-    delay(2000);
-    lcd.clear();
-}
-
 void lcdDisplay(String message) {
     int oldLineID = -1;
 
@@ -62,6 +50,15 @@ void lcdDisplay(String message) {
             }
         }
     }
+}
+
+void lcdWelcome() {
+    //LCD welcome screen-------------
+    lcd.begin(16, 2);
+    lcd.clear();
+    lcdDisplay("Gatech VIP\nSeaPerch Project");
+    delay(2000);
+    lcd.clear();
 }
 
 void detectKey() {
