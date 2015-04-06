@@ -19,8 +19,7 @@ SeaPerch Remote Control Test
 #include <PID_v1.h>
 
 //Motor Driver Libs------------
-#include <Adafruit_MotorShield.h>
-#include <utility/Adafruit_PWMServoDriver.h>
+#include <Servo.h>
 //-----------------------------
 
 //Depth Sensor Libs------------

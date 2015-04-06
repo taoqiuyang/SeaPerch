@@ -1,10 +1,9 @@
 #ifndef _MotorExecutor_H
 #define _MotorExecutor_H
 
+#include <Servo.h>
 #include <PID_v1.h>
 #include <SeaPerch_ControlSpecs.h>
-#include <Adafruit_MotorShield.h>
-#include <utility/Adafruit_PWMServoDriver.h>
 
 class MotorExecutor {
 public:
@@ -16,15 +15,17 @@ public:
 
 private:
     PID myPID;
+
     double pidInput;
     double pidOutput;
     double pidSetpoint;
     double pressureBase;
     double pressureCap;
-    Adafruit_MotorShield AFMS;
-    Adafruit_DCMotor *leftMotor;
-    Adafruit_DCMotor *rightMotor;
-    Adafruit_DCMotor *verticalMotor;
+
+    Servo horizontalLeft;
+    Servo horizontalRight;
+    Servo verticalLeft;
+    Servo verticalRight;
 
     void executeHorizontalMotors(const float normalizedX, const float normalizedY);
 
