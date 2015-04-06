@@ -27,9 +27,9 @@ private:
     Servo verticalLeft;
     Servo verticalRight;
 
-    void executeHorizontalMotors(const float normalizedX, const float normalizedY);
-
     void executeSpeedControlledVerticalMotor(const int speedInput);
+
+    void executeHorizontalMotors(const float normalizedX, const float normalizedY);
 
     void executeDepthControlledVerticalMotor(const int depthInput, const double currentDepth);
 };
