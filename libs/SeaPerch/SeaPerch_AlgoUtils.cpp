@@ -1,11 +1,11 @@
 #include "SeaPerch_AlgoUtils.h"
 
 double AlgoUtils::map(int value, int fromLow, int fromHigh, double toLow, double toHigh) {
-    map((double)value, (double)fromLow, (double)fromHigh, toLow, toHigh);
+    return map((double)value, (double)fromLow, (double)fromHigh, toLow, toHigh);
 }
 
 double AlgoUtils::map(double value, int fromLow, int fromHigh, int toLow, int toHigh) {
-    map(value, (double)fromLow, (double)fromHigh, (double)toLow, (double)toHigh);
+    return map(value, (double)fromLow, (double)fromHigh, (double)toLow, (double)toHigh);
 }
 
 double AlgoUtils::map(double value, double fromLow, double fromHigh, double toLow, double toHigh) {
@@ -20,5 +20,5 @@ double AlgoUtils::map(double value, double fromLow, double fromHigh, double toLo
     double fromRange = fromHigh - fromLow;
     double toRange = toHigh - toLow;
 
-    return toLow + (value / fromRange) * toRange;
+    return toLow + ((value - fromLow) / fromRange) * toRange;
 }
