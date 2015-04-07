@@ -53,9 +53,17 @@ void MotorExecutor::execute(const ControlSpecs &controlSpecs, const double curre
 void MotorExecutor::executeHorizontalMotors(const float normalizedX, const float normalizedY) {
     float normalizedLeft = max(min(normalizedX + normalizedY, 1.0), -1.0); // [-1, 1]
     float normalizedRight = max(min(normalizedX - normalizedY, 1.0), -1.0); // [-1, 1]
+    Serial.print(normalizedLeft);
+    Serial.println();
+    Serial.print(normalizedRight);
+    Serial.println();
 
     int leftSpeed = (int)(AlgoUtils::map(normalizedLeft, -1, 1, MIN_ALLOWED_SPEED, MAX_ALLOWED_SPEED));
     int rightSpeed = (int)(AlgoUtils::map(normalizedRight, -1, 1, MIN_ALLOWED_SPEED, MAX_ALLOWED_SPEED));
+    Serial.print(leftSpeed);
+    Serial.println();
+    Serial.print(rightSpeed);
+    Serial.println();
 
     horizontalLeft.write(leftSpeed);
     horizontalRight.write(rightSpeed);
