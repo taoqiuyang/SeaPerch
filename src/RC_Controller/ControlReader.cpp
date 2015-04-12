@@ -17,6 +17,8 @@ void ControlReader::calibrate() {
         joystickMidPointY = (joystickMidPointY + analogRead(JOYSTICK_VERTICAL)) / 2;
         delay(1);
     }
+
+    lcdDisplayer.display("Speed Ctrl Mode"); // default
 }
 
 void ControlReader::readControlSpecs(ControlSpecs &controlSpecs) {
@@ -38,7 +40,7 @@ const float ControlReader::processJoystick(int pinId, int midPoint) const {
 }
 
 ControlMode ControlReader::detectControlMode() {
-    static ControlMode controlMode = SPEED;
+    static ControlMode controlMode = SPEED; // default
 
     if (keyDetector.detectKey() == SELECT) {
         if (controlMode == SPEED) {
