@@ -13,6 +13,7 @@ Georgia Institute of Technology
 #include <LiquidCrystal.h>
 #include <SeaPerch_BinaryUtils.h>
 #include <SeaPerch_ControlSpecs.h>
+#include <SeaPerch_ControlMode.h>
 
 #include "Key.h"
 #include "ControlPin.h"
@@ -34,12 +35,12 @@ float robot_battery_voltage;
 //Slide pot---------------------------
 int depth_motor;
 
+LCDDisplayer lcdDisplayer;
+KeyDetector keyDetector;
+
 ControlSideByteCoder byteCoder = ControlSideByteCoder(Serial2);
 ControlSideCoder &coder = byteCoder;
-ControlReader controlReader;
-
-LCDDisplayer lcdDisplayer;
-KeyDetector keyDetector(lcdDisplayer);
+ControlReader controlReader(keyDetector, lcdDisplayer);
 
 void setup() {
     lcdDisplayer.initialize();
@@ -55,11 +56,9 @@ void setup() {
 }
 
 void loop() {
-    keyDetector.detectKey();
-
     controlReader.readControlSpecs(controlSpecs);
     coder.toSerial(controlSpecs);
     delay(100);
 
-    lcdDisplayer.display(String() + "Battery Voltage:\n" + robot_battery_voltage + " V");
+//    lcdDisplayer.display(String() + "Battery Voltage:\n" + robot_battery_voltage + " V");
 }

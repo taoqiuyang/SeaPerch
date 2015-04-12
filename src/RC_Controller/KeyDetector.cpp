@@ -3,7 +3,7 @@
 #include "ControlPin.h"
 #include "KeyDetector.h"
 
-KeyDetector::KeyDetector(LCDDisplayer &aLCDDisplayer) : lcdDisplayer(aLCDDisplayer), oldkey(NOT_DETECTED) {
+KeyDetector::KeyDetector() : oldkey(NOT_DETECTED) {
 }
 
 Key KeyDetector::detectKey() {
@@ -15,8 +15,6 @@ Key KeyDetector::detectKey() {
         if (key != oldkey) {
             oldkey = key;
             if (key != NOT_DETECTED) {
-                lcdDisplayer.display(keyNames[key]);
-
                 return key;
             }
         }

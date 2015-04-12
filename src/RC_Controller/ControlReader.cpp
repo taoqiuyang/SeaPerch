@@ -1,10 +1,14 @@
 #include <Arduino.h>
 
 #include "ControlPin.h"
+#include "LCDDisplayer.h"
 #include "ControlReader.h"
-#include "SeaPerch_ControlMode.h"
 
-ControlReader::ControlReader() : joystickMidPointX(0), joystickMidPointY(0) {
+ControlReader::ControlReader(KeyDetector &aKeyDetector, LCDDisplayer &aLCDDisplayer) : keyDetector(aKeyDetector),
+                                                                                       lcdDisplayer(aLCDDisplayer),
+                                                                                       joystickMidPointX(0),
+                                                                                       joystickMidPointY(0),
+                                                                                       controlMode(SPEED) {
 }
 
 void ControlReader::calibrate() {
@@ -16,9 +20,9 @@ void ControlReader::calibrate() {
     }
 }
 
-void ControlReader::readControlSpecs(ControlSpecs &controlSpecs) const {
+void ControlReader::readControlSpecs(ControlSpecs &controlSpecs) {
     controlSpecs.setSlidePotValue(analogRead(SLIDE_POT));
-    controlSpecs.setSlidePotMode(SPEED);
+    controlSpecs.setSlidePotMode(detectControlMode());
     controlSpecs.setNormalized_joystick_X(processJoystick(JOYSTICK_HORIZONTAL, joystickMidPointX));
     controlSpecs.setNormalized_joystick_Y(processJoystick(JOYSTICK_VERTICAL, joystickMidPointY));
 }
@@ -32,4 +36,18 @@ const float ControlReader::processJoystick(int pinId, int midPoint) const {
     } else {
         return -1 * (rawValue - midPoint) / (float)(1023 - midPoint);
     }
+}
+
+ControlMode ControlReader::detectControlMode() {
+    if (keyDetector.detectKey() == SELECT) {
+        if (controlMode == SPEED) {
+            controlMode = DEPTH;
+            lcdDisplayer.display("Auto-Depth Mode");
+        } else if (controlMode == DEPTH) {
+            controlMode = SPEED;
+            lcdDisplayer.display("Speed Ctrl Mode");
+        }
+    }
+
+    return controlMode;
 }

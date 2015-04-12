@@ -7,6 +7,7 @@ LCDDisplayer::LCDDisplayer() : lcd(8, 13, 9, 4, 5, 6, 7) {
 }
 
 void LCDDisplayer::display(String message) {
+    lcd.clear();
     int oldLineID = -1;
 
     for (int i = 0; i < MAX_LINE; i++) {
