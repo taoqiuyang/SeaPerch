@@ -8,9 +8,9 @@ KeyDetector::KeyDetector(LCDDisplayer &aLCDDisplayer) : lcdDisplayer(aLCDDisplay
 
 Key KeyDetector::detectKey() {
     //Detect key pressed on LCD sheild----------------------
-    if (getKey(analogRead(KEYPAD)) != oldkey) {  // if keypress is detected
+    if (mapKey(analogRead(KEYPAD)) != oldkey) {  // if keypress is detected
         delay(50);  // wait for debounce time
-        Key key = getKey(analogRead(KEYPAD));    // convert sensor value into key press
+        Key key = mapKey(analogRead(KEYPAD));    // convert sensor value into key press
 
         if (key != oldkey) {
             oldkey = key;
@@ -26,7 +26,7 @@ Key KeyDetector::detectKey() {
 }
 
 // Convert ADC value from keypad to key number
-Key KeyDetector::getKey(unsigned int input) const {
+Key KeyDetector::mapKey(unsigned int input) const {
     for (int i = 0; i < NUM_KEYS; i++) {
         if (input < adc_key_val[i]) {
             return static_cast<Key>(i);
