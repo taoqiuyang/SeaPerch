@@ -1,31 +1,37 @@
 #include <Arduino.h>
+
 #include "ControlPin.h"
 #include "KeyDetector.h"
 
-KeyDetector::KeyDetector(LCDDisplayer &aLCDDisplayer) : lcdDisplayer(aLCDDisplayer), oldkey(-1) {
+KeyDetector::KeyDetector(LCDDisplayer &aLCDDisplayer) : lcdDisplayer(aLCDDisplayer), oldkey(NOT_DETECTED) {
 }
 
-void KeyDetector::detectKey() {
+Key KeyDetector::detectKey() {
     //Detect key pressed on LCD sheild----------------------
     if (getKey(analogRead(KEYPAD)) != oldkey) {  // if keypress is detected
         delay(50);  // wait for debounce time
-        int key = getKey(analogRead(KEYPAD));    // convert sensor value into key press
+        Key key = getKey(analogRead(KEYPAD));    // convert sensor value into key press
+
         if (key != oldkey) {
             oldkey = key;
-            if (key >= 0) {
+            if (key != NOT_DETECTED) {
                 lcdDisplayer.display(keyNames[key]);
+
+                return key;
             }
         }
     }
+
+    return NOT_DETECTED;
 }
 
 // Convert ADC value from keypad to key number
-int KeyDetector::getKey(unsigned int input) const {
+Key KeyDetector::getKey(unsigned int input) const {
     for (int i = 0; i < NUM_KEYS; i++) {
         if (input < adc_key_val[i]) {
-            return i;
+            return static_cast<Key>(i);
         }
     }
 
-    return -1;
+    return NOT_DETECTED;
 }

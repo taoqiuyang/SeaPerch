@@ -14,6 +14,7 @@ Georgia Institute of Technology
 #include <SeaPerch_BinaryUtils.h>
 #include <SeaPerch_ControlSpecs.h>
 
+#include "Key.h"
 #include "ControlPin.h"
 #include "KeyDetector.h"
 #include "LCDDisplayer.h"
