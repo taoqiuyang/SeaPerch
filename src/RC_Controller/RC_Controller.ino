@@ -15,6 +15,7 @@ Georgia Institute of Technology
 #include <SeaPerch_ControlSpecs.h>
 
 #include "ControlPin.h"
+#include "KeyDetector.h"
 #include "LCDDisplayer.h"
 #include "ControlReader.h"
 #include "ControlSideByteCoder.h"
@@ -37,6 +38,7 @@ ControlSideCoder &coder = byteCoder;
 ControlReader controlReader;
 
 LCDDisplayer lcdDisplayer;
+KeyDetector keyDetector(lcdDisplayer);
 
 void setup() {
     lcdDisplayer.initialize();
@@ -52,7 +54,7 @@ void setup() {
 }
 
 void loop() {
-//    detectKey();
+    keyDetector.detectKey();
 
     controlReader.readControlSpecs(controlSpecs);
     coder.toSerial(controlSpecs);
