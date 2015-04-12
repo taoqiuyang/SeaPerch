@@ -18,7 +18,6 @@ public:
 private:
     int joystickMidPointX;
     int joystickMidPointY;
-    ControlMode controlMode;
     KeyDetector &keyDetector;
     LCDDisplayer &lcdDisplayer;
 

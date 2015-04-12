@@ -7,8 +7,7 @@
 ControlReader::ControlReader(KeyDetector &aKeyDetector, LCDDisplayer &aLCDDisplayer) : keyDetector(aKeyDetector),
                                                                                        lcdDisplayer(aLCDDisplayer),
                                                                                        joystickMidPointX(0),
-                                                                                       joystickMidPointY(0),
-                                                                                       controlMode(SPEED) {
+                                                                                       joystickMidPointY(0) {
 }
 
 void ControlReader::calibrate() {
@@ -39,6 +38,8 @@ const float ControlReader::processJoystick(int pinId, int midPoint) const {
 }
 
 ControlMode ControlReader::detectControlMode() {
+    static ControlMode controlMode = SPEED;
+
     if (keyDetector.detectKey() == SELECT) {
         if (controlMode == SPEED) {
             controlMode = DEPTH;
