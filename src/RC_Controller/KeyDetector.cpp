@@ -7,6 +7,8 @@ KeyDetector::KeyDetector() : oldkey(NOT_DETECTED) {
 }
 
 Key KeyDetector::detectKey() {
+    static Key oldkey = NOT_DETECTED;
+
     //Detect key pressed on LCD sheild----------------------
     if (mapKey(analogRead(KEYPAD)) != oldkey) {  // if keypress is detected
         delay(50);  // wait for debounce time

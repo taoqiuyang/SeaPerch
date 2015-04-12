@@ -10,7 +10,6 @@ public:
     Key detectKey();
 
 private:
-    Key oldkey;
     const int adc_key_val[5] = {50, 200, 400, 600, 800};
 
     Key mapKey(unsigned int input) const;
