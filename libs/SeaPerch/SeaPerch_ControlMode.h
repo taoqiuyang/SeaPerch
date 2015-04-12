@@ -5,4 +5,6 @@ enum ControlMode {
     DEPTH, SPEED
 };
 
+extern const char* controlModeMsg[2];
+
 #endif

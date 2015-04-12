@@ -11,7 +11,7 @@ class ControlReader {
 public:
     ControlReader(KeyDetector &aKeyDetector, LCDDisplayer &aLCDDisplayer);
 
-    void calibrate();
+    void initialize();
 
     void readControlSpecs(ControlSpecs &controlSpecs);
 
@@ -20,8 +20,10 @@ private:
     int joystickMidPointY;
     KeyDetector &keyDetector;
     LCDDisplayer &lcdDisplayer;
+    static const ControlMode defaultMode = SPEED;
 
     const float processJoystick(int pinId, int midPoint) const;
+
     ControlMode detectControlMode();
 };
 

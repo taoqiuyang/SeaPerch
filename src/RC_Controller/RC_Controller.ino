@@ -11,9 +11,9 @@ Georgia Institute of Technology
 */
 #include <Arduino.h>
 #include <LiquidCrystal.h>
+#include <SeaPerch_ControlMode.h>
 #include <SeaPerch_BinaryUtils.h>
 #include <SeaPerch_ControlSpecs.h>
-#include <SeaPerch_ControlMode.h>
 
 #include "Key.h"
 #include "ControlPin.h"
@@ -52,7 +52,7 @@ void setup() {
     Serial1.begin(9600);
     Serial2.begin(2400);
 
-    controlReader.calibrate();
+    controlReader.initialize();
 }
 
 void loop() {

@@ -10,7 +10,7 @@ ControlReader::ControlReader(KeyDetector &aKeyDetector, LCDDisplayer &aLCDDispla
                                                                                        joystickMidPointY(0) {
 }
 
-void ControlReader::calibrate() {
+void ControlReader::initialize() {
     for (int i = 0; i < 200; i++) {
         joystickMidPointX = (joystickMidPointX + analogRead(JOYSTICK_HORIZONTAL)) / 2;
         delay(1);
@@ -18,7 +18,7 @@ void ControlReader::calibrate() {
         delay(1);
     }
 
-    lcdDisplayer.display("Speed Ctrl Mode"); // default
+    lcdDisplayer.display(controlModeMsg[defaultMode]);
 }
 
 void ControlReader::readControlSpecs(ControlSpecs &controlSpecs) {
@@ -40,16 +40,16 @@ const float ControlReader::processJoystick(int pinId, int midPoint) const {
 }
 
 ControlMode ControlReader::detectControlMode() {
-    static ControlMode controlMode = SPEED; // default
+    static ControlMode controlMode = defaultMode;
 
     if (keyDetector.detectKey() == SELECT) {
         if (controlMode == SPEED) {
             controlMode = DEPTH;
-            lcdDisplayer.display("Auto-Depth Mode");
         } else if (controlMode == DEPTH) {
             controlMode = SPEED;
-            lcdDisplayer.display("Speed Ctrl Mode");
         }
+
+        lcdDisplayer.display(controlModeMsg[controlMode]);
     }
 
     return controlMode;
