@@ -3,7 +3,7 @@
 #include "ControlPin.h"
 #include "KeyDetector.h"
 
-KeyDetector::KeyDetector() : oldkey(NOT_DETECTED) {
+KeyDetector::KeyDetector() {
 }
 
 Key KeyDetector::detectKey() {
