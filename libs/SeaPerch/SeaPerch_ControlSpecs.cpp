@@ -4,8 +4,8 @@ ControlSpecs::ControlSpecs(){
 }
 
 ControlSpecs::ControlSpecs(const ControlSpecs& controlSpecs) {
-    slidePotMode = controlSpecs.getSlidePotMode();
     slidePotValue = controlSpecs.getSlidePotValue();
+    depthControlMode = controlSpecs.getDepthControlMode();
     normalized_joystick_X = controlSpecs.getNormalized_joystick_X();
     normalized_joystick_Y = controlSpecs.getNormalized_joystick_Y();
 }
@@ -34,10 +34,10 @@ void ControlSpecs::setSlidePotValue(const int aSlidePotValue) {
     slidePotValue = aSlidePotValue;
 }
 
-const DepthControlMode ControlSpecs::getSlidePotMode() const {
-    return slidePotMode;
+const DepthControlMode ControlSpecs::getDepthControlMode() const {
+    return depthControlMode;
 }
 
-void ControlSpecs::setSlidePotMode(const DepthControlMode depthControlMode) {
-    slidePotMode = depthControlMode;
+void ControlSpecs::setDepthControlMode (const DepthControlMode aDepthControlMode) {
+    depthControlMode = aDepthControlMode;
 }

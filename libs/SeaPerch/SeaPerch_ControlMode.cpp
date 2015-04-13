@@ -2,5 +2,5 @@
 
 const char* depthControlMsg[] = {
         "Auto-Depth Mode",
-        "Manual-Speed Mode"
+        "Manual-Spd Mode"
 };

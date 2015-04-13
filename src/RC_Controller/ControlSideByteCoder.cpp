@@ -22,9 +22,9 @@ void ControlSideByteCoder::toSerial(ControlSpecs &controlSpecs) const {
     intToSerial(slidePotValue);
     checksum += slidePotValue;
 
-    int slidePotMode = static_cast<int>(controlSpecs.getSlidePotMode());
-    intToSerial(slidePotMode);
-    checksum += slidePotMode;
+    int depthControlMode = static_cast<int>(controlSpecs.getDepthControlMode());
+    intToSerial(depthControlMode);
+    checksum += depthControlMode;
 
     floatToSerial(checksum);
 

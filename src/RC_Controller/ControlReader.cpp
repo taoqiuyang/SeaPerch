@@ -23,7 +23,7 @@ void ControlReader::initialize() {
 
 void ControlReader::readControlSpecs(ControlSpecs &controlSpecs) {
     controlSpecs.setSlidePotValue(analogRead(SLIDE_POT));
-    controlSpecs.setSlidePotMode(detectControlMode());
+    controlSpecs.setDepthControlMode(detectControlMode());
     controlSpecs.setNormalized_joystick_X(processJoystick(JOYSTICK_HORIZONTAL, joystickMidPointX));
     controlSpecs.setNormalized_joystick_Y(processJoystick(JOYSTICK_VERTICAL, joystickMidPointY));
 }
