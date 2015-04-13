@@ -60,15 +60,10 @@ double pressure_abs, pressure_relative, altitude_delta, pressure_baseline;
 double base_altitude = 1655.0; // Altitude of SparkFun's HQ in Boulder, CO. in (m)
 //--------------------------------------------------------------------------
 
-String Serial_1_data_recieved = "";
-String Serial_2_data_recieved = "";
-
-float normalized_joystick_X, normalized_joystick_Y, checksum;
-int joystick_button;
-
-RobotSideByteCoder byteCoder(Serial2);
+RobotData robotData;
 ControlSpecs controlSpecs;
 MotorExecutor motorExecutor;
+RobotSideByteCoder byteCoder(Serial2);
 
 void setup() {
     Serial.begin(9600);
