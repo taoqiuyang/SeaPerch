@@ -16,6 +16,9 @@ public:
 private:
     PID myPID;
 
+    int maxSpeed;
+    int minSpeed;
+
     double pidInput;
     double pidOutput;
     double pidSetpoint;
@@ -26,6 +29,8 @@ private:
     Servo horizontalRight;
     Servo verticalLeft;
     Servo verticalRight;
+
+    void setSpeedBoundaries(SpeedControlMode speedMode);
 
     void executeSpeedControlledVerticalMotor(const int speedInput);
 

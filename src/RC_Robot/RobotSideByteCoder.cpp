@@ -32,6 +32,11 @@ bool RobotSideByteCoder::fromSerial(ControlSpecs & controlSpecs) const {
             controlSpecs.setDepthControlMode(static_cast<DepthControlMode>(depthControlMode));
             expectedChecksum += depthControlMode;
 
+            serial.readBytes(buffer, INT_SIZE);
+            int speedControlMode = BinaryUtils::toInt(buffer);
+            controlSpecs.setSpeedControlMode(static_cast<SpeedControlMode>(speedControlMode));
+            expectedChecksum += speedControlMode;
+
             serial.readBytes(buffer, FLOAT_SIZE);
             float checksum = BinaryUtils::toFloat(buffer);
 

@@ -23,7 +23,9 @@ enum MotorID {
     VERTICAL_RIGHT = 5,
 };
 
-MotorExecutor::MotorExecutor() : myPID(&pidInput, &pidOutput, &pidSetpoint, Kp, Ki, Kd, DIRECT) {
+MotorExecutor::MotorExecutor() : myPID(&pidInput, &pidOutput, &pidSetpoint, Kp, Ki, Kd, DIRECT),
+                                 maxSpeed(MAX_ALLOWED_SPEED),
+                                 minSpeed(MIN_ALLOWED_SPEED) {
 }
 
 void MotorExecutor::initialize(const double aPressureBase) {
@@ -40,13 +42,24 @@ void MotorExecutor::initialize(const double aPressureBase) {
 }
 
 void MotorExecutor::execute(const ControlSpecs &controlSpecs, const double currentDepth) {
+    setSpeedBoundaries(controlSpecs.getSpeedControlMode());
     executeHorizontalMotors(controlSpecs.getNormalized_joystick_X(), controlSpecs.getNormalized_joystick_Y());
 
-    DepthControlMode slidePotMode = controlSpecs.getDepthControlMode();
-    if (slidePotMode == AUTO_DEPTH) {
+    DepthControlMode depthMode = controlSpecs.getDepthControlMode();
+    if (depthMode == AUTO_DEPTH) {
         executeDepthControlledVerticalMotor(controlSpecs.getSlidePotValue(), currentDepth);
-    } else if (slidePotMode == MANUAL_SPEED){
+    } else if (depthMode == MANUAL_SPEED) {
         executeSpeedControlledVerticalMotor(controlSpecs.getSlidePotValue());
+    }
+}
+
+void MotorExecutor::setSpeedBoundaries(SpeedControlMode speedMode) {
+    if (speedMode == LIMIT_ON) {
+        maxSpeed = MAX_ALLOWED_SPEED;
+        minSpeed = MIN_ALLOWED_SPEED;
+    } else if (speedMode == LIMIT_OFF) {
+        maxSpeed = MAX_MOTOR_SPEED;
+        minSpeed = MIN_MOTOR_SPEED;
     }
 }
 
@@ -54,15 +67,15 @@ void MotorExecutor::executeHorizontalMotors(const float normalizedX, const float
     float normalizedLeft = max(min(normalizedX + normalizedY, 1.0), -1.0); // [-1, 1]
     float normalizedRight = max(min(normalizedX - normalizedY, 1.0), -1.0); // [-1, 1]
 
-    int leftSpeed = (int)(AlgoUtils::map(normalizedLeft, -1, 1, MIN_ALLOWED_SPEED, MAX_ALLOWED_SPEED));
-    int rightSpeed = (int)(AlgoUtils::map(normalizedRight, -1, 1, MIN_ALLOWED_SPEED, MAX_ALLOWED_SPEED));
+    int leftSpeed = (int) (AlgoUtils::map(normalizedLeft, -1, 1, minSpeed, maxSpeed));
+    int rightSpeed = (int) (AlgoUtils::map(normalizedRight, -1, 1, minSpeed, maxSpeed));
 
     horizontalLeft.write(leftSpeed);
     horizontalRight.write(rightSpeed);
 }
 
 void MotorExecutor::executeSpeedControlledVerticalMotor(const int speedInput) {
-    int verticalSpeed = map(speedInput, 0, 1023, MIN_ALLOWED_SPEED, MAX_ALLOWED_SPEED);
+    int verticalSpeed = map(speedInput, 0, 1023, minSpeed, maxSpeed);
 
     verticalLeft.write(verticalSpeed);
     verticalRight.write(verticalSpeed);
@@ -73,7 +86,7 @@ void MotorExecutor::executeDepthControlledVerticalMotor(const int depthInput, co
     pidSetpoint = AlgoUtils::map(depthInput, 0, 1023, pressureBase, pressureCap);
     myPID.Compute();
 
-    int verticalSpeed = map((int)pidOutput, -255, 255, MIN_ALLOWED_SPEED, MAX_ALLOWED_SPEED);
+    int verticalSpeed = map((int) pidOutput, -255, 255, minSpeed, maxSpeed);
 
     verticalLeft.write(verticalSpeed);
     verticalRight.write(verticalSpeed);

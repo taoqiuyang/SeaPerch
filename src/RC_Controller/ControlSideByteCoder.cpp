@@ -26,6 +26,10 @@ void ControlSideByteCoder::toSerial(ControlSpecs &controlSpecs) const {
     intToSerial(depthControlMode);
     checksum += depthControlMode;
 
+    int speedControlMode = static_cast<int>(controlSpecs.getSpeedControlMode());
+    intToSerial(speedControlMode);
+    checksum += speedControlMode;
+
     floatToSerial(checksum);
 
     serial.flush();

@@ -22,6 +22,7 @@ void ControlReader::initialize() {
 }
 
 void ControlReader::readControlSpecs(ControlSpecs &controlSpecs) {
+    controlSpecs.setSpeedControlMode(LIMIT_ON);
     controlSpecs.setSlidePotValue(analogRead(SLIDE_POT));
     controlSpecs.setDepthControlMode(detectDepthControlMode());
     controlSpecs.setNormalized_joystick_X(processJoystick(JOYSTICK_HORIZONTAL, joystickMidPointX));
