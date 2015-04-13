@@ -44,10 +44,6 @@ SeaPerch Remote Control Test
 #include "RobotSideByteCoder.h"
 
 //IMU----------------------------------------------------------------------
-Adafruit_10DOF dof = Adafruit_10DOF();
-Adafruit_LSM303_Accel_Unified accel = Adafruit_LSM303_Accel_Unified(30301);
-Adafruit_LSM303_Mag_Unified mag = Adafruit_LSM303_Mag_Unified(30302);
-Adafruit_BMP085_Unified bmp = Adafruit_BMP085_Unified(18001);
 float seaLevelPressure = SENSORS_PRESSURE_SEALEVELHPA;
 double yaw, pitch, roll, temperature_IMU, alt_IMU;
 //--------------------------------------------------------------------------
@@ -70,10 +66,6 @@ void setup() {
     Serial1.begin(9600);
     Serial2.begin(2400);
 
-    //---initialize the IMU------------
-    initSensors();
-    //---------------------------------
-
     //---initialize Depth Sensor-------
     sensor.reset();
     sensor.begin();
@@ -89,7 +81,7 @@ void loop() {
         motorExecutor.execute(controlSpecs, sensor.getPressure(ADC_4096));
     }
 
-    get_sensor_data();
+//    get_sensor_data();
 //    Serial.print("  roll: ");
 //    Serial.print(roll);
 //    Serial.print("  pitch: ");
@@ -106,65 +98,47 @@ void loop() {
 }
 
 
-void get_sensor_data() {
-    //IMU---------------------------------------------------------
-    sensors_event_t accel_event;
-    sensors_event_t mag_event;
-    sensors_event_t bmp_event;
-    sensors_vec_t orientation;
-    /* Read the accelerometer and magnetometer */
-    accel.getEvent(&accel_event);
-    mag.getEvent(&mag_event);
-    /* Use the new fusionGetOrientation function to merge accel/mag data */
-    if (dof.fusionGetOrientation(&accel_event, &mag_event, &orientation)) {
-        /* 'orientation' should have valid .roll and .pitch fields */
-        roll = orientation.roll;
-        pitch = orientation.pitch;
-        yaw = orientation.heading;
-    }
-    bmp.getEvent(&bmp_event);
-    if (bmp_event.pressure) {
-        /* Get ambient temperature in C */
-        float temperature;
-        bmp.getTemperature(&temperature);
-        /* Convert atmospheric pressure, SLP and temp to altitude */
-        alt_IMU = bmp.pressureToAltitude(seaLevelPressure, bmp_event.pressure, temperature);
-        temperature_IMU = temperature;
-    }
-    //---------------------------------------------------------------
-
-    //Depth Sensor---------------------------------------------------
-    // To measure to higher degrees of precision use the following sensor settings:
-    // ADC_256
-    // ADC_512
-    // ADC_1024
-    // ADC_2048
-    // ADC_4096
-    temperature_c = sensor.getTemperature(CELSIUS, ADC_512);
-    temperature_f = sensor.getTemperature(FAHRENHEIT, ADC_512);
-    pressure_abs = sensor.getPressure(ADC_4096);
-    pressure_relative = sealevel(pressure_abs, base_altitude);
-    altitude_delta = altitude(pressure_abs, pressure_baseline);
-    //---------------------------------------------------------------
-}
-
-void initSensors() {
-    if (!accel.begin()) {
-        /* There was a problem detecting the LSM303 ... check your connections */
-        Serial.println(F("Ooops, no LSM303 detected ... Check your wiring!"));
-        while (1);
-    }
-    if (!mag.begin()) {
-        /* There was a problem detecting the LSM303 ... check your connections */
-        Serial.println("Ooops, no LSM303 detected ... Check your wiring!");
-        while (1);
-    }
-    if (!bmp.begin()) {
-        /* There was a problem detecting the BMP180 ... check your connections */
-        Serial.println("Ooops, no BMP180 detected ... Check your wiring!");
-        while (1);
-    }
-}
+//void get_sensor_data() {
+//    //IMU---------------------------------------------------------
+//    sensors_event_t accel_event;
+//    sensors_event_t mag_event;
+//    sensors_event_t bmp_event;
+//    sensors_vec_t orientation;
+//    /* Read the accelerometer and magnetometer */
+//    accel.getEvent(&accel_event);
+//    mag.getEvent(&mag_event);
+//    /* Use the new fusionGetOrientation function to merge accel/mag data */
+//    if (dof.fusionGetOrientation(&accel_event, &mag_event, &orientation)) {
+//        /* 'orientation' should have valid .roll and .pitch fields */
+//        roll = orientation.roll;
+//        pitch = orientation.pitch;
+//        yaw = orientation.heading;
+//    }
+//    bmp.getEvent(&bmp_event);
+//    if (bmp_event.pressure) {
+//        /* Get ambient temperature in C */
+//        float temperature;
+//        bmp.getTemperature(&temperature);
+//        /* Convert atmospheric pressure, SLP and temp to altitude */
+//        alt_IMU = bmp.pressureToAltitude(seaLevelPressure, bmp_event.pressure, temperature);
+//        temperature_IMU = temperature;
+//    }
+//    //---------------------------------------------------------------
+//
+//    //Depth Sensor---------------------------------------------------
+//    // To measure to higher degrees of precision use the following sensor settings:
+//    // ADC_256
+//    // ADC_512
+//    // ADC_1024
+//    // ADC_2048
+//    // ADC_4096
+//    temperature_c = sensor.getTemperature(CELSIUS, ADC_512);
+//    temperature_f = sensor.getTemperature(FAHRENHEIT, ADC_512);
+//    pressure_abs = sensor.getPressure(ADC_4096);
+//    pressure_relative = sealevel(pressure_abs, base_altitude);
+//    altitude_delta = altitude(pressure_abs, pressure_baseline);
+//    //---------------------------------------------------------------
+//}
 
 double sealevel(double P, double A)
 // Given a pressure P (mbar) taken at a specific altitude (meters),

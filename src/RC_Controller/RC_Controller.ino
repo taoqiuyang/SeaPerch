@@ -23,24 +23,11 @@ Georgia Institute of Technology
 #include "ControlSideByteCoder.h"
 
 ControlSpecs controlSpecs;
-
-//Serial Comm-------------------------
-String Serial_1_data_recieved = "";
-String Serial_2_data_recieved = "";
-int Serial2_received_data_status = 0;  //0 for no valid data, 1 for valid data received
-
-//Data feedback-----------------------
-float robot_battery_voltage;
-
-//Slide pot---------------------------
-int depth_motor;
-
 LCDDisplayer lcdDisplayer;
 KeyDetector keyDetector;
-
+ControlReader controlReader(keyDetector, lcdDisplayer);
 ControlSideByteCoder byteCoder = ControlSideByteCoder(Serial2);
 ControlSideCoder &coder = byteCoder;
-ControlReader controlReader(keyDetector, lcdDisplayer);
 
 void setup() {
     lcdDisplayer.initialize();
@@ -59,6 +46,4 @@ void loop() {
     controlReader.readControlSpecs(controlSpecs);
     coder.toSerial(controlSpecs);
     delay(100);
-
-//    lcdDisplayer.display(String() + "Battery Voltage:\n" + robot_battery_voltage + " V");
 }
