@@ -43,11 +43,11 @@ DepthControlMode ControlReader::detectControlMode() {
     static DepthControlMode depthControlMode = defaultDepthMode;
 
     if (keyDetector.detectKey() == SELECT) {
-        if (depthControlMode == SPEED) {
-            depthControlMode = DEPTH;
+        if (depthControlMode == MANUAL_SPEED) {
+            depthControlMode = AUTO_DEPTH;
             digitalWrite(SLIDE_POT_LED, HIGH);
-        } else if (depthControlMode == DEPTH) {
-            depthControlMode = SPEED;
+        } else if (depthControlMode == AUTO_DEPTH) {
+            depthControlMode = MANUAL_SPEED;
             digitalWrite(SLIDE_POT_LED, LOW);
         }
 

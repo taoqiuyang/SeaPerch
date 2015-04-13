@@ -2,7 +2,7 @@
 #define _ControlMode_H
 
 enum DepthControlMode {
-    DEPTH, SPEED
+    AUTO_DEPTH, MANUAL_SPEED
 };
 
 extern const char* depthControlMsg[2];

@@ -43,9 +43,9 @@ void MotorExecutor::execute(const ControlSpecs &controlSpecs, const double curre
     executeHorizontalMotors(controlSpecs.getNormalized_joystick_X(), controlSpecs.getNormalized_joystick_Y());
 
     DepthControlMode slidePotMode = controlSpecs.getSlidePotMode();
-    if (slidePotMode == DEPTH) {
+    if (slidePotMode == AUTO_DEPTH) {
         executeDepthControlledVerticalMotor(controlSpecs.getSlidePotValue(), currentDepth);
-    } else if (slidePotMode == SPEED){
+    } else if (slidePotMode == MANUAL_SPEED){
         executeSpeedControlledVerticalMotor(controlSpecs.getSlidePotValue());
     }
 }
