@@ -34,10 +34,10 @@ void ControlSpecs::setSlidePotValue(const int aSlidePotValue) {
     slidePotValue = aSlidePotValue;
 }
 
-const ControlMode ControlSpecs::getSlidePotMode() const {
+const DepthControlMode ControlSpecs::getSlidePotMode() const {
     return slidePotMode;
 }
 
-void ControlSpecs::setSlidePotMode(const ControlMode controlMode) {
-    slidePotMode = controlMode;
+void ControlSpecs::setSlidePotMode(const DepthControlMode depthControlMode) {
+    slidePotMode = depthControlMode;
 }

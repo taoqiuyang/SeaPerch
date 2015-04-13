@@ -29,7 +29,7 @@ bool RobotSideByteCoder::fromSerial(ControlSpecs & controlSpecs) const {
 
             serial.readBytes(buffer, INT_SIZE);
             int slidePotMode = BinaryUtils::toInt(buffer);
-            controlSpecs.setSlidePotMode(static_cast<ControlMode>(slidePotMode));
+            controlSpecs.setSlidePotMode(static_cast<DepthControlMode>(slidePotMode));
             expectedChecksum += slidePotMode;
 
             serial.readBytes(buffer, FLOAT_SIZE);

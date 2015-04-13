@@ -21,13 +21,13 @@ public:
 
     void setSlidePotValue(const int aSlidePotValue);
 
-    const ControlMode getSlidePotMode() const;
+    const DepthControlMode getSlidePotMode() const;
 
-    void setSlidePotMode(const ControlMode controlMode);
+    void setSlidePotMode(const DepthControlMode depthControlMode);
 
 private:
     int slidePotValue;
-    ControlMode slidePotMode;
+    DepthControlMode slidePotMode;
     float normalized_joystick_X;
     float normalized_joystick_Y;
 };

@@ -18,7 +18,7 @@ void ControlReader::initialize() {
         delay(1);
     }
 
-    lcdDisplayer.display(controlModeMsg[defaultMode]);
+    lcdDisplayer.display(depthControlMsg[defaultDepthMode]);
 }
 
 void ControlReader::readControlSpecs(ControlSpecs &controlSpecs) {
@@ -39,18 +39,20 @@ const float ControlReader::processJoystick(int pinId, int midPoint) const {
     }
 }
 
-ControlMode ControlReader::detectControlMode() {
-    static ControlMode controlMode = defaultMode;
+DepthControlMode ControlReader::detectControlMode() {
+    static DepthControlMode depthControlMode = defaultDepthMode;
 
     if (keyDetector.detectKey() == SELECT) {
-        if (controlMode == SPEED) {
-            controlMode = DEPTH;
-        } else if (controlMode == DEPTH) {
-            controlMode = SPEED;
+        if (depthControlMode == SPEED) {
+            depthControlMode = DEPTH;
+            digitalWrite(SLIDE_POT_LED, HIGH);
+        } else if (depthControlMode == DEPTH) {
+            depthControlMode = SPEED;
+            digitalWrite(SLIDE_POT_LED, LOW);
         }
 
-        lcdDisplayer.display(controlModeMsg[controlMode]);
+        lcdDisplayer.display(depthControlMsg[depthControlMode]);
     }
 
-    return controlMode;
+    return depthControlMode;
 }

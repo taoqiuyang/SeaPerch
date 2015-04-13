@@ -1,6 +1,6 @@
 #include "SeaPerch_ControlMode.h"
 
-const char* controlModeMsg[] = {
+const char* depthControlMsg[] = {
         "Auto-Depth Mode",
         "Speed Ctrl Mode"
 };

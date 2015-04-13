@@ -1,10 +1,10 @@
 #ifndef _ControlMode_H
 #define _ControlMode_H
 
-enum ControlMode {
+enum DepthControlMode {
     DEPTH, SPEED
 };
 
-extern const char* controlModeMsg[2];
+extern const char* depthControlMsg[2];
 
 #endif

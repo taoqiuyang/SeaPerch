@@ -20,11 +20,11 @@ private:
     int joystickMidPointY;
     KeyDetector &keyDetector;
     LCDDisplayer &lcdDisplayer;
-    static const ControlMode defaultMode = SPEED;
+    static const DepthControlMode defaultDepthMode = SPEED;
 
     const float processJoystick(int pinId, int midPoint) const;
 
-    ControlMode detectControlMode();
+    DepthControlMode detectControlMode();
 };
 
 #endif
