@@ -32,9 +32,6 @@ ControlSideCoder &coder = byteCoder;
 void setup() {
     lcdDisplayer.initialize();
 
-    pinMode(JOYSTICK_PUSHBUTTON, INPUT);
-    digitalWrite(JOYSTICK_PUSHBUTTON, HIGH);
-
     Serial.begin(9600);
     Serial1.begin(9600);
     Serial2.begin(2400);

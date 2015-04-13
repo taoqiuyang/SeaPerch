@@ -11,6 +11,9 @@ ControlReader::ControlReader(KeyDetector &aKeyDetector, LCDDisplayer &aLCDDispla
 }
 
 void ControlReader::initialize() {
+    pinMode(JOYSTICK_PUSHBUTTON, INPUT);
+    digitalWrite(JOYSTICK_PUSHBUTTON, HIGH);
+
     for (int i = 0; i < 200; i++) {
         joystickMidPointX = (joystickMidPointX + analogRead(JOYSTICK_HORIZONTAL)) / 2;
         delay(1);
