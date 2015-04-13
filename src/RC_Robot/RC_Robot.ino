@@ -89,14 +89,6 @@ void setup() {
     //---------------------------------
 
     motorExecutor.initialize(pressure_baseline);
-
-    //---PID---------------------------
-//    Input_PID = 1000; //1atm=1000mbar
-//    Setpoint_PID = 1000;
-//    myPID.SetOutputLimits(-255, 255);
-//    //turn the PID on
-//    myPID.SetMode(AUTOMATIC);
-    //----------------------------------
 }
 
 
@@ -104,21 +96,6 @@ void loop() {
     if (byteCoder.fromSerial(controlSpecs)) {
         motorExecutor.execute(controlSpecs, sensor.getPressure(ADC_4096));
     }
-
-    //PID-----------------------------------
-//    Input_PID = analogRead(0);
-//    Input_PID = map(Input_PID, 0, 1024, 1480, 1520);
-//    Setpoint_PID = 1500; //the water pressure (mabr)at desired depth
-//    myPID.Compute();
-    //Output_PID=[-255,255]
-
-//    Serial.print("In: ");
-//    Serial.print(Input_PID);
-//    Serial.print("  SetPoint: ");
-//    Serial.print(Setpoint_PID);
-//    Serial.print("  Out: ");
-//    Serial.print(Output_PID);
-    //--------------------------------------
 
     get_sensor_data();
 //    Serial.print("  roll: ");
