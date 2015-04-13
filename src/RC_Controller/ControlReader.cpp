@@ -23,7 +23,7 @@ void ControlReader::initialize() {
 
 void ControlReader::readControlSpecs(ControlSpecs &controlSpecs) {
     controlSpecs.setSlidePotValue(analogRead(SLIDE_POT));
-    controlSpecs.setDepthControlMode(detectControlMode());
+    controlSpecs.setDepthControlMode(detectDepthControlMode());
     controlSpecs.setNormalized_joystick_X(processJoystick(JOYSTICK_HORIZONTAL, joystickMidPointX));
     controlSpecs.setNormalized_joystick_Y(processJoystick(JOYSTICK_VERTICAL, joystickMidPointY));
 }
@@ -39,7 +39,7 @@ const float ControlReader::processJoystick(int pinId, int midPoint) const {
     }
 }
 
-DepthControlMode ControlReader::detectControlMode() {
+DepthControlMode ControlReader::detectDepthControlMode() {
     static DepthControlMode depthControlMode = defaultDepthMode;
 
     if (keyDetector.detectKey() == SELECT) {

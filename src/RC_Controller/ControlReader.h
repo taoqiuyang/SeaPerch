@@ -24,7 +24,7 @@ private:
 
     const float processJoystick(int pinId, int midPoint) const;
 
-    DepthControlMode detectControlMode();
+    DepthControlMode detectDepthControlMode();
 };
 
 #endif

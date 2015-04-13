@@ -25,11 +25,16 @@ public:
 
     void setDepthControlMode(const DepthControlMode aDepthControlMode);
 
+    const SpeedControlMode getSpeedControlMode() const;
+
+    void setSpeedControlMode(const SpeedControlMode aSpeedControlMode);
+
 private:
     int slidePotValue;
     float normalized_joystick_X;
     float normalized_joystick_Y;
     DepthControlMode depthControlMode;
+    SpeedControlMode speedControlMode;
 };
 
 #endif

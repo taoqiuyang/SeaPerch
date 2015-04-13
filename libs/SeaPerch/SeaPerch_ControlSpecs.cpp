@@ -41,3 +41,11 @@ const DepthControlMode ControlSpecs::getDepthControlMode() const {
 void ControlSpecs::setDepthControlMode (const DepthControlMode aDepthControlMode) {
     depthControlMode = aDepthControlMode;
 }
+
+const SpeedControlMode ControlSpecs::getSpeedControlMode() const {
+    return speedControlMode;
+}
+
+void ControlSpecs::setSpeedControlMode(const SpeedControlMode aSpeedControlMode) {
+    speedControlMode = aSpeedControlMode;
+}
