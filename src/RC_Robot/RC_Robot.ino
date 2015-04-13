@@ -34,12 +34,12 @@ SeaPerch Remote Control Test
 #include <Adafruit_10DOF.h>
 //----------------------------
 
+#include <SeaPerch_AlgoUtils.h>
 #include <SeaPerch_BinaryUtils.h>
 #include <SeaPerch_ControlSpecs.h>
 
 #include "MotorExecutor.h"
 #include "RobotSideByteCoder.h"
-#include "SeaPerch_AlgoUtils.h"
 
 //IMU----------------------------------------------------------------------
 Adafruit_10DOF dof = Adafruit_10DOF();

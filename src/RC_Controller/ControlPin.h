@@ -3,7 +3,6 @@
 
 enum ControlPin {
     KEYPAD = 0,
-    BATTERY_VOLTAGE = 12,
     JOYSTICK_VERTICAL = 13,
     JOYSTICK_HORIZONTAL = 14,
     SLIDE_POT = 15,
