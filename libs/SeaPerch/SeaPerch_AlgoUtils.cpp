@@ -8,6 +8,10 @@ double AlgoUtils::map(float value, int fromLow, int fromHigh, int toLow, int toH
     return map((double)value, (double)fromLow, (double)fromHigh, (double)toLow, (double)toHigh);
 }
 
+float AlgoUtils::map(int value, int fromLow, int fromHigh, int toLow, int toHigh) {
+    return static_cast<float >(map((double)value, (double)fromLow, (double)fromHigh, (double)toLow, (double)toHigh));
+}
+
 double AlgoUtils::map(double value, double fromLow, double fromHigh, double toLow, double toHigh) {
     if (value <= fromLow) {
         return toLow;

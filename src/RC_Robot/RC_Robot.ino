@@ -34,7 +34,9 @@ SeaPerch Remote Control Test
 #include <Adafruit_10DOF.h>
 //----------------------------
 
+#include <Arduino.h>
 #include <SeaPerch_AlgoUtils.h>
+#include <SeaPerch_RobotData.h>
 #include <SeaPerch_BinaryUtils.h>
 #include <SeaPerch_ControlSpecs.h>
 
@@ -64,16 +66,11 @@ String Serial_2_data_recieved = "";
 float normalized_joystick_X, normalized_joystick_Y, checksum;
 int joystick_button;
 
-const int BATTERY_MEASUREMENT_PIN = 15;
-float battery_voltage, float_to_be_sent;
-int int_to_be_sent_0, int_to_be_sent_1, int_to_be_sent_2, int_to_be_sent_3, int_to_be_sent_4;
-
 RobotSideByteCoder byteCoder(Serial2);
 ControlSpecs controlSpecs;
 MotorExecutor motorExecutor;
 
 void setup() {
-    pinMode(BATTERY_MEASUREMENT_PIN, INPUT);
     Serial.begin(9600);
     Serial1.begin(9600);
     Serial2.begin(2400);
@@ -115,11 +112,6 @@ void loop() {
 
 
 void get_sensor_data() {
-    //Battery voltage---------------------------------------------
-    battery_voltage = analogRead(BATTERY_MEASUREMENT_PIN);
-    battery_voltage = battery_voltage / 1024.0 * 5.0 * 3.0 - 10;
-    //------------------------------------------------------------
-
     //IMU---------------------------------------------------------
     sensors_event_t accel_event;
     sensors_event_t mag_event;
