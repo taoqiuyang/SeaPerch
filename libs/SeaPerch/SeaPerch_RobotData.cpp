@@ -2,10 +2,18 @@
 
 RobotData::RobotData() { }
 
-const float RobotData::getBatteryVoltage() const {
-    return batteryVoltage;
+//float RobotData::getBatteryVoltage() const {
+//    return batteryVoltage;
+//}
+//
+//void RobotData::setBatteryVoltage(const float aBatteryVoltage) {
+//    batteryVoltage = aBatteryVoltage;
+//}
+
+Orientation const &RobotData::getOrientation() const {
+    return orientation;
 }
 
-void RobotData::setBatteryVoltage(const float aBatteryVoltage) {
-    batteryVoltage = aBatteryVoltage;
+void RobotData::setOrientation(Orientation const &orientation) {
+    RobotData::orientation = orientation;
 }

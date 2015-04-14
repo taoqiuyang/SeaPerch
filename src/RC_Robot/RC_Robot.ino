@@ -37,6 +37,7 @@ SeaPerch Remote Control Test
 #include <Arduino.h>
 #include <SeaPerch_AlgoUtils.h>
 #include <SeaPerch_RobotData.h>
+#include <SeaPerch_Orientation.h>
 #include <SeaPerch_BinaryUtils.h>
 #include <SeaPerch_ControlSpecs.h>
 
