@@ -35,15 +35,11 @@ void ControlSideByteCoder::toSerial(const ControlSpecs &controlSpecs) const {
     SerialUtils::floatToSerial(serial, checksum);
 
     serial.flush();
+    serial.read();
 }
 
 bool ControlSideByteCoder::fromSerial(RobotData &robotData) const {
-    if (serial.available() <= 0) {
-        return false;
-    }
-
-    if (!serial.find("R")) {
-        serial.read(); // clear read buffer garbage
+    if (serial.available() <= 0 || !serial.find("R")) {
         return false;
     }
 

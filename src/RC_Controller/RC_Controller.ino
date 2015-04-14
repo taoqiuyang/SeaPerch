@@ -47,11 +47,8 @@ void setup() {
 void loop() {
     controlReader.readControlSpecs(controlSpecs);
     coder.toSerial(controlSpecs);
-    unsigned long now = millis();
-
-    while(!byteCoder.fromSerial(robotData) && (millis() < now + TIME_OUT)) {
-        Serial.println("waiting");
-    }
+    byteCoder.fromSerial(robotData);
+    delay(300);
 
     const Orientation &orientation = robotData.getOrientation();
     lcdDisplayer.display("roll: " + String(orientation.getRoll()) + "\npitch: " +  String(orientation.getPitch()));
