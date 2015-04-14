@@ -32,10 +32,21 @@ void RobotDataReader::initSensors() {
     }
 }
 
-void RobotDataReader::readRobotData(RobotData &robotData) const {
+void RobotDataReader::readRobotData(RobotData &robotData) {
+    updateOrientation();
+
     robotData.setBatteryVoltage(readBatteryVoltage());
 }
 
 const float RobotDataReader::readBatteryVoltage() const {
     return AlgoUtils::map(analogRead(BATTERY_VOLTAGE), 0, 1023, 0, 15);
+}
+
+void RobotDataReader::updateOrientation() {
+    /* Read the accelerometer and magnetometer */
+    accel.getEvent(&accel_event);
+    mag.getEvent(&mag_event);
+
+    /* Use the new fusionGetOrientation function to merge accel/mag data */
+    dof.fusionGetOrientation(&accel_event, &mag_event, &orientation);
 }

@@ -41,6 +41,7 @@ SeaPerch Remote Control Test
 #include <SeaPerch_ControlSpecs.h>
 
 #include "MotorExecutor.h"
+#include "RobotDataReader.h"
 #include "RobotSideByteCoder.h"
 
 //IMU----------------------------------------------------------------------
@@ -58,6 +59,7 @@ double base_altitude = 1655.0; // Altitude of SparkFun's HQ in Boulder, CO. in (
 
 RobotData robotData;
 ControlSpecs controlSpecs;
+RobotDataReader dataReader;
 MotorExecutor motorExecutor;
 RobotSideByteCoder byteCoder(Serial2);
 
@@ -72,6 +74,7 @@ void setup() {
     pressure_baseline = sensor.getPressure(ADC_4096);
     //---------------------------------
 
+    dataReader.intialize();
     motorExecutor.initialize(pressure_baseline);
 }
 
@@ -80,6 +83,8 @@ void loop() {
     if (byteCoder.fromSerial(controlSpecs)) {
         motorExecutor.execute(controlSpecs, sensor.getPressure(ADC_4096));
     }
+
+    dataReader.readRobotData(robotData);
 
 //    get_sensor_data();
 //    Serial.print("  roll: ");
