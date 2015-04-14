@@ -10,7 +10,12 @@ RobotSideByteCoder::RobotSideByteCoder(HardwareSerial & serial) : RobotSideCoder
 
 // block until serial incoming data available
 bool RobotSideByteCoder::fromSerial(ControlSpecs & controlSpecs) const {
-    if (serial.available() <= 0 || !serial.find("C")) {
+    if (serial.available() <= 0) {
+        return false;
+    }
+
+    if (!serial.find("C")) {
+        serial.read(); // clear read buffer garbage
         return false;
     }
 

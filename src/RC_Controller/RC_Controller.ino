@@ -32,7 +32,7 @@ KeyDetector keyDetector;
 ControlReader controlReader(keyDetector, lcdDisplayer);
 ControlSideByteCoder byteCoder = ControlSideByteCoder(Serial2);
 ControlSideCoder &coder = byteCoder;
-const unsigned long TIME_OUT = 100;
+const unsigned long TIME_OUT = 50;
 
 void setup() {
     lcdDisplayer.initialize();
@@ -49,7 +49,9 @@ void loop() {
     coder.toSerial(controlSpecs);
     unsigned long now = millis();
 
-    while(!byteCoder.fromSerial(robotData) && millis() <= now + TIME_OUT) {}
+    while(!byteCoder.fromSerial(robotData) && (millis() < now + TIME_OUT)) {
+        Serial.println("waiting");
+    }
 
     const Orientation &orientation = robotData.getOrientation();
     lcdDisplayer.display("roll: " + String(orientation.getRoll()) + "\npitch: " +  String(orientation.getPitch()));
