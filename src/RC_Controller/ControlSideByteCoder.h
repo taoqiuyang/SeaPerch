@@ -11,6 +11,8 @@ public:
     explicit ControlSideByteCoder(HardwareSerial &serial);
 
     void toSerial(const ControlSpecs &controlSpecs) const;
+
+    bool fromSerial(RobotData &robotData) const;
 };
 
 #endif

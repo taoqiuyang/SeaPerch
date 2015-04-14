@@ -1,4 +1,6 @@
+#include <SeaPerch_Orientation.h>
 #include <SeaPerch_SerialUtils.h>
+#include <SeaPerch_BinaryUtils.h>
 
 #include "ControlSideByteCoder.h"
 
@@ -33,4 +35,41 @@ void ControlSideByteCoder::toSerial(const ControlSpecs &controlSpecs) const {
     SerialUtils::floatToSerial(serial, checksum);
 
     serial.flush();
+}
+
+bool ControlSideByteCoder::fromSerial(RobotData &robotData) const {
+    int busyWait = 0;
+
+    while (serial.available() == 0) {
+        busyWait++;
+    }
+
+    if (!serial.find("#")) {
+        return false;
+    }
+
+    char buffer[max(INT_SIZE, FLOAT_SIZE)];
+    float expectedChecksum = 0;
+
+    serial.readBytes(buffer, FLOAT_SIZE);
+    float roll = BinaryUtils::toFloat(buffer);
+    expectedChecksum += roll;
+
+    serial.readBytes(buffer, FLOAT_SIZE);
+    float pitch = BinaryUtils::toFloat(buffer);
+    expectedChecksum += pitch;
+
+    serial.readBytes(buffer, FLOAT_SIZE);
+    float yaw = BinaryUtils::toFloat(buffer);
+    expectedChecksum += yaw;
+
+    serial.readBytes(buffer, FLOAT_SIZE);
+    float checksum = BinaryUtils::toFloat(buffer);
+
+    if (expectedChecksum == checksum) {
+        robotData.setOrientation(Orientation(roll, pitch, yaw));
+        return true;
+    } else {
+        return false;
+    }
 }

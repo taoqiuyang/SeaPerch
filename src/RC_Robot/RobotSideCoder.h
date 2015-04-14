@@ -9,9 +9,9 @@ public:
     explicit RobotSideCoder(HardwareSerial &serial) : serial(serial) {
     };
 
-    virtual bool fromSerial(ControlSpecs &controlSpecs) const;
+    virtual bool fromSerial(ControlSpecs &controlSpecs) const = 0;
 
-    virtual void toSerial(const RobotData &robotData) const;
+    virtual void toSerial(const RobotData &robotData) const = 0;
 
 protected:
     HardwareSerial &serial;

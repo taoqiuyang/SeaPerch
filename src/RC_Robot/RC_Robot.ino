@@ -84,9 +84,9 @@ void setup() {
 void loop() {
     if (byteCoder.fromSerial(controlSpecs)) {
         motorExecutor.execute(controlSpecs, sensor.getPressure(ADC_4096));
+        dataReader.readRobotData(robotData);
+        byteCoder.toSerial(robotData);
     }
-
-    dataReader.readRobotData(robotData);
 
 //    get_sensor_data();
 //    Serial.print("  roll: ");

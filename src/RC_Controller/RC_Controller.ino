@@ -11,10 +11,12 @@ Georgia Institute of Technology
 */
 #include <Arduino.h>
 #include <LiquidCrystal.h>
+#include <SeaPerch_RobotData.h>
 #include <SeaPerch_ControlMode.h>
 #include <SeaPerch_BinaryUtils.h>
 #include <SeaPerch_SerialUtils.h>
 #include <SeaPerch_ControlSpecs.h>
+#include <SeaPerch_Orientation.h>
 
 #include "Key.h"
 #include "ControlPin.h"
@@ -23,12 +25,14 @@ Georgia Institute of Technology
 #include "ControlReader.h"
 #include "ControlSideByteCoder.h"
 
+RobotData robotData;
 ControlSpecs controlSpecs;
 LCDDisplayer lcdDisplayer;
 KeyDetector keyDetector;
 ControlReader controlReader(keyDetector, lcdDisplayer);
 ControlSideByteCoder byteCoder = ControlSideByteCoder(Serial2);
 ControlSideCoder &coder = byteCoder;
+const unsigned long TIME_OUT = 100;
 
 void setup() {
     lcdDisplayer.initialize();
@@ -43,5 +47,10 @@ void setup() {
 void loop() {
     controlReader.readControlSpecs(controlSpecs);
     coder.toSerial(controlSpecs);
-    delay(500);
+    unsigned long now = millis();
+
+    while(!byteCoder.fromSerial(robotData) && millis() <= now + TIME_OUT) {}
+
+    const Orientation &orientation = robotData.getOrientation();
+    lcdDisplayer.display("roll: " + String(orientation.getRoll()) + "\npitch: " +  String(orientation.getPitch()));
 }
