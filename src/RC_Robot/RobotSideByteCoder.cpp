@@ -10,13 +10,7 @@ RobotSideByteCoder::RobotSideByteCoder(HardwareSerial & serial) : RobotSideCoder
 
 // block until serial incoming data available
 bool RobotSideByteCoder::fromSerial(ControlSpecs & controlSpecs) const {
-    int busyWait = 0;
-
-    while (serial.available() == 0) {
-        busyWait++;
-    }
-
-    if (!serial.find("#")) {
+    if (serial.available() <= 0 || !serial.find("C")) {
         return false;
     }
 
@@ -58,7 +52,7 @@ void RobotSideByteCoder::toSerial(const RobotData &robotData) const {
     float checksum = 0;
     const Orientation &orientation = robotData.getOrientation();
 
-    serial.print("#");
+    serial.print("R");
 
     float roll = orientation.getRoll();
     SerialUtils::floatToSerial(serial, roll);

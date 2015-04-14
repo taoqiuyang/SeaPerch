@@ -10,7 +10,7 @@ ControlSideByteCoder::ControlSideByteCoder(HardwareSerial &serial) : ControlSide
 void ControlSideByteCoder::toSerial(const ControlSpecs &controlSpecs) const {
     float checksum = 0;
 
-    serial.print("#");
+    serial.print("C");
 
     float normalizedJoystickX = controlSpecs.getNormalized_joystick_X();
     SerialUtils::floatToSerial(serial, normalizedJoystickX);
@@ -38,13 +38,7 @@ void ControlSideByteCoder::toSerial(const ControlSpecs &controlSpecs) const {
 }
 
 bool ControlSideByteCoder::fromSerial(RobotData &robotData) const {
-    int busyWait = 0;
-
-    while (serial.available() == 0) {
-        busyWait++;
-    }
-
-    if (!serial.find("#")) {
+    if (serial.available() <= 0 || !serial.find("R")) {
         return false;
     }
 
