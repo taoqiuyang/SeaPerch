@@ -43,5 +43,5 @@ void setup() {
 void loop() {
     controlReader.readControlSpecs(controlSpecs);
     coder.toSerial(controlSpecs);
-    delay(100);
+    delay(500);
 }
