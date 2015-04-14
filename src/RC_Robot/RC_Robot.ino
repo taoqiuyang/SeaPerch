@@ -39,6 +39,7 @@ SeaPerch Remote Control Test
 #include <SeaPerch_RobotData.h>
 #include <SeaPerch_Orientation.h>
 #include <SeaPerch_BinaryUtils.h>
+#include <SeaPerch_SerialUtils.h>
 #include <SeaPerch_ControlSpecs.h>
 
 #include "MotorExecutor.h"

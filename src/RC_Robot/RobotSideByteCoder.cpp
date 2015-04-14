@@ -1,3 +1,5 @@
+#include <SeaPerch_Orientation.h>
+#include <SeaPerch_SerialUtils.h>
 #include <SeaPerch_BinaryUtils.h>
 
 #include "RobotSideByteCoder.h"
@@ -48,5 +50,24 @@ bool RobotSideByteCoder::fromSerial(ControlSpecs & controlSpecs) const {
 }
 
 void RobotSideByteCoder::toSerial(const RobotData &robotData) const {
+    float checksum = 0;
+    const Orientation &orientation = robotData.getOrientation();
 
+    serial.print("#");
+
+    float roll = orientation.getRoll();
+    SerialUtils::floatToSerial(serial, roll);
+    checksum += roll;
+
+    float pitch = orientation.getPitch();
+    SerialUtils::floatToSerial(serial, pitch);
+    checksum += pitch;
+
+    float yaw = orientation.getYaw();
+    SerialUtils::floatToSerial(serial, yaw);
+    checksum += yaw;
+
+    SerialUtils::floatToSerial(serial, checksum);
+
+    serial.flush();
 }
