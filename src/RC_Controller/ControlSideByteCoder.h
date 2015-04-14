@@ -8,7 +8,7 @@ class ControlSideByteCoder : public ControlSideCoder {
 public:
     explicit ControlSideByteCoder(HardwareSerial &serial);
 
-    void toSerial(ControlSpecs &controlSpecs) const;
+    void toSerial(const ControlSpecs &controlSpecs) const;
 
 private:
     void intToSerial(const int toSend) const;

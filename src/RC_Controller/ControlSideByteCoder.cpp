@@ -5,7 +5,7 @@
 ControlSideByteCoder::ControlSideByteCoder(HardwareSerial &serial) : ControlSideCoder(serial) {
 }
 
-void ControlSideByteCoder::toSerial(ControlSpecs &controlSpecs) const {
+void ControlSideByteCoder::toSerial(const ControlSpecs &controlSpecs) const {
     float checksum = 0;
 
     serial.print("#");

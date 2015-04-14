@@ -9,6 +9,8 @@ public:
     explicit RobotSideByteCoder(HardwareSerial &serial);
 
     bool fromSerial(ControlSpecs &controlSpecs) const;
+
+    void toSerial(const RobotData &robotData) const;
 };
 
 #endif

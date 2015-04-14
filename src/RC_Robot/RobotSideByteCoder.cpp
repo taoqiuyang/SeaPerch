@@ -46,3 +46,7 @@ bool RobotSideByteCoder::fromSerial(ControlSpecs & controlSpecs) const {
         return false;
     }
 }
+
+void RobotSideByteCoder::toSerial(const RobotData &robotData) const {
+
+}
