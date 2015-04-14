@@ -13,6 +13,7 @@ Georgia Institute of Technology
 #include <LiquidCrystal.h>
 #include <SeaPerch_ControlMode.h>
 #include <SeaPerch_BinaryUtils.h>
+#include <SeaPerch_SerialUtils.h>
 #include <SeaPerch_ControlSpecs.h>
 
 #include "Key.h"
