@@ -48,8 +48,7 @@ void loop() {
     controlReader.readControlSpecs(controlSpecs);
     coder.toSerial(controlSpecs);
     byteCoder.fromSerial(robotData);
-    delay(300);
-
     const Orientation &orientation = robotData.getOrientation();
     lcdDisplayer.display("roll: " + String(orientation.getRoll()) + "\npitch: " +  String(orientation.getPitch()));
+    delay(100);
 }
