@@ -32,7 +32,6 @@ KeyDetector keyDetector;
 ControlReader controlReader(keyDetector, lcdDisplayer);
 ControlSideByteCoder byteCoder = ControlSideByteCoder(Serial2);
 ControlSideCoder &coder = byteCoder;
-const unsigned long TIME_OUT = 50;
 
 void setup() {
     lcdDisplayer.initialize();
