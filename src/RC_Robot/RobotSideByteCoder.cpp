@@ -69,5 +69,6 @@ void RobotSideByteCoder::toSerial(const RobotData &robotData) const {
     SerialUtils::floatToSerial(serial, checksum);
 
     serial.flush();
-    serial.read();
+    char junk[100];
+    serial.readBytes(junk, 4 + FLOAT_SIZE * 4);
 }

@@ -39,6 +39,7 @@ void setup() {
     Serial.begin(9600);
     Serial1.begin(9600);
     Serial2.begin(2400);
+    Serial2.setTimeout(10);
 
     controlReader.initialize();
 }
@@ -46,8 +47,8 @@ void setup() {
 void loop() {
     controlReader.readControlSpecs(controlSpecs);
     coder.toSerial(controlSpecs);
+    delay(500);
     byteCoder.fromSerial(robotData);
     const Orientation &orientation = robotData.getOrientation();
     lcdDisplayer.display("roll: " + String(orientation.getRoll()) + "\npitch: " +  String(orientation.getPitch()));
-    delay(100);
 }

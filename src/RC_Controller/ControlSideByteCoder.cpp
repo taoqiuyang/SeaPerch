@@ -35,7 +35,8 @@ void ControlSideByteCoder::toSerial(const ControlSpecs &controlSpecs) const {
     SerialUtils::floatToSerial(serial, checksum);
 
     serial.flush();
-    serial.read();
+    char junk[100];
+    serial.readBytes(junk, 4 + FLOAT_SIZE * 3 + INT_SIZE * 3);
 }
 
 bool ControlSideByteCoder::fromSerial(RobotData &robotData) const {

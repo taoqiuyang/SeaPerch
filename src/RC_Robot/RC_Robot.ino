@@ -69,6 +69,7 @@ void setup() {
     Serial.begin(9600);
     Serial1.begin(9600);
     Serial2.begin(2400);
+    Serial2.setTimeout(10);
 
     //---initialize Depth Sensor-------
     sensor.reset();
@@ -85,6 +86,7 @@ void loop() {
     if (byteCoder.fromSerial(controlSpecs)) {
         motorExecutor.execute(controlSpecs, sensor.getPressure(ADC_4096));
         dataReader.readRobotData(robotData);
+        delay(300);
         byteCoder.toSerial(robotData);
     }
 
