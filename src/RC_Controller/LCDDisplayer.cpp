@@ -18,10 +18,11 @@ void LCDDisplayer::refresh() {
     if (currentKey == UP) {
         displayRow--;
 
-        if (displayRow == 0) {
+        if (displayRow == -1) {
             displayRow = tableSize - 1;
         }
 
+        Serial.println(displayRow);
         currentKey = NOT_DETECTED;
     } else if (currentKey == DOWN) {
         displayRow = (displayRow + 1) % tableSize;
