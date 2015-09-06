@@ -52,7 +52,8 @@ const Orientation RobotDataReader::readOrientation() {
 
     /* Use the new fusionGetOrientation function to merge accel/mag data */
     if (dof.fusionGetOrientation(&accel_event, &mag_event, &orientation)) {
-        return Orientation(orientation.roll, orientation.pitch, orientation.heading);
+        // switched pitch and roll due to hardware setup
+        return Orientation(orientation.pitch, orientation.roll, orientation.heading);
     } else {
         return Orientation();
     }

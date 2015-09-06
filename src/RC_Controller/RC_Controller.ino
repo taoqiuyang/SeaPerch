@@ -27,9 +27,9 @@ Georgia Institute of Technology
 
 RobotData robotData;
 ControlSpecs controlSpecs;
-LCDDisplayer lcdDisplayer;
+LCDDisplayer lcdDisplayer(robotData);
 KeyDetector keyDetector;
-ControlReader controlReader(keyDetector, lcdDisplayer);
+ControlReader controlReader(lcdDisplayer);
 ControlSideByteCoder byteCoder = ControlSideByteCoder(Serial2);
 ControlSideCoder &coder = byteCoder;
 
@@ -49,6 +49,6 @@ void loop() {
     coder.toSerial(controlSpecs);
     delay(500);
     byteCoder.fromSerial(robotData);
-    const Orientation &orientation = robotData.getOrientation();
-    lcdDisplayer.display("roll: " + String(orientation.getRoll()) + "\npitch: " +  String(orientation.getPitch()));
+    keyDetector.detectKey();
+    lcdDisplayer.refresh();
 }

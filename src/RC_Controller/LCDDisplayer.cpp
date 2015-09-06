@@ -1,9 +1,35 @@
+#include "Key.h"
 #include "LCDDisplayer.h"
 
 #include <Arduino.h>
 
-LCDDisplayer::LCDDisplayer() : lcd(8, 13, 9, 4, 5, 6, 7) {
+LCDDisplayer::LCDDisplayer(RobotData &robotData) : robotData(robotData), lcd(8, 13, 9, 4, 5, 6, 7) {
+}
 
+void LCDDisplayer::initialize() {
+    lcd.begin(16, 2);
+    lcd.clear();
+    display("Gatech VIP\nSeaPerch Project");
+    delay(2000);
+    lcd.clear();
+}
+
+void LCDDisplayer::refresh() {
+    if (currentKey == UP) {
+        displayRow--;
+
+        if (displayRow == 0) {
+            displayRow = tableSize - 1;
+        }
+    } else if (currentKey == DOWN) {
+        displayRow = (displayRow + 1) % tableSize;
+    }
+
+    messageTable[0] = "roll: " + String(robotData.getOrientation().getRoll());
+    messageTable[1] = "pitch: " + String(robotData.getOrientation().getPitch());
+    messageTable[2] = "yaw: " + String(robotData.getOrientation().getYaw());
+
+    display(messageTable[displayRow] + "\n" + messageTable[(displayRow + 1) % tableSize]);
 }
 
 void LCDDisplayer::display(String message) {
@@ -27,12 +53,4 @@ void LCDDisplayer::display(String message) {
             }
         }
     }
-}
-
-void LCDDisplayer::initialize() {
-    lcd.begin(16, 2);
-    lcd.clear();
-    display("Gatech VIP\nSeaPerch Project");
-    delay(2000);
-    lcd.clear();
 }

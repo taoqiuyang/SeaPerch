@@ -4,8 +4,7 @@
 #include "LCDDisplayer.h"
 #include "ControlReader.h"
 
-ControlReader::ControlReader(KeyDetector &aKeyDetector, LCDDisplayer &aLCDDisplayer) : keyDetector(aKeyDetector),
-                                                                                       lcdDisplayer(aLCDDisplayer),
+ControlReader::ControlReader(LCDDisplayer &aLCDDisplayer) : lcdDisplayer(aLCDDisplayer),
                                                                                        joystickMidPointX(0),
                                                                                        joystickMidPointY(0) {
 }
@@ -46,7 +45,7 @@ const float ControlReader::processJoystick(int pinId, int midPoint) const {
 DepthControlMode ControlReader::detectDepthControlMode() {
     static DepthControlMode depthControlMode = defaultDepthMode;
 
-    if (keyDetector.detectKey() == SELECT) {
+    if (currentKey == SELECT) {
         if (depthControlMode == MANUAL_SPEED) {
             depthControlMode = AUTO_DEPTH;
             digitalWrite(SLIDE_POT_LED, HIGH);

@@ -12,4 +12,6 @@ const char keyNames[5][16] = {"Right ",
                               "Left  ",
                               "Select"};
 
+extern int currentKey;
+
 #endif

@@ -9,7 +9,7 @@
 
 class ControlReader {
 public:
-    ControlReader(KeyDetector &aKeyDetector, LCDDisplayer &aLCDDisplayer);
+    ControlReader(LCDDisplayer &aLCDDisplayer);
 
     void initialize();
 
@@ -18,7 +18,6 @@ public:
 private:
     int joystickMidPointX;
     int joystickMidPointY;
-    KeyDetector &keyDetector;
     LCDDisplayer &lcdDisplayer;
     static const DepthControlMode defaultDepthMode = MANUAL_SPEED;
 
