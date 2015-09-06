@@ -21,8 +21,11 @@ void LCDDisplayer::refresh() {
         if (displayRow == 0) {
             displayRow = tableSize - 1;
         }
+
+        currentKey = NOT_DETECTED;
     } else if (currentKey == DOWN) {
         displayRow = (displayRow + 1) % tableSize;
+        currentKey = NOT_DETECTED;
     }
 
     messageTable[0] = "roll: " + String(robotData.getOrientation().getRoll());

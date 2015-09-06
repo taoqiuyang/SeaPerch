@@ -55,6 +55,7 @@ DepthControlMode ControlReader::detectDepthControlMode() {
         }
 
         lcdDisplayer.display(depthControlMsg[depthControlMode]);
+        currentKey = NOT_DETECTED;
     }
 
     return depthControlMode;

@@ -19,7 +19,7 @@ private:
 
     static const int tableSize = 3;
 
-    RobotData robotData;
+    RobotData &robotData;
 
     String messageTable[tableSize];
 
