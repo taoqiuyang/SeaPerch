@@ -9,6 +9,8 @@ class MotorExecutor {
 public:
     explicit MotorExecutor();
 
+    void emergencyBrake();
+
     void initialize(const double aPressureBase);
 
     void execute(const ControlSpecs &controlSpecs, const double currentDepth);

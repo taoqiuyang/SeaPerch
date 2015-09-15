@@ -59,6 +59,9 @@ double pressure_abs, pressure_relative, altitude_delta, pressure_baseline;
 double base_altitude = 1655.0; // Altitude of SparkFun's HQ in Boulder, CO. in (m)
 //--------------------------------------------------------------------------
 
+unsigned long lastSignalTimestamp;
+unsigned long TIMEOUT_THRESHOLD_MS = 1000;
+
 RobotData robotData;
 ControlSpecs controlSpecs;
 RobotDataReader dataReader;
@@ -84,10 +87,16 @@ void setup() {
 
 void loop() {
     if (byteCoder.fromSerial(controlSpecs)) {
+        lastSignalTimestamp = millis();
         motorExecutor.execute(controlSpecs, sensor.getPressure(ADC_4096));
         dataReader.readRobotData(robotData);
         delay(300);
         byteCoder.toSerial(robotData);
+    } else {
+        unsigned long currentTime = millis();
+        if (currentTime - lastSignalTimestamp >= TIMEOUT_THRESHOLD_MS) {
+            motorExecutor.emergencyBrake();
+        }
     }
 
 //    get_sensor_data();

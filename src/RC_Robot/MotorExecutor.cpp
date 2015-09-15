@@ -41,6 +41,13 @@ void MotorExecutor::initialize(const double aPressureBase) {
     myPID.SetMode(AUTOMATIC);
 }
 
+void MotorExecutor::emergencyBrake() {
+    verticalLeft.write(STILL_MOTOR_SPEED);
+    verticalRight.write(STILL_MOTOR_SPEED);
+    horizontalLeft.write(STILL_MOTOR_SPEED);
+    horizontalRight.write(STILL_MOTOR_SPEED);
+}
+
 void MotorExecutor::execute(const ControlSpecs &controlSpecs, const double currentDepth) {
     setSpeedBoundaries(controlSpecs.getSpeedControlMode());
     executeHorizontalMotors(controlSpecs.getNormalized_joystick_X(), controlSpecs.getNormalized_joystick_Y());
