@@ -42,10 +42,8 @@ void MotorExecutor::initialize(const double aPressureBase) {
 }
 
 void MotorExecutor::emergencyBrake() {
-    verticalLeft.write(STILL_MOTOR_SPEED);
-    verticalRight.write(STILL_MOTOR_SPEED);
-    horizontalLeft.write(STILL_MOTOR_SPEED);
-    horizontalRight.write(STILL_MOTOR_SPEED);
+    setVerticalSpeed(STILL_MOTOR_SPEED, STILL_MOTOR_SPEED);
+    setHorizontalSpeed(STILL_MOTOR_SPEED, STILL_MOTOR_SPEED);
 }
 
 void MotorExecutor::execute(const ControlSpecs &controlSpecs, const double currentDepth) {
@@ -70,6 +68,16 @@ void MotorExecutor::setSpeedBoundaries(SpeedControlMode speedMode) {
     }
 }
 
+void MotorExecutor::setVerticalSpeed(const int leftSpeed, const int rightSpeed) {
+    verticalLeft.write(leftSpeed);
+    verticalRight.write(rightSpeed);
+}
+
+void MotorExecutor::setHorizontalSpeed(const int leftSpeed, const int rightSpeed) {
+    horizontalLeft.write(leftSpeed);
+    horizontalRight.write(rightSpeed);
+}
+
 void MotorExecutor::executeHorizontalMotors(const float normalizedX, const float normalizedY) {
     float normalizedLeft = max(min(normalizedX + normalizedY, 1.0), -1.0); // [-1, 1]
     float normalizedRight = max(min(normalizedX - normalizedY, 1.0), -1.0); // [-1, 1]
@@ -77,15 +85,13 @@ void MotorExecutor::executeHorizontalMotors(const float normalizedX, const float
     int leftSpeed = (int) (AlgoUtils::map(normalizedLeft, -1, 1, minSpeed, maxSpeed));
     int rightSpeed = (int) (AlgoUtils::map(normalizedRight, -1, 1, minSpeed, maxSpeed));
 
-    horizontalLeft.write(leftSpeed);
-    horizontalRight.write(rightSpeed);
+    setHorizontalSpeed(leftSpeed, rightSpeed);
 }
 
 void MotorExecutor::executeSpeedControlledVerticalMotor(const int speedInput) {
     int verticalSpeed = map(speedInput, 0, 1023, minSpeed, maxSpeed);
 
-    verticalLeft.write(verticalSpeed);
-    verticalRight.write(verticalSpeed);
+    setVerticalSpeed(verticalSpeed, verticalSpeed);
 }
 
 void MotorExecutor::executeDepthControlledVerticalMotor(const int depthInput, const double currentDepth) {
@@ -95,6 +101,5 @@ void MotorExecutor::executeDepthControlledVerticalMotor(const int depthInput, co
 
     int verticalSpeed = map((int) pidOutput, -255, 255, minSpeed, maxSpeed);
 
-    verticalLeft.write(verticalSpeed);
-    verticalRight.write(verticalSpeed);
+    setVerticalSpeed(verticalSpeed, verticalSpeed);
 }

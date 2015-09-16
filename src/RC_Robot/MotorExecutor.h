@@ -36,6 +36,10 @@ private:
 
     void executeSpeedControlledVerticalMotor(const int speedInput);
 
+    void setVerticalSpeed(const int leftSpeed, const int rightSpeed);
+
+    void setHorizontalSpeed(const int leftSpeed, const int rightSpeed);
+
     void executeHorizontalMotors(const float normalizedX, const float normalizedY);
 
     void executeDepthControlledVerticalMotor(const int depthInput, const double currentDepth);
