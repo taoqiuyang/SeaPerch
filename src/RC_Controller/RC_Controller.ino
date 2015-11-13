@@ -47,7 +47,7 @@ void setup() {
 void loop() {
     controlReader.readControlSpecs(controlSpecs);
     coder.toSerial(controlSpecs);
-    delay(500);
+    delay(100);
     byteCoder.fromSerial(robotData);
     keyDetector.detectKey();
     lcdDisplayer.refresh();

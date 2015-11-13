@@ -84,35 +84,21 @@ void setup() {
     motorExecutor.initialize(pressure_baseline);
 }
 
-
 void loop() {
-    if (byteCoder.fromSerial(controlSpecs)) {
-        lastSignalTimestamp = millis();
-        motorExecutor.execute(controlSpecs, sensor.getPressure(ADC_4096));
-        dataReader.readRobotData(robotData);
-        delay(300);
-        byteCoder.toSerial(robotData);
-    } else {
-        unsigned long currentTime = millis();
-        if (currentTime - lastSignalTimestamp >= TIMEOUT_THRESHOLD_MS) {
-            motorExecutor.emergencyBrake();
-        }
-    }
+    unsigned long currentTime = millis();
 
-//    get_sensor_data();
-//    Serial.print("  roll: ");
-//    Serial.print(roll);
-//    Serial.print("  pitch: ");
-//    Serial.print(pitch);
-//    Serial.print("  yaw: ");
-//    Serial.print(yaw);
-//    Serial.print("  temp_IMU:");
-//    Serial.print(temperature_IMU);
-//    Serial.print("  Temp Dep: ");
-//    Serial.print(temperature_c);
-//    Serial.print("  Pres(mbar): ");
-//    Serial.println(pressure_abs);
-//    Serial.println();
+    if (currentTime - lastSignalTimestamp >= TIMEOUT_THRESHOLD_MS) {
+        motorExecutor.emergencyBrake();
+    }
+}
+
+void serialEvent2() {
+    byteCoder.fromSerial(controlSpecs);
+    lastSignalTimestamp = millis();
+    motorExecutor.execute(controlSpecs, sensor.getPressure(ADC_4096));
+    dataReader.readRobotData(robotData);
+    delay(20);
+    byteCoder.toSerial(robotData);
 }
 
 
